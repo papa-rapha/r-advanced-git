@@ -1,0 +1,34 @@
+---
+title: "R avancé et Introduction à git"
+author: "Raphaël Nedellec"
+format: revealjs
+---
+
+# Fonctions
+
+## Écrire une fonction
+
+## Lambda 
+
+## purrr
+
+## Objets S3 
+
+## Programmation fonctionnelle
+
+## Roxygen
+
+# Packages
+
+## Structure
+
+## Description
+
+## Namespace
+
+## R/
+
+## tests/
+
+## usethis, devtools
+

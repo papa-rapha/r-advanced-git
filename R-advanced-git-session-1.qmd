@@ -1,0 +1,66 @@
+---
+title: "R avancé et Introduction à git"
+author: "Raphaël Nedellec"
+format: revealjs
+---
+
+
+# IDE: Rstudio
+
+## Prise en main
+
+## Configuration
+
+## Projets
+
+## Raccourcis clavier
+
+# Rappels de R
+
+## Types primitifs
+
+## Affectation
+
+## Manipuler les vecteurs
+
+## for, if, else, while, ...
+
+# Bonnes pratiques
+
+## Conventions de code
+
+## linter, styler
+
+## pre-commit
+
+# Debug
+
+## Lire un message d'erreur
+
+## Chercher de l'aide
+
+## browse(), checkpoint()
+
+## cheatsheet
+
+# Lire des données
+
+## Fichiers .csv
+
+## Fichiers .json
+
+## Connexion à des bases de données
+
+# Manipuler des données
+
+## tidyverse
+
+## dplyr
+
+## tidyr
+
+
+
+
+
+
