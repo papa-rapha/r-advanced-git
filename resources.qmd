@@ -1,0 +1,5 @@
+---
+format: html
+---
+
+## Ressources et liens externes

@@ -1,0 +1,27 @@
+---
+format: html
+---
+
+## Objectifs du cours
+
+Les objectifs du cours de {{< var course.name >}} sont multiples :
+
+- effectuer un rappel rapide des concepts centraux du langage R : types primitifs, vecteurs, flux de contrôles, fonctions pratiques ;
+- bien configurer son environnement de développement sous l'[IDE Rstudio](https://posit.co/download/rstudio-desktop/) et utiliser des projets ;
+- comprendre le concept de fonctions, de fonctions génériques et d'objets S3 ;
+- construire un package R, notamment en utilisant les librairies [devtools](https://devtools.r-lib.org/), [usethis](https://usethis.r-lib.org/) et [testthat](https://testthat.r-lib.org/) ;
+- sensibiliser à la science reproductible, notamment à l'aide des packages [quarto](https://quarto.org/) et [targets](https://books.ropensci.org/targets/) ;
+- s'initier à [git](https://git-scm.com/), et à [github](https://github.com/) pour pouvoir collaborer et utiliser des gestionnaires de version.
+
+## Déroulé des cours
+
+Toutes les séances se dérouleront en salle informatique, que ce soit pour les cours ou les parties applicatives. 
+
+## Evaluation
+
+L'évaluation se décomposera en 3 parties :
+
+- deux travaux à la maison seront donnés à l'issue des séances 2 et 4, à rendre avant les séances suivantes, soit respectivement les séances 3 et 5 ;
+- un devoir écrit sur feuille sera donné lors de la dernière séance.
+
+Chaque devoir maison comptera pour 25% de la note finale, et le devoir écrit sur feuille pour 50%. 

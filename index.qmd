@@ -1,0 +1,35 @@
+---
+title: "{{< var course.name >}}"
+subtitle: "Ecrire des fonctions, construire des packages, et maitriser les bonnes pratiques issues du développement logiciel pour rendre reproductible ses travaux. Travailler avec git et utiliser des contrôles de version."
+details: |
+  Hiver 2023<br>IAE Nantes<br>Université de Nantes
+sidebar: false
+toc: false
+page-layout: full
+format:
+  html:
+    template-partials:
+      - html/home/title-block.html
+---
+
+### Intervenant
+
+- {{< fa user >}} &nbsp; [{{< var instructor.name >}}]({{< var instructor.url >}})
+- {{< fa envelope >}} &nbsp; <a href="mailto:{{< var instructor.email >}}">{{< var instructor.email >}}</a>
+
+::: {.g-col-12 .g-col-sm-6 .g-col-md-4}
+### Informations pratiques 
+
+- {{< fa calendar >}} &nbsp; {{< var course.days >}}
+- {{< fa calendar-alt >}} &nbsp; {{< var course.dates >}}
+- {{< fa clock >}} &nbsp; {{< var course.time >}}
+- {{< fa location-dot >}} &nbsp; {{< var course.location >}}
+:::
+
+::: {.g-col-12 .g-col-md-4 .contact-policy}
+
+### Me contacter
+
+{{< var instructor.contact_policy >}}
+:::
+
