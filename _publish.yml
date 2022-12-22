@@ -1,0 +1,4 @@
+- source: project
+  netlify:
+    - id: 6c3ef9f4-5ea2-436a-9007-81cb283a1097
+      url: 'https://polite-blancmange-e04799.netlify.app'
