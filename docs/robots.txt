@@ -1,1 +1,1 @@
-Sitemap: https://r-advanced-git.rnedellec.com/sitemap.xml
+Sitemap: https://sage-platypus-1de502.netlify.app/sitemap.xml
