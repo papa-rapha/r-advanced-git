@@ -1,5 +1,5 @@
 ---
-title: "Agenda et supports de cours"
 format: html
 ---
 
+# Agenda du cours
