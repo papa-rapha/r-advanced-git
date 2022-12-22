@@ -24,7 +24,7 @@ description-meta: "R avancé et introduction à Git"
 
 website:
   title: "R avancé et introduction à Git"
-  site-url: "https://r-advanced-git.rnedellec.com"
+  # site-url: "https://r-advanced-git.rnedellec.com"
 
   navbar:
     pinned: true
