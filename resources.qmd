@@ -4,4 +4,7 @@ format: html
 
 ## Ressources et liens externes
 
-Ceci est une ressource très intéressante
+- [R packages](https://r-pkgs.org/)
+- [R for Data Science - R4DS](https://r4ds.had.co.nz/)
+- [Advanced-R](https://adv-r.hadley.nz/index.html) 
+- [Software for Data Analysis: Programming with R (Statistics and Computing)](https://www.amazon.de/Software-Data-Analysis-Programming-Statistics/dp/0387759352) 

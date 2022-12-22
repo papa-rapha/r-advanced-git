@@ -2,4 +2,28 @@
 format: html
 ---
 
-# Agenda du cours
+## Agenda du cours
+
+- L'objectif de la première session sera de faire un rappel des notions de programmation en R et de bien configurer son environnement de développement avec Rstudio.
+- Lors de la seconde session, nous nous concentrerons sur l'écriture de fonctions, et nous introduirons les objets S3, et les classes les plus importantes. 
+- Lors de la troisième séance, nous nous intéresserons à la créations de librairies R.
+- Lors de la quatrième séance, nous ferons une introduction à git, et à la plateforme github.
+- Enfin, lors de la cinquième session, nous nous initierons à la programmation littéraire et aux outils de la science reproductible avec l'outil quarto et le package targets.
+
+## Matériel et supports de cours
+
+```{r}
+#| output: asis
+#| echo: false
+library(tibble)
+library(gt)
+tribble(
+  ~Date, ~Objectifs, ~Slides, ~Exercices,
+  "2023-01-06",   "Rappels de R, Configuration de l'IDE Rstudio", "[{{< fa book >}}](/404.qmd)", "[{{< fa file-circle-qeustion >}}](/404.qmd)",
+  "2023-01-13",   "Fonctions, Objets S3", "O", "O",
+  "2023-01-20",   "Ecrire une librairie R", "O", "O",
+  "2023-01-27",   "Introduction à git et github", "O", "O",
+  "2023-02-03",   "Programmation littéraire et science reproductible", "O", "O",
+) |> gt()
+```
+
