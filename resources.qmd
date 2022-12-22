@@ -3,3 +3,5 @@ format: html
 ---
 
 ## Ressources et liens externes
+
+Ceci est une ressource très intéressante
