@@ -2,28 +2,28 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "{{< var course.name >}}",
+    "title": "R avancé et introduction à Git",
     "section": "",
     "text": "R avancé et introduction à Git\n        \n        \n            Ecrire des fonctions, construire des packages, et maitriser les bonnes pratiques issues du développement logiciel pour rendre reproductible ses travaux. Travailler avec git et utiliser des contrôles de version.\n        \n        \n            Hiver 2023IAE NantesUniversité de Nantes\n        \n    \n    \n      \n        \n        \n        \n      \n    \n\n\n\nIntervenant\n\n   Raphaël Nedellec\n   raphael.nedellec+nantesuniv@gmail.com\n\n\n\nInformations pratiques\n\n   Tous les vendredis\n   du 6 janvier au 3 février\n   14h-17h\n   Erdre salle informatique 337/338\n\n\n\nMe contacter\nLe meilleur moyen de me contacter est par email. J’essaierai de répondre aussi vite que possible (sous 48h) - mais mon agenda peut parfois être chargé. Il peut donc être prudent de ne pas attendre la dernière minute!"
   },
   {
     "objectID": "syllabus.html",
     "href": "syllabus.html",
-    "title": "{{< var course.name >}}",
+    "title": "R avancé et introduction à Git",
     "section": "",
     "text": "Les objectifs du cours de R avancé et introduction à Git sont multiples :\n\neffectuer un rappel rapide des concepts centraux du langage R : types primitifs, vecteurs, flux de contrôles, fonctions pratiques ;\nbien configurer son environnement de développement sous l’IDE Rstudio et utiliser des projets ;\ncomprendre le concept de fonctions, de fonctions génériques et d’objets S3 ;\nconstruire un package R, notamment en utilisant les librairies devtools, usethis et testthat ;\nsensibiliser à la science reproductible, notamment à l’aide des packages quarto et targets ;\ns’initier à git, et à github pour pouvoir collaborer et utiliser des gestionnaires de version."
   },
   {
     "objectID": "syllabus.html#déroulé-des-cours",
     "href": "syllabus.html#déroulé-des-cours",
-    "title": "{{< var course.name >}}",
+    "title": "R avancé et introduction à Git",
     "section": "Déroulé des cours",
     "text": "Déroulé des cours\nToutes les séances se dérouleront en salle informatique, que ce soit pour les cours ou les parties applicatives."
   },
   {
     "objectID": "syllabus.html#evaluation",
     "href": "syllabus.html#evaluation",
-    "title": "{{< var course.name >}}",
+    "title": "R avancé et introduction à Git",
     "section": "Evaluation",
     "text": "Evaluation\nL’évaluation se décomposera en 3 parties :\n\ndeux travaux à la maison seront donnés à l’issue des séances 2 et 4, à rendre avant les séances suivantes, soit respectivement les séances 3 et 5 ;\nun devoir écrit sur feuille sera donné lors de la dernière séance.\n\nChaque devoir maison comptera pour 25% de la note finale, et le devoir écrit sur feuille pour 50%."
   }

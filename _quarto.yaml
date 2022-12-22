@@ -20,10 +20,10 @@ execute:
 
 # bibliography: files/bib/references.bib
 # csl: files/bib/chicago-author-date.csl
-description-meta: "{{< var course.name >}}"
+description-meta: "R avancé et introduction à Git"
 
 website:
-  title: "{{< var course.name >}}"
+  title: "R avancé et introduction à Git"
   site-url: "https://r-advanced-git.rnedellec.com"
 
   navbar:
