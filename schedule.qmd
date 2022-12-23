@@ -12,18 +12,15 @@ format: html
 
 ## Matériel et supports de cours
 
-```{r}
-#| output: asis
-#| echo: false
-library(tibble)
-library(gt)
-tribble(
-  ~Date, ~Objectifs, ~Slides, ~Exercices,
-  "2023-01-06",   "Rappels de R, Configuration de l'IDE Rstudio", "[{{< fa book >}}](/404.qmd)", "[{{< fa file-circle-qeustion >}}](/404.qmd)",
-  "2023-01-13",   "Fonctions, Objets S3", "O", "O",
-  "2023-01-20",   "Ecrire une librairie R", "O", "O",
-  "2023-01-27",   "Introduction à git et github", "O", "O",
-  "2023-02-03",   "Programmation littéraire et science reproductible", "O", "O",
-) |> gt()
-```
 
+
+| Date       | Objectifs                                             | Cours                                          | Exercices                                              |
+|------------|-------------------------------------------------------|:----------------------------------------------:|:-----------------------------------------------------:|
+| 6 janvier  | **Rappels de R, Configuration de l'IDE Rstudio**      | [{{< fa book >}}](/slides/01-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/01-week-exo.html) |
+| 13 janvier | **Fonctions, Objets S3**                              | [{{< fa book >}}](/slides/02-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/02-week-exo.html) |
+| 20 janvier | **Ecrire une librairie R**                            | [{{< fa book >}}](/slides/03-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/03-week-exo.html) |
+| 27 janvier | **Introduction à git et github**                      | [{{< fa book >}}](/slides/04-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/04-week-exo.html) |
+| 3 février  | **Programmation littéraire et science reproductible** | [{{< fa book >}}](/slides/05-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/05-week-exo.html) |
+
+
+: {tbl-colwidths="\[15,55,10,10\]"}
