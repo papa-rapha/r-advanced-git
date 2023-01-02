@@ -10,3 +10,6 @@
 /.vscode/
 
 /slides/
+
+/docs/
+!/docs/.gitkeep

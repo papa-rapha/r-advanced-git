@@ -7,20 +7,23 @@ format: html
 - L'objectif de la première session sera de faire un rappel des notions de programmation en R et de bien configurer son environnement de développement avec Rstudio.
 - Lors de la seconde session, nous nous concentrerons sur l'écriture de fonctions, et nous introduirons les objets S3, et les classes les plus importantes. 
 - Lors de la troisième séance, nous nous intéresserons à la créations de librairies R.
-- Lors de la quatrième séance, nous ferons une introduction à git, et à la plateforme github.
-- Enfin, lors de la cinquième session, nous nous initierons à la programmation littéraire et aux outils de la science reproductible avec l'outil quarto et le package targets.
+- Lors de la quatrième session, nous nous initierons à la programmation littéraire et aux outils de la science reproductible avec l'outil quarto et le package targets.
+- Enfin, lors de la cinquième séance, nous ferons une introduction à git, et à la plateforme github.
 
 ## Matériel et supports de cours
 
 
 
-| Date       | Objectifs                                             | Cours                                          | Exercices                                              |
-|------------|-------------------------------------------------------|:----------------------------------------------:|:-----------------------------------------------------:|
+| Date       | Objectifs                                             | Cours                                          | Exercices                                                      |
+|------------|-------------------------------------------------------|:----------------------------------------------:|:--------------------------------------------------------------:|
 | 6 janvier  | **Rappels de R, Configuration de l'IDE Rstudio**      | [{{< fa book >}}](/slides/01-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/01-week-exo.html) |
 | 13 janvier | **Fonctions, Objets S3**                              | [{{< fa book >}}](/slides/02-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/02-week-exo.html) |
+| 19 janvier | **Rendu DM n°1**                                      |                                                | [{{< fa list-check >}}](/dm/01-dm.pdf)                         |
 | 20 janvier | **Ecrire une librairie R**                            | [{{< fa book >}}](/slides/03-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/03-week-exo.html) |
 | 27 janvier | **Introduction à git et github**                      | [{{< fa book >}}](/slides/04-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/04-week-exo.html) |
+| 2 février  | **Rendu DM n°2**                                      |                                                | [{{< fa list-check >}}](/dm/02-dm.pdf)                         |
 | 3 février  | **Programmation littéraire et science reproductible** | [{{< fa book >}}](/slides/05-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/05-week-exo.html) |
+| 10 février | **Projet final**                                      |                                                | [{{< fa list-check >}}](/dm/03-projet.pdf)                     |
 
 
 : {tbl-colwidths="\[15,55,10,10\]"}
