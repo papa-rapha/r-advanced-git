@@ -16,7 +16,7 @@ format: html
 
 | Date       | Objectifs                                             | Cours                                          | Exercices                                                      |
 |------------|-------------------------------------------------------|:----------------------------------------------:|:--------------------------------------------------------------:|
-| 6 janvier  | **Rappels de R, Configuration de l'IDE Rstudio**      | [{{< fa book >}}](/slides/01-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/01-week-exo.html) |
+| 6 janvier  | **Configuration de l'IDE Rstudio, Rappels de R**      | [{{< fa book >}}](/slides/01-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/01-week-exo.html) |
 | 13 janvier | **Fonctions, Objets S3**                              | [{{< fa book >}}](/slides/02-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/02-week-exo.html) |
 | 19 janvier | **Rendu DM n°1**                                      |                                                | [{{< fa list-check >}}](/dm/01-dm.pdf)                         |
 | 20 janvier | **Ecrire une librairie R**                            | [{{< fa book >}}](/slides/03-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/03-week-exo.html) |

@@ -18,7 +18,7 @@ Toujours écrit par Hadley Wickham, ce livre est probablement la source détaill
 
 #### [Software for Data Analysis: Programming with R (Statistics and Computing)](https://www.amazon.de/Software-Data-Analysis-Programming-Statistics/dp/0387759352)
 
-Ce livre - non disponible gratuitement - écrit par le créateur du langage S (langage à l'origine de sa version open source R) [John Chambers](https://en.wikipedia.org/wiki/John_Chambers_(statistician)) est un livre très intéressant pour qui veut comprendre le langage et sa philosophie expliquée par un des auteurs originels.
+Ce livre - non disponible gratuitement - écrit par le créateur du langage S (langage à l'origine de sa version open source R)  [John Chambers](https://en.wikipedia.org/wiki/John_Chambers_(statistician)) est un livre très intéressant pour qui veut comprendre le langage et sa philosophie expliquée par un des auteurs originels.
 
 #### [Rstudio Cheatsheets](https://posit.co/resources/cheatsheets/)
 
