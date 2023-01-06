@@ -8,7 +8,7 @@ instructor:
   github: "https://www.github.com/papa-rapha/"
   contact_policy: >-
     Le meilleur moyen de me contacter est par email. J'essaierai de répondre aussi vite que possible (sous 48h) -
-     mais mon agenda peut parfois être chargé. Il peut donc être prudent de ne pas attendre la dernière minute! 
+     mais mon agenda peut parfois être chargé. Il peut donc être prudent de ne pas attendre la dernière minute.
 
 course:
   name: "R avancé et introduction à Git"
@@ -17,8 +17,8 @@ course:
   time: "14h-17h"
   location: "Erdre salle informatique 337/338"
   dates: "du 6 janvier au 3 février"
-  github: "https://www.github.com/papa-rapha/r-advanced-git.rnedellec.com"
-  url: "https://r-advanced-git.rnedellec.com"
+  github: "https://github.com/papa-rapha/r-advanced-git"
+  url: "https://rnedellec-r-advanced-git.netlify.app/"
   copyright_year: "2023"
 
 university:

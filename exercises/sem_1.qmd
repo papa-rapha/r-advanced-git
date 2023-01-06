@@ -1,0 +1,90 @@
+---
+title: "Exercices - Semaine 1"
+author: "Raphaël Nedellec"
+format: pdf
+---
+
+## Préparation
+
+1. Vérifiez que les options globales de RStudio sont conformes aux options recommandées dans le cours.
+2. Créez un projet RStudio intitulé `cours_r_semaine_1`. Ce projet sera créé vide. Les options utilisation de renv et de git peuvent être ignorées.
+3. Créez un dossier data au sein du projet. Téléchargez le .zip correspondant à la semaine 1 sur le site du cours et le décompresser dans le dossier data.
+
+## Exercice 1
+
+
+Cet exercice est tiré d'un problème d'[adventofcode](https://adventofcode.com/)
+
+1. Créez un script .R intitulé `exercice_1.R`.
+2. Lisez le fichier `exo_1_ex.txt` avec la fonction `read.table`. Le résultat sera affecté à l'objet de nom `data_ex`. Quels sont les paramètres importants à contrôler ? Recommer les colonnes `col_1`et `col_2`.
+3. Nous avons donc une data.frame à deux colonnes. Combien y a-t-il de lignes dans la data.frame `data_ex` ?
+
+
+Nous cherchons à identifier quand la plage de valeurs d'une colonne contient totalement l'autre plage de valeur. Par exemple, pour la première ligne :
+
+| 2-4       | 6-8       |
+|-----------|-----------|
+| -234----- | -----678- |
+
+il n'y a pas chevauchement. A fortiori, aucun élément n'est contenu dans l'autre.
+
+A l'inverse, pour la quatrième ligne : 
+
+| 2-8       | 3-7       |
+|-----------|-----------|
+| -2345678- | --34567-- |
+
+on observe que tous les élément compris entre 3 et 7 sont contenus dans la plage 2-8.
+
+4. Pour la colonne `col_1`, en utilisant une boucle `for`, créez une liste intitulée `list_col_1` de longueur le nombre de ligne de `data_ex` contenant dans chaque élément un vecteur contenant l'ensemble des entiers compris entre les deux valeurs. Ex: 2-4 -> `c(2, 3, 4)` 
+  - Pour extraire les éléments de part et d'autre du `-`, vous pourrez utiliser la fonction `strsplit()`
+  - Pour initialiser une liste à la bonne dimension, vous pourrez utiliser la fonction `vector()`
+
+5. Répétez l'opération pour la `col_2`. Quel type d'objet aurait-il été intéressant d'écrire lors de la question 4?
+
+6. Combien d'éléments d'une colonne sont intégralement contenus dans l'autre colonne ?
+
+7. Dans combien de lignes observe-t-on un chevauchement, soit au moins un des éléments est partagé par les deux colonnes ?
+
+8. Répliquer les mêmes calculs, mais cette fois-ci avec le fichier `exo_1.txt`. Vous devez trouver 485 lignes où les éléments d'une colonne sont contenus dans les éléments de l'autre colonne, et 857 lignes où les éléments se chevauchent.
+
+
+## Exercice 2
+
+Cet exercice s'intéresse à des données concernant l'activité du réseau social Mastodon. Depuis le rachat de Twitter, l'utilisation de ce réseau décentralisé a explosé. Ce dataset a été référencé dans la mailing list [*data is plural*](https://www.data-is-plural.com/)
+
+1. Créez un script .R intitulé `exercice_2.R`.
+2. Chargez le fichier .json intitulé `exo_2.json`. On pourra utiliser la librairie `jsonlite`.
+3. Combien de lignes et donc d'instances avons-nous dans le fichier ? Combien de champs avons nous pour chaque instance de Mastodon ? Quels sont les différents champs possibles ?
+
+Exemple, nous avons 12 champs pour la première instance.
+```{}
+[1] "name"              "title"             "short_description" "description"      
+[5] "up"                "https_score"       "https_rank"        "ipv6"             
+[9] "openRegistrations" "users"             "statuses"          "connections" 
+```
+
+  - On pourra utiliser soit une boucle `for`, soit la fonction `lapply()` pour répondre à cette question.
+
+4. En utilisant une boucle `for`, créer un vecteur `nb_users` de taille le nombre d'instances contenant le nombre d'utilisateurs par instances.
+5. Quel est le nom de l'instance ayant le plus d'utilisateurs ?
+6. Quel est le nombre d'utilisateurs de l'instance `fosstodon.org` ?
+
+
+## Exercice 3
+
+Ces données ont été téléchargées depuis le `Mapping Museums website` à l'adresse www.mappingmuseums.org, à la date du 05-01-2023. Ce dataset a été référencé dans la mailing list [*data is plural*](https://www.data-is-plural.com/). Un glossaire des données est disponible [ici](https://museweb.dcs.bbk.ac.uk/glossary). Nous faisons dans la suite l'hypothèse que tous les musées sont encore ouverts aujourd'hui sauf si la date de fermeture est explicitement mentionnée dans les données.
+
+1. Créez un script .R intitulé `exercice_3.R`.
+2. Les données ont été enregistrées dans une base de données SQLite. Ouvrez une connexion à la base de données, que l'on nommera `con`, en utilisant la fonction dbConnect() de la librarie `DBI`.
+3. Listez les tables contenues dans la base de données. Quel est le nom de l'unique table de la base de données ?
+4. Listez les colonnes de la table.
+5. Lisez la table sous forme d'une data.frame, que l'on nommera `data_3`. Fermez la connexion à la base de données.
+6. Combien de musées sont recensés à Manchester ? Combien semblent toujours ouverts aujourd'hui ? 
+
+Nous souhaitons tracer la répartition des musées sur l'ensemble du territoire du Royaume-Uni. Pour ce faire, nous allons utiliser la librairie `esquisse` pour nous assister dans la réalisation du graphique en `ggplot2`.
+
+7. Installez la librairie `esquisse`.
+8. Utilisez l'addin RStudio 'ggplot2 builder'. L'objectif est de tracer les musées selon leurs coordonnées géographiques. La couleur du point traduira si le musée est toujours ouvert aujourd'hui, et la forme du point traduira le type de gouvernance du musée. Exportez le code depuis l'addin.
+9. Modifiez le code généré pour tracer en fond les contours du Royaume-uni.
+10. Question bonus : quel est le musée le plus improbable ?

@@ -4,5 +4,5 @@ sidebar: false
 toc: false
 ---
 
-Cette page n'existe pas !
+Cette page n'existe pas encore ou sera bientôt disponible.
 

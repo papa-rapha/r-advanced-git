@@ -2,17 +2,21 @@ project:
   type: website
   output-dir: docs
   render:
-    - "*.qmd"
-    - "!slides/"
+    - "404.qmd"
+    - "index.qmd"
+    - "resources.qmd"
+    - "schedule.qmd"
+    - "syllabus.qmd"
+    - "exercises/sem_1.qmd"
   resources:
-    - "files/"
-    - "projects/"
-    - "slides/*.html"
-    - "slides/*.pdf"
-    - "slides/img/"
-    - "slides/libs/"
-    - "slides/css/"
-    - "slides/*_files/"
+    - "slides/cours_1.html"
+    - "slides/cours_1_files/"
+    - "slides/images/"
+    - "material/semaine_1.zip"
+  #   - "slides/img/"
+  #   - "slides/libs/"
+  #   - "slides/css/"
+  #   - "slides/*_files/"
 
 # See https://quarto.org/docs/projects/code-execution.html#freeze
 execute:

@@ -4,12 +4,13 @@
 .Ruserdata
 
 /.quarto/
+/_freeze/
 
 /.luarc.json
 
 /.vscode/
 
-/slides/
+slides/lessons
 
 /docs/
 !/docs/.gitkeep

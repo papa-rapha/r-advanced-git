@@ -14,16 +14,16 @@ format: html
 
 
 
-| Date       | Objectifs                                             | Cours                                          | Exercices                                                      |
-|------------|-------------------------------------------------------|:----------------------------------------------:|:--------------------------------------------------------------:|
-| 6 janvier  | **Configuration de l'IDE Rstudio, Rappels de R**      | [{{< fa book >}}](/slides/01-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/01-week-exo.html) |
-| 13 janvier | **Fonctions, Objets S3**                              | [{{< fa book >}}](/slides/02-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/02-week-exo.html) |
-| 19 janvier | **Rendu DM n°1**                                      |                                                | [{{< fa list-check >}}](/dm/01-dm.pdf)                         |
-| 20 janvier | **Ecrire une librairie R**                            | [{{< fa book >}}](/slides/03-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/03-week-exo.html) |
-| 27 janvier | **Introduction à git et github**                      | [{{< fa book >}}](/slides/04-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/04-week-exo.html) |
-| 2 février  | **Rendu DM n°2**                                      |                                                | [{{< fa list-check >}}](/dm/02-dm.pdf)                         |
-| 3 février  | **Programmation littéraire et science reproductible** | [{{< fa book >}}](/slides/05-week-lesson.html) | [{{< fa file-circle-question >}}](/exercises/05-week-exo.html) |
-| 10 février | **Projet final**                                      |                                                | [{{< fa list-check >}}](/dm/03-projet.pdf)                     |
+| Date       | Objectifs                                             | Cours                                   | Exercices                                                   | Input                                     |
+|------------|-------------------------------------------------------|:---------------------------------------:|:-----------------------------------------------------------:|:-----------------------------------------:|
+| 6 janvier  | **Configuration de l'IDE Rstudio, Rappels de R**      | [{{< fa book >}}](/slides/cours_1.html) | [{{< fa file-circle-question >}}](/exercises/sem_1.pdf) | [{{< fa box >}}](/material/semaine_1.zip) |
+| 13 janvier | **Fonctions, Objets S3**                              | [{{< fa book >}}](/slides/cours_2.html) | [{{< fa file-circle-question >}}](/exercises/semaine_2.pdf) | [{{< fa box >}}](/material/semaine_2.zip) |
+| 19 janvier | **Rendu DM n°1**                                      |                                         | [{{< fa list-check >}}](/dm/01-dm.pdf)                      |                                           |
+| 20 janvier | **Ecrire une librairie R**                            | [{{< fa book >}}](/slides/cours_3.html) | [{{< fa file-circle-question >}}](/exercises/semaine_3.pdf) | [{{< fa box >}}](/material/semaine_3.zip) |
+| 27 janvier | **Introduction à git et github**                      | [{{< fa book >}}](/slides/cours_4.html) | [{{< fa file-circle-question >}}](/exercises/semaine_4.pdf) | [{{< fa box >}}](/material/semaine_4.zip) |
+| 2 février  | **Rendu DM n°2**                                      |                                         | [{{< fa list-check >}}](/dm/02-dm.pdf)                      |                                           |
+| 3 février  | **Programmation littéraire et science reproductible** | [{{< fa book >}}](/slides/cours_5.html) | [{{< fa file-circle-question >}}](/exercises/semaine_5.pdf) | [{{< fa box >}}](/material/semaine_5.zip) |
+| 10 février | **Projet final**                                      |                                         | [{{< fa list-check >}}](/dm/03-projet.pdf)                  |                                           |
 
 
-: {tbl-colwidths="\[15,55,10,10\]"}
+: {tbl-colwidths="\[15,55,10,10,15\]"}
