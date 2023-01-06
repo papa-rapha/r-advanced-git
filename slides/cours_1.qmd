@@ -42,22 +42,29 @@ En R, tout est objet.
 
 Un objet est l'association d'un nom et d'une valeur. Techniquement, on associe une valeur à un nom.
 
+. . .
+
 ```{r}
 nom <- "valeur"
 ```
 
+. . .
+
 Plusieurs opérateurs pour affecter une valeur :
+
+. . .
 
 ```{r}
 nom = "valeur"
 "valeur" -> nom
 ```
 
+. . .
+
 Contrainte sur les noms : ils ne peuvent commencer par un `_` ou un chiffre.
 
 ## Types primitifs
 
-. . .
 
 Il existe 6 types primitifs en R
 
@@ -91,12 +98,16 @@ TRUE <- FALSE # error
 
 Fonctions de coercition de type (*type coercion*) : **as.\***
 
+. . .
+
 ```{r}
 #| eval: true
 as.numeric("1.2")
 as.character(2.3)
 as.integer(TRUE)
 ```
+
+. . .
 
 Fonctions d'assertion de type : **is.\***
 
@@ -117,6 +128,8 @@ Facteur (*`factor`*) :
 factor(c("a", "b", "b", "c"), levels = c("a", "b", "c", "d"))
 ```
 
+. . .
+
 Facteur ordonné (*`ordered`*) :
 
 ```{r}
@@ -124,6 +137,8 @@ Facteur ordonné (*`ordered`*) :
 
 factor(c("a", "b", "b", "c"), levels = c("a", "b", "c", "d"), ordered = TRUE)
 ```
+
+. . .
 
 Mais aussi `Date`, `POSIXct`, `POSIXlt`, `data.frame`, `matrix`, `array` ...
 
@@ -248,6 +263,8 @@ Pour des listes :
 
 ![](images/list_1.png){fig-align="center"}
 
+. . .
+
 ![](images/list_2.png){fig-align="center"}
 
 ::: aside
@@ -257,6 +274,8 @@ Illustration by Hadley Wickham in [Advanced R](https://adv-r.hadley.nz/subsettin
 ## Subsetting
 
 ![](images/list_1.png){fig-align="center"}
+
+. . .
 
 ![](images/list_3.png){fig-align="center"}
 

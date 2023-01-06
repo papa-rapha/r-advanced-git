@@ -433,21 +433,27 @@
 <h2>Objets</h2>
 <p>En R, tout est objet.</p>
 <p>Un objet est l’association d’un nom et d’une valeur. Techniquement, on associe une valeur à un nom.</p>
+<div class="fragment">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>nom <span class="ot">&lt;-</span> <span class="st">"valeur"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
+<div class="fragment">
 <p>Plusieurs opérateurs pour affecter une valeur :</p>
+</div>
+<div class="fragment">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>nom <span class="ot">=</span> <span class="st">"valeur"</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="st">"valeur"</span> <span class="ot">-&gt;</span> nom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
+<div class="fragment">
 <p>Contrainte sur les noms : ils ne peuvent commencer par un <code>_</code> ou un chiffre.</p>
+</div>
 </section>
 <section id="types-primitifs" class="slide level2">
 <h2>Types primitifs</h2>
-<div class="fragment">
 <p>Il existe 6 types primitifs en R</p>
-</div>
 <div class="fragment">
 <p><code>character</code>, <code>integer</code>, <code>numeric</code>, <code>logical</code>,</p>
 <div class="cell">
@@ -483,6 +489,7 @@
 <section id="types-primitifs-1" class="slide level2">
 <h2>Types primitifs</h2>
 <p>Fonctions de coercition de type (<em>type coercion</em>) : <strong>as.*</strong></p>
+<div class="fragment">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">as.numeric</span>(<span class="st">"1.2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -497,6 +504,8 @@
 <pre><code>#&gt; [1] 1</code></pre>
 </div>
 </div>
+</div>
+<div class="fragment">
 <p>Fonctions d’assertion de type : <strong>is.*</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">is.numeric</span>(<span class="fl">1.23</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -512,6 +521,7 @@
 <pre><code>#&gt; [1] FALSE</code></pre>
 </div>
 </div>
+</div>
 </section>
 <section id="autres-objets-importants" class="slide level2">
 <h2>Autres objets importants</h2>
@@ -523,6 +533,7 @@
 #&gt; Levels: a b c d</code></pre>
 </div>
 </div>
+<div class="fragment">
 <p>Facteur ordonné (<em><code>ordered</code></em>) :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -531,7 +542,10 @@
 #&gt; Levels: a &lt; b &lt; c &lt; d</code></pre>
 </div>
 </div>
+</div>
+<div class="fragment">
 <p>Mais aussi <code>Date</code>, <code>POSIXct</code>, <code>POSIXlt</code>, <code>data.frame</code>, <code>matrix</code>, <code>array</code> …</p>
+</div>
 </section>
 <section id="vecteurs" class="slide level2">
 <h2>Vecteurs</h2>
@@ -668,12 +682,14 @@
 <p><img data-src="images/list_1.png"></p>
 </figure>
 </div>
+<div class="fragment">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="images/list_2.png"></p>
 </figure>
 </div>
 
+</div>
 <aside><div>
 <p>Illustration by Hadley Wickham in <a href="https://adv-r.hadley.nz/subsetting.html#section">Advanced R</a></p>
 </div></aside></section>
@@ -684,12 +700,14 @@
 <p><img data-src="images/list_1.png"></p>
 </figure>
 </div>
+<div class="fragment">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="images/list_3.png"></p>
 </figure>
 </div>
 
+</div>
 <aside><div>
 <p>Illustration by Hadley Wickham in <a href="https://adv-r.hadley.nz/subsetting.html#section">Advanced R</a></p>
 </div></aside></section>
