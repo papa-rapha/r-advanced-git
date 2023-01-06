@@ -85,6 +85,7 @@ Ces données ont été téléchargées depuis le `Mapping Museums website` à l'
 Nous souhaitons tracer la répartition des musées sur l'ensemble du territoire du Royaume-Uni. Pour ce faire, nous allons utiliser la librairie `esquisse` pour nous assister dans la réalisation du graphique en `ggplot2`.
 
 7. Installez la librairie `esquisse`.
-8. Utilisez l'addin RStudio 'ggplot2 builder'. L'objectif est de tracer les musées selon leurs coordonnées géographiques. La couleur du point traduira si le musée est toujours ouvert aujourd'hui, et la forme du point traduira le type de gouvernance du musée. Exportez le code depuis l'addin.
-9. Modifiez le code généré pour tracer en fond les contours du Royaume-uni.
+8. Combien de modalités a l'attribut `governance`de la table ? Nous souhaitons réduire cette variable a trois modalités : `government`, `independant`, `other`. Convertissez cette colonne en facteur.
+9. Utilisez l'addin RStudio 'ggplot2 builder'. L'objectif est de tracer les musées selon leurs coordonnées géographiques. La couleur du point traduira si le musée est toujours ouvert aujourd'hui, et la taille du point traduira le type de gouvernance du musée. Exportez le code depuis l'addin.
+9. Modifiez le code généré pour tracer en fond les contours du Royaume-uni. Vous pourrez chercher de l'aide, notamment dans le livre sur [ggplot2](https://ggplot2-book.org/maps.html).
 10. Question bonus : quel est le musée le plus improbable ?
