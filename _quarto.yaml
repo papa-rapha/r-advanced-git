@@ -11,6 +11,8 @@ project:
   resources:
     - "slides/cours_1.html"
     - "slides/cours_1_files/"
+    - "slides/cours_2.html"
+    - "slides/cours_2_files/"
     - "slides/images/"
     - "material/semaine_1.zip"
   #   - "slides/img/"
