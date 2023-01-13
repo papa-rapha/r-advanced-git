@@ -8,7 +8,7 @@ project:
     - "schedule.qmd"
     - "syllabus.qmd"
     - "exercises/sem_1.qmd"
-    # - "exercises/sem_2.qmd"
+    # - "exercises/sem_2.qmd" don't know what happen there :oo:
     - "dm/01-dm.qmd"
   resources:
     - "slides/cours_1.html"
@@ -17,6 +17,7 @@ project:
     - "slides/cours_2_files/"
     - "slides/images/"
     - "material/semaine_1.zip"
+    - "material/semaine_2.zip"
   #   - "slides/img/"
   #   - "slides/libs/"
   #   - "slides/css/"
