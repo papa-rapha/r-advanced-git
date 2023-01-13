@@ -38,8 +38,7 @@ Dans la suite de l'exercice, nous chercherons à implémenter notre propre algor
 
 En sortie de la fonction, on retournera une liste contenant les informations suivantes : 
 
-```{r}
-#| eval: false
+```{}
 list(
   coef = ..., # vecteur nommés des coefficients
   residuals = ..., # résidus (Y - beta*X),
@@ -83,8 +82,7 @@ Utilisez la fonction `mapply` pour le faire.
 4. Lisez le fichier `exo_3_full.txt`. Combien d'arbres sont visibles depuis l'extérieur de la forêt dans le jeu de données complet ? 
 5. On cherche désormais à identifier l'arbre de la forêt qui a la meilleure vue ! Il faut tout d'abord compter le nombre d'arbres visibles dans chaque direction pour tous les arbres de la forêt. Dans cet exemple :
 
-```{r}
-#| eval: false
+```{}
 30373
 25512
 65332
