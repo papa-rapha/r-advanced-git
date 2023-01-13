@@ -69,9 +69,9 @@ Dans cette exercice, nous allons travailler avec les fonctionnelles : des foncti
 9. On s'intéresse désormais à nouveau au dataset originel `data_exo_2`. On souhaite calculer l'indicateur précis suivant : 
 - si `mainroad == TRUE` et `prefarea == TRUE`, alors `indicateur <- price/area + 1000`
 - sinon, `indicateur <- price/area - 5000 + bedrooms*100`
-
 Utilisez la fonction `mapply` pour le faire.
-10. Répondez à l'intégralité des questions à nouveaux en utilisant les fonctions `map_\*` et `pmap_\*` adaptées de la librairie `purrr`. Quels sont les différences entre les fonctions de `purrr` et les fonctions de base ? Quels sont les avantages de `purrr` ?
+
+10. Répondez à l'intégralité des questions à nouveaux en utilisant les fonctions `map_*` et `pmap_*` adaptées de la librairie `purrr`. Quels sont les différences entre les fonctions de `purrr` et les fonctions de base ? Quels sont les avantages de `purrr` ?
 
 
 ## Exercice 3 : Advent of code : algorithmes et fonctions.
