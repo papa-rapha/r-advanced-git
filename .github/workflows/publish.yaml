@@ -4,6 +4,9 @@ on:
 
 name: Quarto Publish
 
+env:
+  RENV_CONFIG_REPOS_OVERRIDE: "https://cloud.r-project.org"
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
