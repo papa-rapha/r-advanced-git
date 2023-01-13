@@ -18,7 +18,7 @@ Un modèle de régression linéaire multiple s'écrie sous la forme $Y = \beta_0
 
 1. Lire le fichier `exo_1_2.csv`. Décrire le fichier de données.
 2. Construire un ensemble d'apprentissage `data_train` contenant les 500 premières lignes du dataset. `data_test` sera le jeu de validation et comprendra les lignes restantes.
-3. On cherche à expliquer le prix des biens immobiliers en fonction des autres variables explicatives du dataset. Utiliser la fonction `lm` pour entrainer un modèle de régression linéaire sur le jeu de données d'apprentissage en régressant le prix sur le reste des variables explicatives. Décrivez l'objet de modèle obtenu. Quels sont les paramètres obtenus ? Quelle est la nature de l'objet obtenu ? Comment sont incluses les variables `mainroad`, `basement`, `hotwaterheating`, `airconditioning`, `prefarea` et `furnishingstatus`dans le modèle ?
+3. On cherche à expliquer le prix des biens immobiliers en fonction des autres variables explicatives du dataset. Utiliser la fonction `lm` pour entrainer un modèle de régression linéaire sur le jeu de données d'apprentissage en régressant le prix sur le reste des variables explicatives. Décrivez l'objet de modèle obtenu. Quels sont les paramètres obtenus ? Quelle est la nature de l'objet obtenu ? Comment sont incluses les variables `mainroad`, `basement`, `hotwaterheating`, `airconditioning`, `prefarea` et `furnishingstatus` dans le modèle ?
 
 Dans la suite de l'exercice, nous chercherons à implémenter notre propre algorithme de régression linéaire.
 
