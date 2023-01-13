@@ -33,7 +33,8 @@ description-meta: "R avancé et introduction à Git"
 
 website:
   title: "R avancé et introduction à Git"
-  # site-url: "https://r-advanced-git.rnedellec.com"
+  site-url: "https://rnedellec-r-advanced-git.netlify.app/"
+  favicon: "html/RN.png"
 
   navbar:
     pinned: true
