@@ -12,6 +12,6 @@ Créez un projet RStudio intitulé `dm-01`.
 Résoudre l'ensemble des exercices proposés lors des cours 1 et 2.
 Assurez-vous que l'ensemble des données nécessaires à la résolution des exercices sont contenues dans le projet, et que les fichiers sont chargés en utilisant des chemins relatifs.
 
-Les exercices pourront être résolus dans des scripts R commentés, ou en utilisant des Notebooks `rmarkdown` ou `quarto`. Pensez à commenter votre code et à expliquer vos réponses. L'ensemble des scripts doivent pouvoir être exécutés par mes soins sans changements ou manipulation de code. Assurez-vous de la reproductibilité des résultats !
+Les exercices pourront être résolus dans des scripts R commentés, ou en utilisant des Notebooks rmarkdown ou quarto. Pensez à commenter votre code et à expliquer vos réponses. L'ensemble des scripts doivent pouvoir être exécutés par mes soins sans changements ou manipulation de code. Assurez-vous de la reproductibilité des résultats !
 
 Votre projet devra être envoyé zippé par mail avant le vendredi 20 janvier.
