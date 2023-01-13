@@ -12,7 +12,7 @@ format: pdf
 
 ## Exercice 1 : Régression linéaire - classe S3 et fonctions génériques
 
-Le but de cet exercice est de manipuler des fonctions et de réimplémenter manuellement quelques fonctions de R utiles pour faire de la modélisation statistique.
+Le but de cet exercice est de manipuler des fonctions et d'implémenter manuellement quelques fonctions de R utiles pour faire de la modélisation statistique.
 
 Un modèle de régression linéaire multiple s'écrie sous la forme $Y = \beta_0 + \beta_1X_1 + ... \beta_nX_n + \epsilon$, où les $\epsilon$ sont indépendants, d'espérance nulle et de variance constante $\sigma^2$.
 
