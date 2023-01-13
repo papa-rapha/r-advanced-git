@@ -8,7 +8,7 @@ project:
     - "schedule.qmd"
     - "syllabus.qmd"
     - "exercises/sem_1.qmd"
-    - "exercises/sem_2.qmd"
+    # - "exercises/sem_2.qmd"
     - "dm/01-dm.qmd"
   resources:
     - "slides/cours_1.html"
