@@ -54,7 +54,7 @@ on observe que tous les élément compris entre 3 et 7 sont contenus dans la pla
 Cet exercice s'intéresse à des données concernant l'activité du réseau social Mastodon. Depuis le rachat de Twitter, l'utilisation de ce réseau décentralisé a explosé. Ce dataset a été référencé dans la mailing list [*data is plural*](https://www.data-is-plural.com/)
 
 1. Créez un script .R intitulé `exercice_2.R`.
-2. Chargez le fichier .json intitulé `exo_2.json`. On pourra utiliser la librairie `jsonlite`.
+2. Chargez le fichier .json intitulé `exo_2.json`. On pourra utiliser la librairie `jsonlite` et la fonction `read_json` sans modifier ses paramètres par défaut.
 3. Combien de lignes et donc d'instances avons-nous dans le fichier ? Combien de champs avons nous pour chaque instance de Mastodon ? Quels sont les différents champs possibles ?
 
 Exemple, nous avons 12 champs pour la première instance.

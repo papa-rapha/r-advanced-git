@@ -1,6 +1,6 @@
 ---
 title: "{{< var course.name >}}"
-subtitle: "Ecrire des fonctions, construire des packages, et maitriser les bonnes pratiques issues du développement logiciel pour rendre reproductible ses travaux. Travailler avec git et utiliser des contrôles de version."
+subtitle: "Ecrire des fonctions, construire des packages, et maîtriser les bonnes pratiques issues du développement logiciel pour rendre reproductible ses travaux. Travailler avec Git et utiliser du contrôle de version."
 details: |
   Hiver 2023<br>IAE Nantes<br>Université de Nantes
 sidebar: false
