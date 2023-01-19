@@ -635,20 +635,15 @@ test_that("my_function multiply works", {
 })
 ```
 
-## Quelques assertions {.smaller}
+## Quelques assertions 
 
 - `expect_equal()` `expect_identical()` 
-- `expect_type()` `expect_s3_class()` `expect_s4_class()`
+- `expect_type()` `expect_s3_class()` 
 - `expect_length()`
-- `expect_lt()` `expect_lte()` `expect_gt()` `expect_gte()`
-- `expect_named()`
-- `expect_setequal()` `expect_mapequal()`
 - `expect_true()` `expect_false()`
-- `expect_vector()`
 - `expect_error()` `expect_warning()` `expect_message()` `expect_condition()`
-- `expect_no_error()` `expect_no_warning()` `expect_no_message()` `expect_no_condition()`
-- `expect_invisible()` `expect_visible()`
-- `expect_output()` `expect_silent()`
+
+Liste exhaustive [ici](https://testthat.r-lib.org/reference/index.html)
 
 # En résumé : processus de développement
 
