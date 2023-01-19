@@ -13,21 +13,18 @@ L'objectif de cet exercice sera de créer un package nous permettant d'accéder 
 1. Installez le package 'devtools'
 2. Dans une nouvelle session R, créer un nouveau projet de package intitulé `infotan` en utilisant la fonction `create_package` de la librairie `usethis`. Pourquoi n'est-il pas nécessaire d'installer explicitement `usethis` ?
 3. Tout d'abord, nous pouvons récupérer la liste de tous les arrêts TAN à l'adresse suivante <https://open.tan.fr/ewp/arrets.json>.
-
-3.1. Initialisez un script de récupération de données avec `usethis::use_data_raw()`. Nous appellerons ce dataset `arrets_tan`.
-3.2. Modifiez le script `data-raw/arrets_tan.R` de manière à charger le fichier <https://open.tan.fr/ewp/arrets.json>. Ce fichier est hébergé en ligne mais il est possible de le lire comme n'importe quel fichier en utilisant la fonction `fromJSON` de la librairie `jsonlite`. 
-3.2. Conservez uniquement les colonnes `codeLieu`, `libelle`, `ligne`. Quelle est la nature de la colonne `ligne` ?
-3.3. Toujours dans le script `data-raw/arrets_tan.R`, transformez l'objet ci-dessus de manière à obtenir une ligne par `libelle`*`ligne`. Par exemple, la table finale comprendra deux lignes pour l'arrêt Abel Durand comme les lignes C20 et LO y passent. Si aucune ligne ne passe, l'arrêt doit être conservé et une valeur manquante de type `NA_character_` doit être utilisée. NB : la table doit avoir 2831 lignes au final.
-3.4. Exécutez le script. Quel nouveau dossier a été créé à la racine ?
-3.5. Documentez la table comme décrit [ici](https://r-pkgs.org/data.html#sec-documenting-data)
-3.6. Exécutez `devtools::load_all()`. Que se passe-t-il quand vous tapez `?arrets_tan` ?
-
-4.1. Écrire une fonction `is_station` qui prend en entrée un code lettre et qui retourne un valeur logique `TRUE` si l'arrêt existe, et `FALSE` sinon. Vous pourrez utiliser `usethis::use_r` pour initialiser le fichier.
-4.2. Testez la fonction (au moins un cas négatif et un cas positif). Utilisez `usethis::use_test` pour initialiser le fichier de tests.
-4.3. Documentez. Cette fonction devra être exportée. 
-
+    3.1. Initialisez un script de récupération de données avec `usethis::use_data_raw()`. Nous appellerons ce dataset `arrets_tan`.
+    3.2. Modifiez le script `data-raw/arrets_tan.R` de manière à charger le fichier <https://open.tan.fr/ewp/arrets.json>. Ce fichier est hébergé en ligne mais il est possible de le lire comme n'importe quel fichier en utilisant la fonction `fromJSON` de la librairie `jsonlite`. 
+    3.2. Conservez uniquement les colonnes `codeLieu`, `libelle`, `ligne`. Quelle est la nature de la colonne `ligne` ?
+    3.3. Toujours dans le script `data-raw/arrets_tan.R`, transformez l'objet ci-dessus de manière à obtenir une ligne par `libelle`*`ligne`. Par exemple, la table finale comprendra deux lignes pour l'arrêt Abel Durand comme les lignes C20 et LO y passent. Si aucune ligne ne passe, l'arrêt doit être conservé et une valeur manquante de type `NA_character_` doit être utilisée. NB : la table doit avoir 2831 lignes au final.
+    3.4. Exécutez le script. Quel nouveau dossier a été créé à la racine ?
+    3.5. Documentez la table comme décrit [ici](https://r-pkgs.org/data.html#sec-documenting-data)
+    3.6. Exécutez `devtools::load_all()`. Que se passe-t-il quand vous tapez `?arrets_tan` ?
+4. Première fonction
+    4.1. Écrire une fonction `is_station` qui prend en entrée un code lettre et qui retourne un valeur logique `TRUE` si l'arrêt existe, et `FALSE` sinon. Vous pourrez utiliser `usethis::use_r` pour initialiser le fichier.
+    4.2. Testez la fonction (au moins un cas négatif et un cas positif). Utilisez `usethis::use_test` pour initialiser le fichier de tests.
+    4.3. Documentez. Cette fonction devra être exportée. 
 5. Écrivez une fonction `find_closest_name` qui prendra en entrée deux paramètres : un string `input` et une liste de strings `list_station`. La fonction devra retourner les lignes de la data.frame correspondant aux stations dont le libellé est le plus proche au sens de la distance de Levenshtein. Pour se faire, on pourra utiliser la fonction `stringdist` de la librairie `stringdist`. Ecrivez au moins 5 tests unitaires. Documentez la dépendance à la librairie `stringdist` dans la documentation `roxygen2` de la fonction, et éditez les dépendances dans le fichier DESCRIPTION. Rechargez la librairie. Que se passe-t-il quand vous tapez `?find_closest_name()` ?
-
 6. Nous souhaitons désormais écrire une fonction `get_waiting_time` pour obtenir les temps d'attente pour les prochains passages à un arrêt donné. Cette information est accessible à l'endpoint suivant : "https://open.tan.fr/ewp/tempsattente.json/{codeArret}" où `codeArret` correspond au `codeLieu` (il faut remplacer les accolades et leur contenu par le codeLieu de l'arrêt). Écrire une fonction qui prend en entrée le `codeLieu` et qui retourne en sortie les temps d'attente sous forme d'une data.frame contenant 3 colonnes : `numLigne`, `terminus`, `temps`, contenant une ligne pour chaque ligne et chaque direction. Pour construire l'url, nous pourrons utiliser la fonction de base `paste0` ou `sprintf`. Pour lire le fichier, nous pourrons utiliser la fonction `fromJSON` de la librairie `jsonlite` en gérant proprement la dépendance. Testez la fonction, documentez.
 7. Créez une fonction `get_next_transport` qui prendra pour input un string. La fonction trouvera la (les) stations ayant le nom le plus proche avec le string donné en input (en utilisant la fonction `find_closest_name`) et retournera les prochains passages de toutes les lignes passant dans les stations potentielles identifiées. Testez en mettant à jour les tests.
 8. Documentez, installez la librairie avec la fonction `devtools::install()`.
