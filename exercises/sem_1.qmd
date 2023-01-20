@@ -76,7 +76,7 @@ Exemple, nous avons 12 champs pour la première instance.
 Ces données ont été téléchargées depuis le `Mapping Museums website` à l'adresse www.mappingmuseums.org, à la date du 05-01-2023. Ce dataset a été référencé dans la mailing list [*data is plural*](https://www.data-is-plural.com/). Un glossaire des données est disponible [ici](https://museweb.dcs.bbk.ac.uk/glossary). Nous faisons dans la suite l'hypothèse que tous les musées sont encore ouverts aujourd'hui sauf si la date de fermeture est explicitement mentionnée dans les données.
 
 1. Créez un script .R intitulé `exercice_3.R`.
-2. Les données ont été enregistrées dans une base de données SQLite. Ouvrez une connexion à la base de données, que l'on nommera `con`, en utilisant la fonction dbConnect() de la librarie `DBI`.
+2. Les données ont été enregistrées dans une base de données SQLite. Ouvrez une connexion à la base de données, que l'on nommera `con`, en utilisant la fonction `dbConnect()` de la librarie `DBI`.
 3. Listez les tables contenues dans la base de données. Quel est le nom de l'unique table de la base de données ?
 4. Listez les colonnes de la table.
 5. Lisez la table sous forme d'une data.frame, que l'on nommera `data_3`. Fermez la connexion à la base de données.
@@ -85,7 +85,7 @@ Ces données ont été téléchargées depuis le `Mapping Museums website` à l'
 Nous souhaitons tracer la répartition des musées sur l'ensemble du territoire du Royaume-Uni. Pour ce faire, nous allons utiliser la librairie `esquisse` pour nous assister dans la réalisation du graphique en `ggplot2`.
 
 7. Installez la librairie `esquisse`.
-8. Combien de modalités a l'attribut `governance`de la table ? Nous souhaitons réduire cette variable a trois modalités : `government`, `independant`, `other`. Convertissez cette colonne en facteur.
+8. Combien de modalités a l'attribut `governance` de la table ? Nous souhaitons réduire cette variable a trois modalités : `government`, `independant`, `other`. Convertissez cette colonne en facteur.
 9. Utilisez l'addin RStudio 'ggplot2 builder'. L'objectif est de tracer les musées selon leurs coordonnées géographiques. La couleur du point traduira si le musée est toujours ouvert aujourd'hui, et la taille du point traduira le type de gouvernance du musée. Exportez le code depuis l'addin.
 9. Modifiez le code généré pour tracer en fond les contours du Royaume-uni. Vous pourrez chercher de l'aide, notamment dans le livre sur [ggplot2](https://ggplot2-book.org/maps.html).
 10. Question bonus : quel est le musée le plus improbable ?

@@ -28,7 +28,7 @@ Dans la suite de l'exercice, nous chercherons à implémenter notre propre algor
 
 5. Usuellement, les modèles de régression linéaires incluent une constante. Concrètement, cela se traduit par l'introduction d'une colonne constante de 1 dans la matrice de design. Construire une fonction `add_constant` qui ajoute à la matrice de variables explicatives une colonne constante.
 6. Pour des raisons d'identifiabilité, il faut traiter avec attention les variables catégorielles. Il faut définir des contrastes. Une variable catégorielle à n modalités va être transformées en n-1 variables. Définir une fonction `mat_factor` qui prend en entrée un vecteur de type facteur à n modalités et renvoie en sortie un matrice de n-1 colonnes. Par exemple, le vecteur : `as.factor(c("a", "b", "b", "c"))` sera transformée en la matrice `matrix(c(0, 1, 1, 0, 0, 0, 0, 1), ncol = 2L, dimnames = list(NULL, c("b", "c")))`.
-4. Pour que le problème ait une solution, il faut que la matrice X soit inversible. Implémenter la fonction  `my_lm` prenant en entrée un vecteur y (variable cible) et une data.frame X (matrice des variables explicatives).
+7. Pour que le problème ait une solution, il faut que la matrice X soit inversible. Implémenter la fonction  `my_lm` prenant en entrée un vecteur y (variable cible) et une data.frame X (matrice des variables explicatives).
 
 - il faudra tester que la taille de y a la même taille que le nombre de lignes de X ou lancer une erreur ;
 - transformer la data.frame X en matrice de design; chaque variable catégorielle doit être transformée en utilisant la fonction `mat_factor` ;
@@ -47,11 +47,11 @@ list(
 )
 ```
 
-5. Modifier la fonction `my_lm` pour que l'objet retourné soit de classe `"my_lm"`.
-6. Implémenter la fonction générique `predict.my_lm` qui prendra deux arguments `object` héritant de la classe `my_lm` et un argument `newdata` de type data.frame. Cette fonction renvoie en sortie un vecteur $\hat{y}$ de prévision correspondant au produit $\beta X^{new}$.
-7. Implémenter la fonction `print.my_lm` générique de telle sorte que les coefficients obtenus pour les différentes variables, ainsi que la comparaison entre les 10 premières valeurs de Y et les 10 premières `fitted.values` soient affichées de manière claire dans la console. 
-8. Comparez les résultats obtenus en 3. avec les résultats obtenus avec votre fonction `my_lm`. Sont-ils identiques ? Les coefficients estimés sont ils les mêmes ? Obtenez-vous les mêmes prédictions sur le jeu de test `data_test` ? 
-9. Utilisez la fonction `microbenchmark` de la librairie `microbenchmark` pour mesurer le temps d'exécution de votre fonction et celui de la fonction lm. Commentez et analysez les différences.
+8. Modifier la fonction `my_lm` pour que l'objet retourné soit de classe `"my_lm"`.
+9. Implémenter la fonction générique `predict.my_lm` qui prendra deux arguments `object` héritant de la classe `my_lm` et un argument `newdata` de type data.frame. Cette fonction renvoie en sortie un vecteur $\hat{y}$ de prévision correspondant au produit $\beta X^{new}$.
+10. Implémenter la fonction `print.my_lm` générique de telle sorte que les coefficients obtenus pour les différentes variables, ainsi que la comparaison entre les 10 premières valeurs de Y et les 10 premières `fitted.values` soient affichées de manière claire dans la console. 
+11. Comparez les résultats obtenus en 3. avec les résultats obtenus avec votre fonction `my_lm`. Sont-ils identiques ? Les coefficients estimés sont ils les mêmes ? Obtenez-vous les mêmes prédictions sur le jeu de test `data_test` ? 
+12. Utilisez la fonction `microbenchmark` de la librairie `microbenchmark` pour mesurer le temps d'exécution de votre fonction et celui de la fonction lm. Commentez et analysez les différences.
 
 ## Exercice 2 : Fonctionnelles
 
