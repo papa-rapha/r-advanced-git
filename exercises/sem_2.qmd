@@ -59,19 +59,20 @@ Dans cette exercice, nous allons travailler avec les fonctionnelles : des foncti
 
 1. Lire le fichier `exo_1_2.csv` et l'affecter à la variable `data_exo_2`.
 2. On souhaite tout d'abord calculer quelques statistiques pour les biens conditionnellement au nombre de salles de bains. Utiliser la fonction `split` pour séparer le dataset complet en autant de datasets que de modalités de la variable `bathrooms`. Que fait la fonction `split` ? On affectera le résultat à la variable `data_split`. Décrire. 
-2. En utilisant la fonction `lapply`, calculez le prix minimal, médian, moyen, et maximal des biens par nombre de salles de bain. Comparez les résultats en utilisant `simplify = TRUE` puis `simplify = FALSE` comme argument de la fonction `lapply`. 
-3. Utiliser `sapply`, en lieu et place de `lapply`. Expliquez la différence.
-4. Nous savons que pour chaque catégorie de biens, nous calculons en sortie un vecteur de 4 valeurs numériques (prix minimal, médian, moyen, et maximal). Utilisez la fonction `vapply` en lieu et place de `sapply`. Quel avantage y a-t-il à utiliser `vapply` ?
-5. Executez la commande suivante : `data_split[[4L]] <- data_split[[4L]][, -1]`. Que fait cette commande ?
-6. Refaites tourner le code de la question 4. Quels sont les nouveaux résultats, en particulier pour les biens avec 4 salles de bain ?
-7. Modifier votre fonction pour qu'une erreur soit explicitement déclarée si chaque sous-jeu de données ne contient pas de colonne intitulée `price`. En exécutant votre code à nouveau, que se passe-t-il désormais ?
-8. Utilisez la fonction `tryCatch` pour capturer l'erreur et renvoyer `NA` si la colonne `price` est manquante.
-9. On s'intéresse désormais à nouveau au dataset originel `data_exo_2`. On souhaite calculer l'indicateur précis suivant : 
+3. En utilisant la fonction `lapply`, calculez le prix minimal, médian, moyen, et maximal des biens par nombre de salles de bain. 
+4. Utiliser `sapply`, en lieu et place de `lapply`. Comparez les résultats en utilisant `simplify = TRUE` puis `simplify = FALSE` comme argument de la fonction `sapply`.  Expliquez la différence.
+5. Nous savons que pour chaque catégorie de biens, nous calculons en sortie un vecteur de 4 valeurs numériques (prix minimal, médian, moyen, et maximal). Utilisez la fonction `vapply` en lieu et place de `sapply`. Quel avantage y a-t-il à utiliser `vapply` ?
+6. Exécutez la commande suivante : `data_split[[4L]] <- data_split[[4L]][, -1]`. Que fait cette commande ?
+7. Refaites tourner le code de la question 4. Quels sont les nouveaux résultats, en particulier pour les biens avec 4 salles de bain ?
+8. Modifier votre fonction pour qu'une erreur soit explicitement déclarée si chaque sous-jeu de données ne contient pas de colonne intitulée `price`. En exécutant votre code à nouveau, que se passe-t-il désormais ?
+9. Utilisez la fonction `tryCatch` pour capturer l'erreur et renvoyer `NA` si la colonne `price` est manquante.
+10. On s'intéresse désormais à nouveau au dataset originel `data_exo_2`. On souhaite calculer l'indicateur précis suivant :
+
 - si `mainroad == TRUE` et `prefarea == TRUE`, alors `indicateur <- price/area + 1000`
-- sinon, `indicateur <- price/area - 5000 + bedrooms*100`
+- sinon, `indicateur <- price/area - 5000 + bedrooms*100`.
 Utilisez la fonction `mapply` pour le faire.
 
-10. Répondez à l'intégralité des questions à nouveaux en utilisant les fonctions `map_*` et `pmap_*` adaptées de la librairie `purrr`. Quels sont les différences entre les fonctions de `purrr` et les fonctions de base ? Quels sont les avantages de `purrr` ?
+11. Répondez à l'intégralité des questions à nouveaux en utilisant les fonctions `map_*` et `pmap_*` adaptées de la librairie `purrr`. Quels sont les différences entre les fonctions de `purrr` et les fonctions de base ? Quels sont les avantages de `purrr` ?
 
 
 ## Exercice 3 : Advent of code : algorithmes et fonctions.

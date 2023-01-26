@@ -7,10 +7,10 @@
 <link href="cours_2_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="cours_2_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="cours_2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.2.269">
+  <meta name="generator" content="quarto-1.0.36">
 
   <meta name="author" content="Raphaël Nedellec">
-  <title>R avancé et introduction à git</title>
+  <title>R avancé et introduction à Git</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -19,15 +19,10 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -389,18 +384,11 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">R avancé et introduction à git</h1>
-
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Raphaël Nedellec 
-</div>
-</div>
-</div>
-
+<section id="title-slide" class="center">
+  <h1 class="title">R avancé et introduction à Git</h1>
+  <p class="author">Raphaël Nedellec</p>
 </section>
+
 <section>
 <section id="pourquoi-écrire-des-fonctions" class="title-slide slide level1 center">
 <h1>Pourquoi écrire des fonctions ?</h1>
@@ -716,9 +704,9 @@ Raphaël Nedellec
 <span id="cb27-15" class="hljs-ln-code"><a href="#cb27-15"></a><span class="fu">f02</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; &lt;environment: R_GlobalEnv&gt;
-#&gt; &lt;environment: 0x55c48dc30080&gt;
+#&gt; &lt;environment: 0x56546a24bb38&gt;
 #&gt; [1] 7
-#&gt; &lt;environment: 0x55c48dcd5770&gt;
+#&gt; &lt;environment: 0x56546a307880&gt;
 #&gt; [1] 7</code></pre>
 </div>
 </div>
@@ -1083,7 +1071,7 @@ Raphaël Nedellec
 <span id="cb66-4"><a href="#cb66-4"></a><span class="co"># Population standard deviation</span></span>
 <span id="cb66-5"><a href="#cb66-5"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(<span class="fu">square</span>(<span class="fu">deviation</span>(x)))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.2976308</code></pre>
+<pre><code>#&gt; [1] 0.2975481</code></pre>
 </div>
 </div>
 </div>
@@ -1099,7 +1087,7 @@ Raphaël Nedellec
 <span id="cb68-4"><a href="#cb68-4"></a>  <span class="fu">mean</span>() <span class="sc">|&gt;</span></span>
 <span id="cb68-5"><a href="#cb68-5"></a>  <span class="fu">sqrt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.2976308</code></pre>
+<pre><code>#&gt; [1] 0.2975481</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>x <span class="sc">%&gt;%</span> <span class="co"># maggritr</span></span>
 <span id="cb70-2"><a href="#cb70-2"></a>  <span class="fu">deviation</span>() <span class="sc">%&gt;%</span></span>
@@ -1107,7 +1095,7 @@ Raphaël Nedellec
 <span id="cb70-4"><a href="#cb70-4"></a>  <span class="fu">mean</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb70-5"><a href="#cb70-5"></a>  <span class="fu">sqrt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.2976308</code></pre>
+<pre><code>#&gt; [1] 0.2975481</code></pre>
 </div>
 </div>
 </div>
@@ -1175,7 +1163,7 @@ Raphaël Nedellec
 </div>
 </div>
 <p>Les objets de type <code>Date</code>sont de classe <code>Date</code>, même si leur représentation interne est <code>double</code><sup>1</sup>.</p>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>On s’attend à un entier - nombre de jours depuis une certaine date de référence - mais non-forcé dans la représentation interne</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn1" role="doc-endnote"><p>On s’attend à un entier - nombre de jours depuis une certaine date de référence - mais non-forcé dans la représentation interne</p></li></ol></aside></section>
 <section id="attribut-de-classe" class="slide level2">
 <h2>Attribut de classe</h2>
 <div class="cell">
@@ -1500,15 +1488,12 @@ Raphaël Nedellec
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
       (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
           const event = window.document.createEvent("Event");
           event.initEvent("slideenter", true, true);
           window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
 
           // dispatch for shiny
           if (window.jQuery) {
@@ -1519,6 +1504,13 @@ Raphaël Nedellec
               window.jQuery(currentSlide).trigger("shown");
             }
           }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
         }
 
         // hookup for slidy
@@ -1570,24 +1562,7 @@ Raphaël Nedellec
         button.classList.add('code-copy-button-checked');
         var currentTitle = button.getAttribute("title");
         button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
         setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
-          }
           button.setAttribute("title", currentTitle);
           button.classList.remove('code-copy-button-checked');
         }, 1000);
@@ -1617,50 +1592,31 @@ Raphaël Nedellec
       for (var i=0; i<noterefs.length; i++) {
         const ref = noterefs[i];
         tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          let href = ref.getAttribute('href');
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
           return note.innerHTML;
         });
       }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
-          }
-        } else {
-          return undefined;
-        }
-      };
       var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
       for (var i=0; i<bibliorefs.length; i++) {
         const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
           });
-        }
+          return popup.innerHTML;
+        });
       }
     });
     </script>

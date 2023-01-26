@@ -1,5 +1,5 @@
 ---
-title: "R avancé et introduction à git"
+title: "R avancé et introduction à Git"
 author: "Raphaël Nedellec"
 format: 
   revealjs:
