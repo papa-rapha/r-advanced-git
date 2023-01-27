@@ -542,10 +542,10 @@ L'utilisation de `renv` facilite la gestion des versions et la configurations de
 
 ## Liens complémentaires
 
-- [documentation quarto](https://quarto.org/)
-- [targets package](https://docs.ropensci.org/targets/)
-- [2018 - targets tutorial](https://github.com/wlandau/targets-tutorial)
-- [targets manual](https://books.ropensci.org/targets/)
-- [renv](https://rstudio.github.io/renv/index.html) with very precious explanatory articles.
+- [documentation quarto](https://quarto.org/) Documentation officielle `quarto`.
+- [targets package](https://docs.ropensci.org/targets/) Documentation du package `targets`.
+- [2018 - targets tutorial](https://github.com/wlandau/targets-tutorial) Un tuto `targets` qui date de 2018 - mais toujours valide dans les grandes lignes.
+- [targets manual](https://books.ropensci.org/targets/) Manuel avancé de `targets`.
+- [renv](https://rstudio.github.io/renv/index.html)  Documentation du package `renv`, avec beaucoup d'articles explicatifs.
 
 

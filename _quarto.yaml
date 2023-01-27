@@ -12,6 +12,7 @@ project:
     - "exercises/sem_3.qmd"
     - "exercises/sem_4.qmd"
     - "dm/01-dm.qmd"
+    - "dm/02-dm.qmd"
   resources:
     - "slides/cours_1.html"
     - "slides/cours_1_files/"
