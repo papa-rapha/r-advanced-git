@@ -10,6 +10,7 @@ project:
     - "exercises/sem_1.qmd"
     - "exercises/sem_2.qmd" 
     - "exercises/sem_3.qmd"
+    - "exercises/sem_4.qmd"
     - "dm/01-dm.qmd"
   resources:
     - "slides/cours_1.html"
@@ -23,6 +24,8 @@ project:
     - "slides/images/"
     - "material/semaine_1.zip"
     - "material/semaine_2.zip"
+    - "material/semaine_4.zip"
+    - "exercises/images/"
 
 # See https://quarto.org/docs/projects/code-execution.html#freeze
 execute:

@@ -1,0 +1,22 @@
+---
+title: "DM 02"
+author: "Raphaël Nedellec"
+format: pdf
+---
+
+## Date de rendu : 02/02/2023
+
+## Devoir maison
+
+Créez un projet RStudio intitulé `dm-02`.
+Résoudre les exercices des semaines 3 et 4. Les exercices et questions bonus ne seront pris en compte dans la note que positivement (c'est du bonus).
+
+Assurez-vous que l'ensemble des données nécessaires à la résolution des exercices soient contenues dans le projet, et que les fichiers soient chargés en utilisant des chemins relatifs.
+
+Pour l'exercice de la semaine 3, vous rendrez un document contenant les explications et réponses aux questions, ainsi que le dossier contenant l'ensemble de votre package.
+
+Pour les exercices de la semaine 4, vous rendrez l'ensemble des fichiers demandés dans les 2 premiers exercices, ainsi qu'un fichier détaillant vos réponses de l'exercice 3.
+
+Votre projet devra être envoyé zippé par mail au format `dm02-nom-prenom.zip` et envoyés à mon adresse avant le vendredi 2 février.
+
+Bon courage !

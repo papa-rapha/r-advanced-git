@@ -3,3 +3,85 @@ title: "Exercices - Semaine 4"
 author: "Raphaël Nedellec"
 format: pdf
 ---
+
+## Exo 1 : Quarto
+
+Le jeu de données provient de <https://www.datarepository.movebank.org/handle/10255/move.882>. Il concerne des chats équipés de capteurs GPS, au Royaume-Uni.
+
+1. Créez un nouveau projet RStudio, de type quarto. Décrivez ce que vous observez dans l'éditeur. Passez en mode 'source' pour l'édition du fichier `qmd.`. Comparez avec l'interface précédente. Créez un dossier `data/`. Dans la suite de l'exercice, chaque question sera répondue dans une section de niveau h2 (`##`). Sauvegardez le fichier `.qmd` sous le nom `exo1.qmd`.
+
+2. Configurez le document quarto. Les options doivent être définies comme suit :
+
+- le format du document doit être de type `html` ;
+- le thème doit être `united` ;
+- une table des matières `toc` doit être présente dans le document, et situé sur la gauche de la page ;
+- cochez la case `render on save` dans RStudio pour ouvrir une fenêtre synchronisée de 'preview' de votre document.
+
+Note : les infos de paramètres sont disponibles [ici](https://quarto.org/docs/output-formats/html-basics.html)
+
+3. Créez un bloc de code R et lisez le fichier de données `exo_1_quarto.csv`. Nommez le bloc de données `q3` en utilisant le paramètre quarto `label`. Affichez les 6 premières lignes du tableau. 
+
+Note : vous pouvez créer un bloc de code en utilisant le raccourci `ctrl + alt + I` sous RStudio (`cmd + alt + I` sous Mac).
+
+
+4. Installez les packages `DT`, `dplyr`, `leaflet` dans le terminal. Créez un nouveau bloc `q4` pour charger ces librairies. Utilisez l'option `include` pour ne pas inclure ce bloc dans le document final compilé (affectez la valeur `false`).
+
+5. Créez un nouveau bloc `q5` où vous utiliserez la fonction `datatable` de la librairie `DT` pour afficher les 6 premières lignes du tableau. Comparez.
+
+6. Créez un nouveau bloc `q6` avec le label `tbl-q6`. En utilisant les fonctions `group_by` et `summarize` de dplyr, calculez le nombre de point d'observations par individu. Quel est l'individu avec le 5 ème plus grand nombre d'observations ? L'output sera une nouvelle fois une table `DT::datatable`. 
+
+7. Créez une sous-table contenant uniquement les observations de l'individu identifié question 6. Créez une fonction qui à partir de la sous-table, renvoie les latitudes et longitudes min et max (le rectangle contenant l'ensemble des points de mesure). Cette fonction sera documentée en utilisant des balises `roxygen`. 
+
+8. Ecrivez une fonction qui à partir de 2 paramètres `df` et `id` renvoie un objet de classe `leaflet`. Cet objet contient une carte leaflet contenant tous les points de passage de l'individu `id`. Chaque point de passage sera représenté sous forme d'un marker, comme visible sur l'image @fig-leaflet.
+
+![Maxwell](images/leaflet.png){#fig-leaflet}
+
+9. Exécutez la fonction de la question 8. pour les individus Maxwell et Ares. Légendez chacun des plots leaflets (en utilisant les outils de références <https://quarto.org/docs/authoring/cross-references.html>) dans le texte. Utilisez l'option `#| echo: false` pour ces deux blocs de code. Que se passe-t-il ?
+
+10. Compilez le document une dernière fois. Quel est le raccourci clavier sous RStudio pour compiler un document `quarto` (ou `rmarkdown`) ?
+
+## Exo 2 : targets
+
+L'objectif de l'exercice 2 est de reproduire les questions de l'exercice 1 en utilisant `targets`.
+
+1. Créez une copie du document `exo1.qmd` appelée `exo2.qmd`.
+2. Utilisez la fonction `use_targets` du package `targets` pour initialiser les fichiers `targets`. Décrivez les fichiers créés, en particulier le fichier `_targets.R`
+
+Note : dans la suite, on pourra se référer au guide de `targets` <https://books.ropensci.org/targets/walkthrough.html>.
+
+3. Modifiez le fichier `_targets.R` pour importer les bonnes dépendances listées dans l'exercice 1.
+4. Définissez la première étape de votre pipeline en utilisant une 'target' de type 'file' pour charger le jeu de données.
+5. Implémentez une fonction que vous nommerez `find_5th` qui reprendra le code de la question 6. de l'exercice 1. Sauvegardez cette fonction dans un script `functions.R` que vous placerez dans un dossier intitulé `R/`. Documentez a minima la fonction.
+6. Copiez les fonctions des questions 7. et 8. dans le fichier `R/functions.R`. 
+7. Ajoutez trois 'targets' avec la fonction `tar_target` dans le script `_targets.R` :
+  
+  - Pour utiliser la fonction `find_5th`
+  - Pour utiliser la fonction de la question 7. 
+  - Pour enfin utiliser la fonction de la question 8. sur les deux individus `Maxwell` et `Ares`.
+
+Ces actions devront être chainées dans le bon ordre.
+  
+8. Exécutez les commandes `tar_visnetwork`, `tar_make`, `tar_make` à nouveau, puis `tar_visnetwork` à nouveau. Decrivez les sorties des 4 appels. Commentez.
+
+Questions bonus :
+
+9. Là où c'est possible, remplacer les appels de fonctions ou les blocs de code par des `tar_read` ou `tar_load` pour lire les résultats depuis la pipeline 'target', plutôt que de les générer dans le notebook `quarto`.
+
+10. Installez la librairie `tarchetypes`. Mettez à jour les dépendances et le script `_targets.R`. Ajoutez une étape `tar_quarto` dans le fichier `targets`.
+
+Note : on pourra s'aider de la section <https://books.ropensci.org/targets/literate-programming.html#quarto-targets>
+
+11. Exécutez les commandes `tar_visnetwork`, `tar_make`, `tar_make` à nouveau, puis `tar_visnetwork` à nouveau. Décrivez les sorties des 4 appels à nouveau. Commentez. Félicitations !
+
+
+## Exo 3 : renv
+
+L'exercice 3 doit s'effectuer à la suite des exercices 2 et 3, dans le même projet. Avant de démarrer, exécutez la pipeline `targets` de l'exercice 2.
+
+1. Installez `renv`.
+2. Appelez la fonction `devtools::session_info()`. Décrivez.
+3. Appelez la fonction `renv::init()`. Que s'est-il passé ? Quels fichiers ont été créés ?
+4. Décrivez le contenu du fichier `renv.lock`.
+5. Copiez le fichier `renv.lock` sur votre bureau. Fermez le projet RStudio, et créez un nouveau projet RStudio vide. Copiez le fichier `renv.lock` à la racine du projet.
+6. Utilisez les instructions `renv::activate` puis `renv::restore()`. Décrivez.
+

@@ -20,9 +20,9 @@ format: html
 | 13 janvier | **Fonctions, Objets S3**                              | [{{< fa book >}}](/slides/cours_2.html) | [{{< fa file-circle-question >}}](/exercises/sem_2.pdf) | [{{< fa box >}}](/material/semaine_2.zip) |
 | 19 janvier | **Rendu DM n°1**                                      |                                         | [{{< fa list-check >}}](/dm/01-dm.pdf)                  |                                           |
 | 20 janvier | **Ecrire une librairie R**                            | [{{< fa book >}}](/slides/cours_3.html) | [{{< fa file-circle-question >}}](/exercises/sem_3.pdf) |                                           |
-| 27 janvier | **Programmation littéraire et science reproductible**                      | [{{< fa book >}}](/slides/cours_4.html) | [{{< fa file-circle-question >}}](/exercises/sem_4.pdf) | [{{< fa box >}}](/material/semaine_4.zip) |
-| 2 février  | **Rendu DM n°2**                                      |                                         | [{{< fa list-check >}}](/dm/02-dm.pdf)                  | [{{< fa box >}}](/material/dm_2.zip)      |
-| 3 février  | **Introduction à git et github** | [{{< fa book >}}](/slides/cours_5.html) | [{{< fa file-circle-question >}}](/exercises/sem_5.pdf) | [{{< fa box >}}](/material/semaine_5.zip) |
+| 27 janvier | **Programmation littéraire et science reproductible** | [{{< fa book >}}](/slides/cours_4.html) | [{{< fa file-circle-question >}}](/exercises/sem_4.pdf) | [{{< fa box >}}](/material/semaine_4.zip) |
+| 2 février  | **Rendu DM n°2**                                      |                                         | [{{< fa list-check >}}](/dm/02-dm.pdf)                  |                                           |
+| 3 février  | **Introduction à git et github**                      | [{{< fa book >}}](/slides/cours_5.html) | [{{< fa file-circle-question >}}](/exercises/sem_5.pdf) |                                           |
 | 10 février | **Projet final**                                      |                                         | [{{< fa list-check >}}](/dm/03-projet.pdf)              | [{{< fa box >}}](/material/projet.zip)    |
 
 
