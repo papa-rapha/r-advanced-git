@@ -1,0 +1,32 @@
+---
+title: "Projet : R avancé et introduction à Git"
+author: "Raphaël Nedellec"
+format: pdf
+---
+
+# Projet de fin de classe
+
+L'objectif du projet est le suivant :
+
+- manipuler les différents concepts R vu lors des différents cours : fonctions et packages, documents `quarto`, et études reproductibles avec `targets` et `renv` notamment.
+- vous faire intéragir avec git et github pour vous familiariser avec les outils et vous donner à voir aux potentialités de ces outils.
+
+## Rendu
+
+Le dossier projet sous github et le site seront le rendu. 
+
+- Le site devra être conforme aux demandes des questions suivantes.
+- Le dossier projet devra être structuré comme attendu.
+
+La date finale du rendu est le 19 février 2023.
+
+## Création d'un blog R quarto
+
+À la fin du projet, vous aurez créé un site de blog perso en quarto, hébergé sur github. Votre premier post de blog sera issu d'un travail reproductible généré en R.
+
+### Création du projet de site sous github
+
+### Post de blog
+
+
+

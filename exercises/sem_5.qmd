@@ -3,3 +3,15 @@ title: "Exercices - Semaine 5"
 author: "Raphaël Nedellec"
 format: pdf
 ---
+
+## Exercice 1 Configurer son compte github
+
+1. Créez un compte sous [Github](https://github.com)
+2.
+
+
+## Exercice 2 Tutoriel git
+
+Réaliser le tutoriel <https://learngitbranching.js.org/> :
+- dans la section Main, la séquence d'introduction
+- dans la section Remote, la séquence Push & Pull

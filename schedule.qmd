@@ -23,7 +23,7 @@ format: html
 | 27 janvier | **Programmation littéraire et science reproductible** | [{{< fa book >}}](/slides/cours_4.html) | [{{< fa file-circle-question >}}](/exercises/sem_4.pdf) | [{{< fa box >}}](/material/semaine_4.zip) |
 | 2 février  | **Rendu DM n°2**                                      |                                         | [{{< fa list-check >}}](/dm/02-dm.pdf)                  |                                           |
 | 3 février  | **Introduction à git et github**                      | [{{< fa book >}}](/slides/cours_5.html) | [{{< fa file-circle-question >}}](/exercises/sem_5.pdf) |                                           |
-| 10 février | **Projet final**                                      |                                         | [{{< fa list-check >}}](/dm/03-projet.pdf)              | [{{< fa box >}}](/material/projet.zip)    |
+| 10 février | **Projet final**                                      |                                         | [{{< fa list-check >}}](/dm/projet.pdf)              | [{{< fa box >}}](/material/projet.zip)    |
 
 
 : {tbl-colwidths="\[15,55,10,10,15\]"}
