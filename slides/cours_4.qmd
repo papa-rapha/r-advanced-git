@@ -13,24 +13,24 @@ knitr:
     comment: "#>" 
 ---
 
-# Programmation littéraire et science reproductible 
+# Programmation littéraire et science reproductible
 
 ## Avoir un 'workflow' de datascience reproductible
 
 ::: incremental
-- Pouvoir expliquer et reproduire ses résultats aujourd'hui comme dans N jours/mois/années.
-- En datascience, il est aussi important de s'adresser correctement à ses collègues qu'à sa machine.
-- Avoir un workflow efficace lorsque les calculs et les processus sont compliqués.
-- Pouvoir travailler de manière collaborative.
+-   Pouvoir expliquer et reproduire ses résultats aujourd'hui comme dans N jours/mois/années.
+-   En datascience, il est aussi important de s'adresser correctement à ses collègues qu'à sa machine.
+-   Avoir un workflow efficace lorsque les calculs et les processus sont compliqués.
+-   Pouvoir travailler de manière collaborative.
 :::
 
 ## Agenda
 
 ::: incremental
-- Programmation littéraire avec [`quarto`](https://quarto.org/)
-- Simplification du workflow et reproductibilité avec [`targets`](https://docs.ropensci.org/targets/)
-- Gestion des dépendances avec [`renv`](https://rstudio.github.io/renv/articles/renv.html)
-- `Version control` : [git](https://git-scm.com/) au prochain cours !
+-   Programmation littéraire avec [`quarto`](https://quarto.org/)
+-   Simplification du workflow et reproductibilité avec [`targets`](https://docs.ropensci.org/targets/)
+-   Gestion des dépendances avec [`renv`](https://rstudio.github.io/renv/articles/renv.html)
+-   `Version control` : [git](https://git-scm.com/) au prochain cours !
 :::
 
 # Programmation littéraire avec `quarto`
@@ -48,8 +48,8 @@ knitr:
 ## Programmation littéraire pour la datascience
 
 ::: incremental
-- Reproductibilité des résultats
-- Explications, codes et résultats dans le même document
+-   Reproductibilité des résultats
+-   Explications, codes et résultats dans le même document
 :::
 
 . . .
@@ -58,6 +58,7 @@ Un outil et une méthode précieuse pour rendre intelligibles et reproductibles 
 
 ::: callout-note
 ## Outils
+
 Notebook (jupyter), Rmarkdown, Quarto
 :::
 
@@ -66,39 +67,40 @@ Notebook (jupyter), Rmarkdown, Quarto
 Un peu d'histoire
 
 ::: incremental
-- Engine `knitr` (2011), avec des dialectes \Latex, markdown
-- `rmarkdown` (2015)
-- Et désormais, `quarto` (2022)
+-   Engine `knitr` (2011), avec des dialectes \Latex, markdown
+-   `rmarkdown` (2015)
+-   Et désormais, `quarto` (2022)
 :::
 
 . . .
 
 ::: callout-note
 ## Histoire de rmarkdown par l'auteur de la librairie
+
 <https://slides.yihui.org/2021-Brazilian-R-Day.html#1>
-::: 
+:::
 
 ## rmarkdown vs quarto
 
 ::: incremental
-- `quarto` reprend la philosophie de rmarkdown
-- mais est agnostique au langage (compatible R, python, ...)
-- les fichiers .rmd peuvent être compilés avec `quarto` (pour la plupart)
-- aujourd'hui, sauf exceptions, privilégier `quarto`
+-   `quarto` reprend la philosophie de rmarkdown
+-   mais est agnostique au langage (compatible R, python, ...)
+-   les fichiers .rmd peuvent être compilés avec `quarto` (pour la plupart)
+-   aujourd'hui, sauf exceptions, privilégier `quarto`
 :::
 
 . . .
 
 ::: callout-warning
 ## Vignettes
+
 Le CRAN ne supporte pas (encore) les vignettes générées par `quarto` aujourd'hui. C'est un des rares cas où privilégier `rmarkdown`.
 :::
 
 ## rmarkdown vs quarto
 
-:::: {.columns}
+::: columns
 ::: {.column width="45%"}
-
 Avec quarto :
 
 ```{r}
@@ -109,10 +111,9 @@ Avec quarto :
 1 + 1
 
 ```
-
 :::
-::: {.column width="55%"}
 
+::: {.column width="55%"}
 Avec rmarkdown :
 
 ```{r chunk-rmarkdown, eval=FALSE}
@@ -120,9 +121,8 @@ Avec rmarkdown :
 
 1 + 1
 ```
-
 :::
-::::
+:::
 
 . . .
 
@@ -130,8 +130,7 @@ Paramètres du 'bloc' dans les accolades en rmarkdown, après `#|` en quarto.
 
 ## quarto
 
-Metadata du document : YAML 
-
+Metadata du document : YAML
 
 ``` yaml
 ---
@@ -148,7 +147,6 @@ format:
 
 Multiples formats : [html](https://quarto.org/docs/reference/formats/html.html), [PDF](https://quarto.org/docs/reference/formats/pdf.html), [MS Word](https://quarto.org/docs/reference/formats/docx.html), [OpenOffice](https://quarto.org/docs/reference/formats/odt.html), [ePub](https://quarto.org/docs/reference/formats/epub.html), [Revealjs](https://quarto.org/docs/reference/formats/presentations/revealjs.html), [PowerPoint](https://quarto.org/docs/reference/formats/presentations/pptx.html), [Beamer](https://quarto.org/docs/reference/formats/presentations/beamer.html), et de nombreux autres
 
-
 ## quarto : project
 
 Documents, présentations, mais aussi 'websites' ou 'books'
@@ -163,7 +161,6 @@ website:
     background: primary
   ...
 ---
-
 ```
 
 Exemple : ce cours est hébergé sur un [site](https://github.com/papa-rapha/r-advanced-git/blob/master/_quarto.yaml) quarto. Les [slides](https://github.com/papa-rapha/r-advanced-git/blob/master/slides/cours_1.qmd) des cours sont aussi écrites en quarto avec revealjs, les [sujets d'exercices](https://github.com/papa-rapha/r-advanced-git/blob/master/exercises/sem_1.qmd) en quarto - pdf.
@@ -204,7 +201,7 @@ ggplot(airquality, aes(Temp, Ozone)) +
 
 ## quarto : 'code chunk' R
 
-```{{r}}
+``` {{r}}
 #| echo: true/false/fenced
 #| eval: true/false
 #| warning: true/false
@@ -216,38 +213,38 @@ ggplot(airquality, aes(Temp, Ozone)) +
 
 Liste complète des options de blocs de code avec knitr disponible [ici](https://yihui.org/knitr/options/)
 
-
 ## quarto : aussi en Python
 
 ::: incremental
-- Tout comme rmarkdown, les blocs de code ne sont pas nécessairement en R.
-- Autres langages : Python, R, Julia, Observable.js
-- Quarto, à la différence de rmarkdown, est totalement agnostique envers le langage. C'est un outil aussi très utile en Python !
+-   Tout comme rmarkdown, les blocs de code ne sont pas nécessairement en R.
+-   Autres langages : Python, R, Julia, Observable.js
+-   Quarto, à la différence de rmarkdown, est totalement agnostique envers le langage. C'est un outil aussi très utile en Python !
 :::
 
 ## quarto en résumé
 
 ::: incremental
-- Programmation littéraire.
-- Document auto-portant avec texte, code et résultats réunis.
-- Hautement configurable, multiples formats de projets disponibles.
-- Templates et thèmes customisables.
+-   Programmation littéraire.
+-   Document auto-portant avec texte, code et résultats réunis.
+-   Hautement configurable, multiples formats de projets disponibles.
+-   Templates et thèmes customisables.
 :::
 
 . . .
 
 ::: callout-tip
 ## quarto
+
 À utiliser aussi souvent que possible pour une analyse de données ou un projet de datascience.
 :::
 
 ## Mais alors, quand utiliser des fichiers .R ?
 
 ::: incremental
-- pour définir des fonctions, dans des packages
-- avec parcimonie, pour sourcer des fonctions (`source()`)
-- lorsque l'on écrit un vrai script à appeler en ligne de commande avec [Rscript](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/Rscript)
-- avec targets
+-   pour définir des fonctions, dans des packages
+-   avec parcimonie, pour sourcer des fonctions (`source()`)
+-   lorsque l'on écrit un vrai script à appeler en ligne de commande avec [Rscript](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/Rscript)
+-   avec targets
 :::
 
 # Études reproductibles avec `targets`
@@ -263,24 +260,25 @@ Developpé par Will Landau
 Expérience classique lors d'un projet de data science :
 
 ::: incremental
-1. Ecrire du code, l'exécuter
-2. Attendre (longtemps...) la fin de l'exécution
-3. Découvrir une erreur, corriger
-4. Redémarrer à l'étape 1.
+1.  Ecrire du code, l'exécuter
+2.  Attendre (longtemps...) la fin de l'exécution
+3.  Découvrir une erreur, corriger
+4.  Redémarrer à l'étape 1.
 :::
 
 ## Outils de 'pipeline'
 
 ::: incremental
-- Des solutions et outils de 'pipeline' permettent de mettre fin à ce cercle vicieux
-- [GNU-make](https://www.gnu.org/software/make/)
-- targets : spécialement désigné pour exécuter du code R
+-   Des solutions et outils de 'pipeline' permettent de mettre fin à ce cercle vicieux
+-   [GNU-make](https://www.gnu.org/software/make/)
+-   targets : spécialement désigné pour exécuter du code R
 :::
 
 . . .
 
 ::: callout-tip
 ## Vidéo d'intro
+
 Vidéo d'intro à targets de 4 minutes : <https://vimeo.com/700982360>
 :::
 
@@ -288,28 +286,25 @@ Vidéo d'intro à targets de 4 minutes : <https://vimeo.com/700982360>
 
 Organisation du projet :
 
-```
-├── _targets.R      # fichier de configuration du workflow
-├── data.csv        # jeu de données
-├── R/ 
-│   ├── functions.R # fichier de fonctions
-```
+    ├── _targets.R      # fichier de configuration du workflow
+    ├── data.csv        # jeu de données
+    ├── R/ 
+    │   ├── functions.R # fichier de fonctions
 
 . . .
 
 ::: callout-tip
 ## Organisation du projet
+
 `targets::use_targets` permet d'initialiser la structure du projet. Cette structure peut être adaptée.
 :::
 
 ## example : data.csv
 
-```
-Ozone,Solar.R,Wind,Temp,Month,Day
-36,118,8.0,72,5,2
-12,149,12.6,74,5,3
-...
-```
+    Ozone,Solar.R,Wind,Temp,Month,Day
+    36,118,8.0,72,5,2
+    12,149,12.6,74,5,3
+    ...
 
 ## example : functions.R
 
@@ -435,30 +430,31 @@ tar_visnetwork
 
 ## targets et programmation littéraire
 
-1. Programmation littéraire dans le workflow :
+1.  Programmation littéraire dans le workflow :
 
 ::: incremental
-- En exécutant la pipeline en premier, puis en appelant les résultats de la pipeline dans le document (avec les fonctions `tar_read` ou `tar_load`).
-- On peut aussi intégrer une étape de rendering d'un document rmarkdown ou quarto directement avec la fonction `tarchetypes::tar_render` ou `tarchetypes::tar_quarto`
+-   En exécutant la pipeline en premier, puis en appelant les résultats de la pipeline dans le document (avec les fonctions `tar_read` ou `tar_load`).
+-   On peut aussi intégrer une étape de rendering d'un document rmarkdown ou quarto directement avec la fonction `tarchetypes::tar_render` ou `tarchetypes::tar_quarto`
 :::
 
 . . .
 
-2. `target markdown`: le workflow est embarqué dans le document.
+2.  `target markdown`: le workflow est embarqué dans le document.
 
 ## `targets` en résumé
 
 ::: incremental
-- Outil de pipeline avancé en R
-- Optimisation des calculs
-- Evite la gestion manuelle du 'cache'
-- Integré avec `quarto` et `rmarkdown`
+-   Outil de pipeline avancé en R
+-   Optimisation des calculs
+-   Evite la gestion manuelle du 'cache'
+-   Integré avec `quarto` et `rmarkdown`
 :::
 
 . . .
 
 ::: callout-tip
 ## Projets de datascience
+
 À utiliser sur les projets de datascience et d'analyse de données avec de multiples étapes et des analyses longues.
 :::
 
@@ -472,16 +468,14 @@ tar_visnetwork
 devtools::session_info() # alternative à sessionInfo()
 ```
 
-
-
 ## Reproductibilité
 
 Pour s'assurer de la reproductibilité, il faut pouvoir reproduire son environnement :
 
 ::: incremental
-- Savoir quelle version de R a été utilisée
-- Savoir quelles librairies ont été appelées, et quelle était leur version
-- Pouvoir reconstruire cet environnement
+-   Savoir quelle version de R a été utilisée
+-   Savoir quelles librairies ont été appelées, et quelle était leur version
+-   Pouvoir reconstruire cet environnement
 :::
 
 . . .
@@ -491,41 +485,43 @@ Un outil : `renv`
 ## `renv`
 
 ::: incremental
-- Librairie [`renv`](https://rstudio.github.io/renv/articles/renv.html)
-- Philosophie : isoler les dépendances d'un projet pour le rendre reproductible dans le temps
-- Management local des dépendances et des environnements
-- Similaire à [`venv`](https://docs.python.org/3/library/venv.html) en Python
+-   Librairie [`renv`](https://rstudio.github.io/renv/articles/renv.html)
+-   Philosophie : isoler les dépendances d'un projet pour le rendre reproductible dans le temps
+-   Management local des dépendances et des environnements
+-   Similaire à [`venv`](https://docs.python.org/3/library/venv.html) en Python
 :::
 
 . . .
 
 ::: callout-note
 ## .libPaths()
+
 L'utilisation de `renv` facilite la gestion des versions et la configurations des libPaths()...
 :::
 
 ## `renv` : workflow
 
 ::: incremental
-- `renv::init()` : pour initialiser un projet avec `renv`
-- `renv::snapshot()` : sauvegarder les références aux dépendances dans un fichier `renv.lock`
-- `renv::restore()` : pour retourner à l'état référencé dans le fichier `renv.lock`
+-   `renv::init()` : pour initialiser un projet avec `renv`
+-   `renv::snapshot()` : sauvegarder les références aux dépendances dans un fichier `renv.lock`
+-   `renv::restore()` : pour retourner à l'état référencé dans le fichier `renv.lock`
 :::
 
 . . .
 
 ::: callout-warning
 ## Limites
-- Dépendances systèmes : [docker](https://www.docker.com/) ? Voir [ce post de blog](https://colinfay.me/docker-r-reproducibility/) pour une intro.
-- Librairies archivées du CRAN
-::: 
+
+-   Dépendances systèmes : [docker](https://www.docker.com/) ? Voir [ce post de blog](https://colinfay.me/docker-r-reproducibility/) pour une intro.
+-   Librairies archivées du CRAN
+:::
 
 ## `renv` : avantages
 
 ::: incremental
-- Gestion globale d'un cache : optimisation d'espace disque et de temps de sauvegarde
-- Possible d'utiliser des versions différentes de librairies dans différents projets sans avoir à configurer manuellement les `.libPaths()`
-- Facilite la [collaboration](https://rstudio.github.io/renv/articles/collaborating.html) 
+-   Gestion globale d'un cache : optimisation d'espace disque et de temps de sauvegarde
+-   Possible d'utiliser des versions différentes de librairies dans différents projets sans avoir à configurer manuellement les `.libPaths()`
+-   Facilite la [collaboration](https://rstudio.github.io/renv/articles/collaborating.html)
 :::
 
 # En résumé
@@ -533,19 +529,17 @@ L'utilisation de `renv` facilite la gestion des versions et la configurations de
 ## En résumé
 
 ::: incremental
-1. `quarto` : programmation littéraire. Utile pour les rapports, blogs, EDA... Et pour vous faire un 'portfolio' facilement !
-2. `targets` : pour les études longues. Renforce la reproductibilité et facilite la vie au quotidien en gagnant en qualité de rendu et en productivité
-3. `renv` : gestion de l'environnement, un point essentiel de la reproductibilité des résultats
+1.  `quarto` : programmation littéraire. Utile pour les rapports, blogs, EDA... Et pour vous faire un 'portfolio' facilement !
+2.  `targets` : pour les études longues. Renforce la reproductibilité et facilite la vie au quotidien en gagnant en qualité de rendu et en productivité
+3.  `renv` : gestion de l'environnement, un point essentiel de la reproductibilité des résultats
 :::
 
 # Annexes
 
 ## Liens complémentaires
 
-- [documentation quarto](https://quarto.org/) Documentation officielle `quarto`.
-- [targets package](https://docs.ropensci.org/targets/) Documentation du package `targets`.
-- [2018 - targets tutorial](https://github.com/wlandau/targets-tutorial) Un tuto `targets` qui date de 2018 - mais toujours valide dans les grandes lignes.
-- [targets manual](https://books.ropensci.org/targets/) Manuel avancé de `targets`.
-- [renv](https://rstudio.github.io/renv/index.html)  Documentation du package `renv`, avec beaucoup d'articles explicatifs.
-
-
+-   [documentation quarto](https://quarto.org/) Documentation officielle `quarto`.
+-   [targets package](https://docs.ropensci.org/targets/) Documentation du package `targets`.
+-   [2018 - targets tutorial](https://github.com/wlandau/targets-tutorial) Un tuto `targets` qui date de 2018 - mais toujours valide dans les grandes lignes.
+-   [targets manual](https://books.ropensci.org/targets/) Manuel avancé de `targets`.
+-   [renv](https://rstudio.github.io/renv/index.html) Documentation du package `renv`, avec beaucoup d'articles explicatifs.
