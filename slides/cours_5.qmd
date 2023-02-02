@@ -274,6 +274,19 @@ Lorsque l'on souhaite fusionner deux branches, on peut réaliser deux types d'op
 
 Ces deux opérations diffèrent par la manière de fusionner les historiques (`merge` préserve l'historique complet, quand `rebase` réécrit l'historique).
 
+## .gitignore
+
+Il est possible d'écrire un fichier .gitignore pour ne pas traquer certains fichiers:
+
+- fichiers volumineux
+- fichiers générés à la volée qui ne doivent pas être sauvegardés (.pdf quand les sources sont dispos)
+- fichiers sensibles
+
+::: callout-warning
+## Secrets
+Il est facile de glisser des 'secrets' dans ses scripts et que ceux-ci se retrouvent dans un historique git : mots de passe, token, informations sensibles. Attention aux fichiers que vous enregistrez dans vos commits (comme le .Rhistory). Soyez vigilants.
+:::
+
 ## En résumé
 
 ::: incremental

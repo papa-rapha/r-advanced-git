@@ -13,7 +13,7 @@ L'objectif du projet est le suivant :
 
 ## Rendu
 
-Le dossier projet sous github et le site seront le rendu. 
+Le dossier projet sous github et le site seront le rendu, ainsi qu'un document .qmd compilé dans lequel vous préciserez les réponses aux questions qui ne pourront pas figurer dans le code. 
 
 - Le site devra être conforme aux demandes des questions suivantes.
 - Le dossier projet devra être structuré comme attendu.
@@ -25,6 +25,32 @@ La date finale du rendu est le 19 février 2023.
 À la fin du projet, vous aurez créé un site de blog perso en quarto, hébergé sur github. Votre premier post de blog sera issu d'un travail reproductible généré en R.
 
 ### Création du projet de site sous github
+
+1. Créez un nouveau projet sous RStudio. Ce projet sera créé en utilisant le template quarto blog. Décrivez la structure du projet.
+2. Personnalisez les documents `index.qmd` et `about.qmd` *a minima*. De la même manière, modifiez le post `posts/welcome/index.qmd`.
+3. Créez un nouveau projet github, que vous appelerez `my_blog`. 
+4. De retour sur RStudio, ouvrez le terminal. Configurez les paramètres user.name et user.email en utilisant les instructions `git config user.name "<votre username>"` et `git config user.email "<votre email>"`. Vous pourrez utilisez le paramètre `--global` pour modifier ces valeurs pour tous vos projets par défaut `git config --global user.name "<votre username>"`.
+5. Toujours dans le terminal, configurez le `remote` de manière à le faire pointer vers le projet github récemment créé. L'instruction devrait ressembler à `git remote add git@github.com:<votre username github>/my_blog.git`.
+6. Faites un commit de l'ensemble des fichiers, puis un push. Que voyez-vous désormais sous github ?
+7. Quittez le projet RStudio avant de passer à la section suivante.
+
+### Un package sous github
+
+1. En utilisant `usethis`, créez un nouveau projet de package intitulé `heron`.
+2. Créez une fonction `heron` qui prend en paramètre trois variables `a` , `b`, et `c`. La fonction `heron` permettra de calculer la formule de héron, qui permet de calculer l'aire d'un triangle à partir de la longueur de ses trois côtés. L'aire d'un triangle de trois côtés a, b, c se calcule comme suit :
+
+$$
+Aire = \sqrt{p(p-a)(p-b)(p-c)}\space \mathbb{avec}\space p = \frac{a + b + c}{2}
+$$
+
+On définira une fonction intermédiaire `demi_perimetre` pour calculer le demi périmètre du triangle.
+
+4. Documentez les deux fonctions en utilisant des balises roxygen2. Veillez à spécifier que seule la fonction `heron` soit exportée. On précisera que la documentation de la fonction `demi_perimetre` doit être cachée en utilisant la balise `@noRd`. Ajoutez deux exemples à la fonction héron.
+5. Modifiez la fonction `heron` pour que la fonction envoie une erreur si un des arguments n'est pas un numérique, ou si une des valeurs est négative. De même, vous renverrez un warning si une des valeurs est égale à 0.
+6. Testez la fonction `demi_perimetre` avec trois tests. La fonction `heron` devra être testée sur chacune de ses erreurs, ainsi que pour plusieurs exemples de triangles.
+7. Modifiez le fichier DESCRIPTION. Assurez vous que les tests passent bien et que la documentation est à jour, et installez votre package. Vérifiez que l'aide est accessible et que la fonction marche comme prévu.
+8. Créez un nouveau projet github, que vous appelerez `heron`. 
+9. 
 
 ### Post de blog
 

@@ -6,12 +6,35 @@ format: pdf
 
 ## Exercice 1 Configurer son compte github
 
-1. Créez un compte sous [Github](https://github.com)
-2.
+1. Téléchargez git [ici](https://git-scm.com/downloads). Installez git. 
+2. Créez un compte sous [Github](https://github.com)
+3. Sous RStudio, allez dans Global Options, Git/SVN, et créez une clef SSH. Copiez la clef publique.
+4. Sous Github, allez dans profile, settings, SSH and GPG keys. Créez une nouvelle clef SSH. Donnez lui un titre approprié et copiez la clef publique dans le champ dédié. 
+5. Allez sur votre page personnelle, et naviguez jusqu'à vos projets. Créez un nouveau projet intitulé `test000`. Cochez l'option `ajouter un fichier README.md`.
+6. Sous RStudio, créez un nouveau projet. Choisissez l'option `nouveau projet depuis un dépôt git`.
+7. Quels fichiers sont présents à la racine du nouveau projet ? Décrivez.
+8. Modifiez le fichier README.md en ajoutant les instructions suivantes : 
 
+```md
+
+Je modifie mon fichier en local !
+
+```
+
+9. En utilisant l'éditeur visuel de git sous RStudio, ajoutez le fichier README.md, puis créez votre premier commit avec le message : "mon premier commit". Naviguez jusqu'à votre projet sous github. Voyez vous une différence ? Est-ce normal ?
+10. Modifiez à nouveau le fichier README :
+
+```md
+
+Je modifie mon fichier en local à nouveau!
+
+```
+
+11. Faites un deuxième commit en ajoutant à nouveau le fichier README.md. Ce deuxième commit aura pour message "mon deuxième commit". En utilisant le client graphique de RStudio, faites un git push. Que s'est il passé cette fois-ci sur le dépôt github ?
 
 ## Exercice 2 Tutoriel git
 
 Réaliser le tutoriel <https://learngitbranching.js.org/> :
+
 - dans la section Main, la séquence d'introduction
 - dans la section Remote, la séquence Push & Pull
