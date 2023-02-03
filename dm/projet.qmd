@@ -73,10 +73,9 @@ NB : la fonction prend en entrée un triangle et renvoie en sortie une liste de 
 5. Créez un fichier `_targets.R` à la racine du dossier `posts/post-with-code/` en utilisant la fonction `tar_script` et l'argument `script`.
 6. Configurez `targets` pour référencer le bon fichier de pipeline en utilisant la fonction `tar_config_set` et en affectant à l'argument `script`  et `store`le chemin du fichier `_targets` et du dossier `_targets/`, ici normalement `posts/post-with-code/_targets.R`.
 
-```{r}
-#| eval: false
-
-tar_config_set(store = "posts/post-with-code/_targets", script = "posts/post-with-code/_targets.R")
+```
+tar_config_set(store = "posts/post-with-code/_targets",
+ script = "posts/post-with-code/_targets.R")
 ```
 
 
