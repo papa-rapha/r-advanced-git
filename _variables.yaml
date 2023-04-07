@@ -4,8 +4,8 @@ instructor:
   name: Raphaël Nedellec
   name_no_title: Raphaël Nedellec
   email: "raphael.nedellec@univ-nantes.fr"
-  url: "https://papa-rapha.github.io/website/"
-  github: "https://github.com/papa-rapha/website"
+  url: "https://raphael-nedellec.github.io/website/"
+  github: "https://github.com/raphael-nedellec/website"
   contact_policy: >-
     Le meilleur moyen de me contacter est par email. J'essaierai de répondre aussi vite que possible (sous 48h) -
      mais mon agenda peut parfois être chargé. Il peut donc être prudent de ne pas attendre la dernière minute.
@@ -17,7 +17,7 @@ course:
   time: "14h-17h"
   location: "Erdre salle informatique 337/338"
   dates: "du 6 janvier au 3 février"
-  github: "https://github.com/papa-rapha/r-advanced-git"
+  github: "https://github.com/raphael-nedellec/r-advanced-git"
   url: "https://rnedellec-r-advanced-git.netlify.app/"
   copyright_year: "2023"
 
