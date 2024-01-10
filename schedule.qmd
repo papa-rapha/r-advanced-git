@@ -6,24 +6,24 @@ format: html
 
 - L'objectif de la première session sera de faire un rappel des notions de programmation en R et de bien configurer son environnement de développement avec Rstudio.
 - Lors de la seconde session, nous nous concentrerons sur l'écriture de fonctions, et nous introduirons les objets S3, et les classes les plus importantes. 
-- Lors de la troisième séance, nous nous intéresserons à la créations de librairies R.
-- Lors de la quatrième session, nous nous initierons à la programmation littéraire et aux outils de la science reproductible avec l'outil quarto et le package targets.
+- Lors de la troisième séance, nous ferons un zoom particuliers sur quelques librairies dédiées à la lecture et manipulation des données, avec un focus sur les données textuelles et les dates.
+- Lors de la quatrième séance, nous nous intéresserons à la créations de librairies R.
+- Lors de la cinquième session, nous nous initierons à la programmation littéraire et aux outils de la science reproductible avec l'outil quarto et le package renv.
 - Enfin, lors de la cinquième séance, nous ferons une introduction à git, et à la plateforme github.
 
 ## Matériel et supports de cours
 
 
 
-| Date       | Objectifs                                             | Cours                                   | Exercices                                               | Input                                     |
-|------------|-------------------------------------------------------|:---------------------------------------:|:-------------------------------------------------------:|:-----------------------------------------:|
-| 6 janvier  | **Configuration de l'IDE Rstudio, Rappels de R**      | [{{< fa book >}}](/slides/cours_1.html) | [{{< fa file-circle-question >}}](/exercises/sem_1.pdf) | [{{< fa box >}}](/material/semaine_1.zip) |
-| 13 janvier | **Fonctions, Objets S3**                              | [{{< fa book >}}](/slides/cours_2.html) | [{{< fa file-circle-question >}}](/exercises/sem_2.pdf) | [{{< fa box >}}](/material/semaine_2.zip) |
-| 19 janvier | **Rendu DM n°1**                                      |                                         | [{{< fa list-check >}}](/dm/01-dm.pdf)                  |                                           |
-| 20 janvier | **Ecrire une librairie R**                            | [{{< fa book >}}](/slides/cours_3.html) | [{{< fa file-circle-question >}}](/exercises/sem_3.pdf) |                                           |
-| 27 janvier | **Programmation littéraire et science reproductible** | [{{< fa book >}}](/slides/cours_4.html) | [{{< fa file-circle-question >}}](/exercises/sem_4.pdf) | [{{< fa box >}}](/material/semaine_4.zip) |
-| 2 février  | **Rendu DM n°2**                                      |                                         | [{{< fa list-check >}}](/dm/02-dm.pdf)                  |                                           |
-| 3 février  | **Introduction à git et github**                      | [{{< fa book >}}](/slides/cours_5.html) | [{{< fa file-circle-question >}}](/exercises/sem_5.pdf) |                                           |
-| 10 février | **Projet final**                                      |                                         | [{{< fa list-check >}}](/dm/projet.pdf)                 |                                           |
+| Date       | Objectifs                        | Cours               | Exercices                           | Input              |
+|------------|----------------------------------|:-------------------:|:-----------------------------------:|:------------------:|
+| 12 janvier | **IDE Rstudio, Rappels de R**    | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
+| 19 janvier | **Fonctions, Objets S3**         | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
+| 24 janvier | **Données, Texte, Dates**        | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
+| 2 février  | **Ecrire une librairie R**       | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
+| 9 février  | **Science reproductible**        | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
+| 16 février | **Introduction à git et github** | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
+| 23 février | **Projet final**                 |                     | [{{< fa list-check >}}]()           | [{{< fa box >}}]() |
 
 
 : {tbl-colwidths="\[15,55,10,10,15\]"}

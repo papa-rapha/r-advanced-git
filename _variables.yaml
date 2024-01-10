@@ -12,14 +12,14 @@ instructor:
 
 course:
   name: "R avancé et introduction à Git"
-  semester: "Hiver 2023"
+  semester: "Hiver 2024"
   days: "Tous les vendredis"
-  time: "14h-17h"
+  time: "9h-12h"
   location: "Erdre salle informatique 337/338"
-  dates: "du 6 janvier au 3 février"
+  dates: "du 12 janvier au 16 février"
   github: "https://github.com/raphael-nedellec/r-advanced-git"
   url: "https://rnedellec-r-advanced-git.netlify.app/"
-  copyright_year: "2023"
+  copyright_year: "2024"
 
 university:
   name: "Université de Nantes"
