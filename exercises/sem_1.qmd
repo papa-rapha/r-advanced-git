@@ -22,12 +22,12 @@ Pour cet exercice, nous allons télécharger un jeu de données issu de [https:/
 6. Quels sont les disciplines para-olympiques accueillies dans ces sites franciliens ?
 7. Quel(s) site(s) accueille(nt) le plus de disciplines différentes ?
 8. Quel discipline aura lieu sur le plus grand nombre de sites ? Quels sont ces sites ? 
-9. A vol d'oiseau, quels sont les sites les deux sites les plus proches, au sens de la distance euclidienne ?
+9. A vol d'oiseau, quels sont les sites les deux sites les plus proches ?
 10. Quels sont les deux sites les plus éloignés ?
 11. Vous êtes un heureux millionaire et souhaitez investir dans un bien immobilier. Vous décidez d'acheter un appartement situé au barycentre de l'ensemble des sites olympiques. Où se situe cet appartement ?
 
 ### Aide pour l'exercice
 
 - Les fonctions `grep`, `grepl`, `strsplit`, `regmatches` pourront vous être utiles pour identifier tout ou partie d'une chaine de caractères, ou les manipuler. N'hésitez pas à regarder la documentation pour trouver la fonction appropriée.
-- La fonction `dist` est une fonction du package stats (dans R base) pour calculer des distances.
+- La fonction `distHaversine` est une fonction du package geosphere pour calculer des distances sur une sphère entre deux points géolocalisés.
 - Vous pouvez installer le package [`tidygeocoder`](https://cran.r-project.org/web/packages/tidygeocoder/readme/README.html) et utiliser la fonction `reverse_geocode` pour identifier le nom d'une adresse à partir d'une localisation.
