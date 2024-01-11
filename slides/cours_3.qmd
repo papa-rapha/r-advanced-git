@@ -13,678 +13,115 @@ knitr:
     comment: "#>" 
 ---
 
-# Les packages 
 
-## Un package
+# Données, Texte, Dates
 
-Un 'package' ou une 'librairie' rassemble du code, des données, de la documentation et des tests ensemble et est facile à partager.
+# Lire des données
 
-::: incremental
-- Pourquoi faire un package ?
-- Qu'est-ce qu'un package et comment développer un package ?
-- Tester et documenter son package.
-:::
+## Fichiers plats (.txt, .csv)
 
+Traditionnellement, les fichiers de données de petite taille sont disponibles au format **.csv** ou **.txt**
 
-# Pourquoi faire un package ?
-
-## Motivation
-
-Pour le développeur :
-
-::: incremental
-- Se faciliter la vie, s'organiser ;
-- mutualiser et maintenir des fonctions en un seul endroit ;
-- monter en compétence ;
-- documenter et partager avec la communauté sous un format standardisé.
-:::
-
-## Motivation
-
-Pour l'utilisateur :
-
-::: incremental
-- Utiliser des outils testés et validés par la communauté ;
-- gagner en efficacité et optimalité ;
-- accélérer les différents processus de data science.
-:::
-
-## [CRAN](https://cran.r-project.org/)
-
-::: incremental
-- Dépôt officiel historique
-- [Plusieurs miroirs disponibles](https://cran.r-project.org/)
-- ["Validation"](https://cran.r-project.org/doc/manuals/R-exts.html#Checking-and-building-packages) des packages
-- [Liste de librairie par thèmes](https://cran.r-project.org/)
-:::
-
-## [Github](https://github.com/) {auto-animate="true"}
-
-![](images/github.png){fig-align="center"}
-
-## [Github](https://github.com/) {auto-animate="true"}
-
-![](images/github.png){fig-align="left"}
-
-::: callout-note
-## Github et Git
-Plus sur ce sujet lors du cours 5
-:::
-
-## Installer, charger
-
-Installer un package :
 ```{r}
-#| eval: false
-install.packages("tidyverse") # base R
-remotes::install_github("r-lib/conflicted") # using remotes
+# base R
+read.csv()
+read.table()
+# R package readr
+readr::read_csv()
+# autres solutions :
+datatable::fread()
+vroom::vroom()
 ```
 
-- `install.packages` en R base, depuis le CRAN ou des sources
-- `remotes` : library permettant l'installation depuis le CRAN et différents dépôt de code, tels que [github](https://github.com/), [gitlab](https://gitlab.com/), [bitbucket](https://bitbucket.org/product), ainsi que [Bioconductor](https://www.bioconductor.org/).
+
+::: {.callout-warning}
+Même s'il est possible d'importer des données directement depuis RStudio, il est primordial de coder les imports pour rendre les études reproductibles.
+:::
+
+## Fichiers .json
+
+Format omni-présent sur le web. Permet de représenter des données hiérarchiques.
+
+```{js}
+{"employees":[
+  { "firstName":"John", "lastName":"Doe" },
+  { "firstName":"Anna", "lastName":"Smith" },
+  { "firstName":"Peter", "lastName":"Jones" }
+]}
+```
+
+Pour lire les fichiers json, on utilisera en priorité la librairie [`jsonlite`](https://cran.r-project.org/web/packages/jsonlite/vignettes/json-aaquickstart.html).
+
+```{r}
+library(jsonlite)
+read_json("some_json_file.json")
+?fromJSON()
+?toJSON()
+```
+
+Possibilité de lire et écrire du json depuis R.
+
+
+## Requêter une base de données {auto-animate="true"}
+
+Enfin, de nos jours, beaucoup de données d'analyse résident dans des bases de données, souvent dites relationnelles.
 
 . . .
 
-Charger un package :
-
-```{r}
-#| eval: false
-
-library(dplyr)
-```
-
-
-
-# Structure d'un package
-
-## Arborescence : [randomForest](https://github.com/cran/randomForest)
-
-![](images/randomForst_gh.png){fig-align="center"}
-
-
-## Code R/ {auto-animate="true"}
-
-Contient le code R du package. 
-
-- Ce code est exécuté au `build time` ;
-- différent d'un script/ d'une analyse interactive dans RStudio où le code est exécuté au `run time`.
+En R, le backend [`DBI`](https://dbi.r-dbi.org/) a été développé pour fournir une interface unique à de nombreux systèmes de bases de données ou data warehouse existants : mysql, postgresql, snowflake, etc.
 
 . . .
 
-::: callout-warning
-## Pas de sous-dossier
-Utilisez des préfixes "smthing-*.R" pour organiser les fichiers par thème
-:::
-
-## Code R/ {auto-animate="true"}
-
-Contient le code R du package. 
-
-- Ce code est exécuté au `build time` ;
-- différent d'un script/ d'une analyse interactive dans RStudio où le code est exécuté au `run time`.
-
-
-::: callout-warning
-## Points de vigilance
-- Ne modifiez pas le système de l'utilisateur ! Pas d'appels aux fonctions `source`, `library` dans le code d'un package
-- Utilisez avec vigilance `par`, `options`, `setwd` ...
-:::
-
-## Exemple R/
-
-![](images/R_folder_1.png){fig-align="center"}
-
-. . .
-
-
-::: callout-note
-## Contenu des fichiers
-Rester cohérent et clair sur le contenu des fichiers - ni trop, ni pas assez. Dépend du contexte.
-:::
-
-## data/
-
-::: incremental
-- Partage de dataset utiles au package pour la documentation, les exemples, le fonctionnement interne du package ;
-- data packages : [nycflights13](https://nycflights13.tidyverse.org/), [babynames](https://github.com/hadley/babynames) ;
-- organisation différentes en fonction des données et de leur utilité.
-:::
-
-. . .
-
-::: callout-note
-## usethis
-Voir `usethis::use_data()`
-:::
-
-## data/
-
-::: incremental
-- Stocker des objets R pour qu'ils soient disponibles pour les utilisateurs : `data/` au format `.rda/.RData`
-- Stocker des objets à des fins de développement : `R/sysdata.rda`
-- Stocker des objets au format brut (xls, xlsx, json, ..) : `inst/extdata/`
-:::
-
-. . .
-
-::: callout-important
-## Préserver la reproducibilité des datasets
-Voir `usethis::use_data_raw()`
-:::
-
-## man/
-
-![](images/man-0.png){fig-align="center"}
-
-
-## man/
-
-![](images/man-1.png){fig-align="center"}
-
-## vignettes/
-
-![](images/vignette-1.png){fig-align="center"}
-
-## vignettes/
-
-![](images/vignette-2.png){fig-align="center"}
-
-## man/ et vignettes/
-
-- Il est possible d'écrire les documents .Rd à la main. Mais il recommandé d'utiliser `roxygen2` pour les générer automatiquement !
-- `roxygen2` est bien intégré au workflow `devtools`
-- Les *vignettes* sont des guides d'utilisation détaillés pour le package ou certaines de ses fonctionnalités.
-- À écrire en Rmarkdown
-
-## Autres dossiers
-
-::: incremental
-- `inst/` : pour les fichiers additionnels à inclure dans la librairie ;
-- `src/`: pour stocker des fichiers sources et "header" C/C++/... et utiliser du code compilé dans un package R ;
-- `demo/`, `exec/`, `po/`, `tools/`, ...
-:::
-
-. . .
-
-::: callout-note
-## Plus d'informations
-Voir le chapitre dédié dans [R packages](https://r-pkgs.org/misc.html)
-:::
-
-## Metadata : DESCRIPTION {auto-animate="true"}
-
-```{}
-Package: mynewpackage
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
-Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
-```
-
-
-## Metadata : DESCRIPTION {auto-animate="true"}
-
-::: incremental
-- `Title` : Décrire en une phrase la librairie
-- `Description` : Décrire de manière plus détaillée l'intérêt et les fonctionnalités de la librairie
-- `Authors@R` : Les auteurs. Voir `?person()`.
-- `Version` : Version du package. Important de le maintenir à jour, voir [chapitre dédié dans R avancé](https://r-pkgs.org/lifecycle.html).
-- `License` : Quelle licence et quels droits d'utilisation ?
-- `Suggests`, `Imports`, and others : Gestion des dépendances avec des librairies tierces.
-:::
-
-## Quand utiliser des dépendances ?
-
-Plusieurs critères et questions à se poser :
-
-::: incremental
-- Type de dépendance
-- Nombre de dépendances indirectes induites
-- Coût d'installation des dépendances (dépendances systèmes, code compilé, taille des packages)
-- Maintenance et suivi des librairies
-- Criticité des fonctionnalités
-:::
-
-## Dépendances : DESCRIPTION
-
-- `Imports` : Les packages listés ici doivent être présents et installés pour que votre librairie fonctionne.
-- `Suggests`: Votre package peut utiliser ces dépendances, mais ne sont pas nécessaires à son fonctionnement. Par exemple, ces packages peuvent être utilisés dans les vignettes ou les tests.
-
-::: callout-note
-## DESCRIPTION
-Les dépendances déclarées dans le fichier DESCRIPTION aident R à valider la présence des packages nécessaires et à les installer lors de l'installation de votre package.
-:::
-
-## Dépendances : NAMESPACE
-
-Quelle fonction `here()` est disponible dans l'environnement global ?
-
 ```{r}
-#| eval: false
-library(lubridate)    |  library(here)
-library(here)         |  library(lubridate)
+library(DBI)
+# Create an ephemeral in-memory RSQLite database
+con <- dbConnect(RSQLite::SQLite(), dbname = ":memory:")
 
-here() # here::here() |  here() # lubridate::here()
-```
+dbListTables(con)
+dbWriteTable(con, "mtcars", mtcars)
+dbListTables(con)
 
-. . .
-
-Opérateur `::`
-
-```{r}
-#| eval: false
-lubridate::here() # always gets lubridate::here()
-here::here()      # always gets here::here()
-```
-
-## Dépendances : NAMESPACE {auto-animate="true"}
-
-```{r}
-sd
-#> function (x, na.rm = FALSE) 
-#> sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
-#>     na.rm = na.rm))
-#> <bytecode: 0x563eba6f48a0>
-#> <environment: namespace:stats>
-```
-
-. . .
-
-Que se passe-t-il lorsque l'on déclare une nouvelle fonction `var` ?
-
-```{r}
-#| eval: false
-var <- function(x) -5
-var(1:5)
-#> [1] -5
-sd(1:5)
+dbDisconnect(con)
 ```
 
 
-## Dépendances : NAMESPACE {auto-animate="true"}
 
-```{r}
-sd
-#> function (x, na.rm = FALSE) 
-#> sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
-#>     na.rm = na.rm))
-#> <bytecode: 0x563eba6f48a0>
-#> <environment: namespace:stats>
-```
-
-
-Que se passe-t-il lorsque l'on déclare une nouvelle fonction `var` ?
-
-```{r}
-#| eval: false
-var <- function(x) -5
-var(1:5)
-#> [1] -5
-sd(1:5)
-#> [1] 1.58
-```
-
-Cela est possible grâce au `namespace` du package `stats` où la fonction `var` du package `stats` est déjà référencée.  
-
-## Dépendances : NAMESPACE
-
-Exemple tiré du package `remotes`
-
-```{}
-# Generated by roxygen2: do not edit by hand
-
-S3method(format,bioc_git2r_remote)
-S3method(format,bioc_xgit_remote)
-...
-export(add_metadata)
-export(available_packages)
-...
-importFrom(stats,update)
-importFrom(tools,file_ext)
-```
-
-::: callout-note
-## roxygen2
-Une bonne pratique aujourd'hui est d'utiliser roxygen2 pour générer automatiquement le fichier NAMESPACE
-::: 
-
-## Dépendances : NAMESPACE
-
-::: incremental
-- `importFrom` : importe un objet (fonction) d'une dépendance
-- `import` : importe tous les objets exportés
-- `S3method` : pour exporter une méthode S3
-- `export` : pour exporter une fonction (rendre une fonction publique)
-:::
-
-. . .
-
-::: callout-note
-## Autres instructions
-Plus rares : `useDynLib()`, `exportPattern()`, `exportClasses()`, `exportMethods()`, `importClassesFrom()`, `importMethodsFrom()`
-:::
-
-# Développer un package
-
-## Un exemple de workflow avec Devtools
-
-::: incremental
-- [devtools](https://devtools.r-lib.org/), librairie "chapeau" pour tous les outils de développement
-- [usethis](https://usethis.r-lib.org/), pour automatiser l'initialisation d'un nouveau package
-- [roxygen2](https://roxygen2.r-lib.org/), pour la gestion de la documentation
-:::
-. . .
-
-::: callout-note
-## Cheatsheet
-Voir <https://raw.githubusercontent.com/rstudio/cheatsheets/main/package-development.pdf>
-:::
-
-## Setup 
-
-Création d'un squelette de package :
-
-```{r}
-# package name may only contain 
-# letters, numbers
-# dots are allowed but not recommended
-usethis::create_package("mynewpackage")
-```
-
-. . .
-
-![](images/package_01.png){fig-align="center"}
-
-RStudio initialise un nouveau projet. 
-
-## Setup : nouveau projet
-
-![](images/new_project_package.png){fig-align="center"}
-
-::: callout-note
-## Nouveau projet
-En utilisant l'interface graphique, il est possible de créer des projets avec des templates, dont des packages. Ceci utilise *in fine* `usethis`.
-:::
-
-## Écrire et documenter ses fonctions
-
-- les fonctions sont dans des fichiers .R au sein du répertoire R/
-- il faut documenter ses fonctions en utilisant les balises `roxygen2`
-
-::: callout-note
-## usethis
-`usethis::use_r` pour créer un fichier .R dans le répertoire R/, ou naviguer dans celui-ci dans RStudio.
-:::
-
-## roxygen2 {auto-animate="true"}
-
-```{r}
-compute_stats_by_levels <- function(
-    data, col, by, stats
-) {
-  if (stats %in% c("mean", "max", "min")) {
-    res <- tapply(data[[col]], data[[by]], stats)
-  } else {
-    stop("wrong stats")
-  }
-  return(res)
-}
-```
-
-Resultats ?
-
-```{r}
-#| eval: false
-#| error: true
-compute_stats_by_levels(mtcars, "mpg", "cyl", mean)
-compute_stats_by_levels(mtcars, "mpg", "cyl", "mean")
-```
-## roxygen2 {auto-animate="true"}
-
+## Requêter une base de données {auto-animate="true"}
 ```{r}
 #| eval: true
-compute_stats_by_levels <- function(
-    data, col, by, stats
-) {
-  if (stats %in% c("mean", "max", "min")) {
-    res <- tapply(data[[col]], data[[by]], stats)
-  } else {
-    stop("wrong stats")
-  }
-  return(res)
-}
+
+
+library(DBI)
+# Create an ephemeral in-memory RSQLite database
+con <- dbConnect(RSQLite::SQLite(), dbname = ":memory:")
+
+dbListTables(con)
+dbWriteTable(con, "mtcars", mtcars)
+dbListTables(con)
+dbListFields(con, "mtcars")
 ```
 
-Résultats :
+## Requêter une base de données {auto-animate="true"}
+```{r}
+#| eval: false
+head(dbReadTable(con, "mtcars"))
+res <- dbSendQuery(con, "SELECT * from mtcars LIMIT 6")
+dbFetch(res)
+```
 
+## Requêter une base de données {auto-animate="true"}
 ```{r}
 #| eval: true
-#| error: true
-compute_stats_by_levels(mtcars, "mpg", "cyl", mean)
-compute_stats_by_levels(mtcars, "mpg", "cyl", "mean")
+head(dbReadTable(con, "mtcars"))
+res <- dbSendQuery(con, "SELECT * from mtcars LIMIT 6")
+dbFetch(res)
+dbClearResult(res)
+dbDisconnect(con)
 ```
 
-## roxygen2 {auto-animate="true"}
 
-```{r}
-#| code-line-numbers: "|1-5,7"
-#' @param data A data.frame
-#' @param col A string, the column name for which we compute the stats
-#' @param by A string, the column name by which we group
-#' @param stats A string, the name of the function. Must be one of "mean",
-#'   "min", "max".
-compute_stats_by_levels <- function(
-    data, col, by, stats
-) {
-  if (stats %in% c("mean", "max", "min")) {
-    res <- tapply(data[[col]], data[[by]], stats)
-  } else {
-    stop("wrong stats")
-  }
-  return(res)
-}
-```
+# Manipulation de dataframes
 
-## roxygen2 {auto-animate="true"}
+# Données textuelles
 
-```{r}
-#| code-line-numbers: "|7-8,10,17"
-#' @param data A data.frame
-#' @param col A string, the column name for which we compute the stats
-#' @param by A string, the column name by which we group
-#' @param stats A string, the name of the function. Must be one of "mean",
-#'   "min", "max".
-#' 
-#' @export
-compute_stats_by_levels <- function(
-    data, col, by, stats
-) {
-  if (stats %in% c("mean", "max", "min")) {
-    res <- tapply(data[[col]], data[[by]], stats)
-  } else {
-    stop("wrong stats")
-  }
-  return(res)
-}
-```
-
-## roxygen2 {auto-animate="true"}
-
-```{r}
-#| code-line-numbers: "|1-3,12-13"
-#' A Function to Compute Group Statistics
-#' 
-#' @description This function is designed for example only and is not really usefull..
-#'
-#' @param data A data.frame
-#' @param col A string, the column name for which we compute the stats
-#' @param by A string, the column name by which we group
-#' @param stats A string, the name of the function. Must be one of "mean", "min", "max".
-#' @return A named vector statistics, of size `length(unique(data[[col]]))`
-#' 
-#' @export
-#' @examples
-#' compute_stats_by_levels(mtcars, "mpg", "cyl", "mean")
-compute_stats_by_levels <- function(
-    data, col, by, stats
-) {
-  if (stats %in% c("mean", "max", "min")) {
-    res <- tapply(data[[col]], data[[by]], stats)
-  } else {
-    stop("wrong stats")
-  }
-  return(res)
-}
-```
-
-## roxygen2 : balises
-
-::: incremental
-- `@title`, `@description`, `@detail` : pour présenter et détailler sa fonction. Peuvent être implicites.
-- `@param` : pour documenter les paramètres de la fonction
-- `@return` : quel est l'output de la fonction 
-- `@examples` : suite d'examples
-- `@export` : pour exposer la fonction dans le NAMESPACE
-- `@importFrom` : quand la fonction importe une fonction depuis une librairie tierce
-- `@noRd` : pour documenter la fonction mais ne pas exposer la documentation publiquement
-:::
-
-## roxygen2
-
-::: incremental
-- Possibilité d'utiliser [des balises Mardown](https://roxygen2.r-lib.org/articles/rd-formatting.html) dans la documentation.
-- Possibilité de réutiliser/mutualiser de la documentation entre fonctions, en utilisant les balises `@describe`, `@rdname`,
-`@inheritParams`, `@inheritSection`, `@inherit`
-- Pour documenter des fonctions, mais aussi des datasets.
-:::
-
-. . .
-
-::: callout-note
-## Liste des balises
-<https://roxygen2.r-lib.org/articles/rd.html> pour le processus de base
-<https://roxygen2.r-lib.org/reference/tags-rd.html> pour la liste exhaustive
-:::
-
-## roxygen2 : en résumé
-
-::: incremental
-- documentez vos fonctions avec les balises roxygen2
-- roxygen2 générera la documentation et le NAMESPACE de votre package
-- multiples balises disponibles, et il est possible de moduler la documentation ;
-- s'intègre au workflow de développement `devtools`
-:::
-
-# Testing
-
-# Comment testez-vous une fonction ?
-
-## Tester vos fonctions {auto-animate="true"}
-
-En développement logiciel (donc quand vous développez une librairie / des fonctions en R) :
-
-::: incremental
-- il faut tester vos fonctions pour s'assurer qu'elles se comportent comme attendu ;
-- de manière reproductible et non de manière informelle et ad'hoc ;
-- un bug : un nouveau test à ajouter ;
-- évaluer la couverture des tests et la robustesse du code.
-:::
-
-## [testthat](https://testthat.r-lib.org/index.html)
-
-Framework dominant pour l'écriture de tests en R.
-
-```{r}
-# from dplyr test suite
-# https://github.com/tidyverse/dplyr/blob/2af5c86112c697a8abf114eb5dc323e5116777bc/tests/testthat/test-bind-cols.R#L33
-test_that("bind_cols() handles all-NULL values (#2303)", {
-  expect_identical(bind_cols(list(a = NULL, b = NULL)), tibble())
-  expect_identical(bind_cols(NULL), tibble())
-})
-```
-
-## testthat, exemple
-
-Dans R/
-```{r}
-# myfunction.R
-my_function <- f(x, y) {
-  stopifnot(!is.numeric(x), !is.numeric(y))
-  return(x * y)
-}
-```
-
-Dans  tests/testthat/test-myfunction.R
-
-```{r}
-# test-myfunction.R
-test_that("my_function multiply works", {
-  expect_identical(my_function(1, 2), 1 * 2)
-  expect_identical(my_function(TRUE, FALSE), 0)
-  expect_error(my_function("x", 1))
-})
-```
-
-## Quelques assertions 
-
-- `expect_equal()` `expect_identical()` 
-- `expect_type()` `expect_s3_class()` 
-- `expect_length()`
-- `expect_true()` `expect_false()`
-- `expect_error()` `expect_warning()` `expect_message()` `expect_condition()`
-
-Liste exhaustive [ici](https://testthat.r-lib.org/reference/index.html)
-
-# En résumé : processus de développement
-
-## Processus de développement d'une fonction
-
-::: incremental
-- Écrire sa fonction
-- Documenter
-- Écrire les tests associés (voir `usethis::use_testthat()` et `?usethis::use_test()`)
-- Charger son package en émulant son installation avec `?devtools::load_all()`
-- Itérer
-:::
-
-## Développement d'une librairie
-
-::: incremental
-- Développez vos fonctions et ajoutez vos datasets.
-- Documenter. `devtools::document()` permet de générer et mettre à jour automatiquement les différents documents (.Rd, NAMESPACE).
-- Testez régulièrement vos fonctions en utilisant `devtools::test()` qui exécutera la suite de test de la librairie en développement.
-- Utilisez `devtools::check()` si vous voulez tester la compatibilité avec le CRAN.
-:::
-
-## Développement d'une librairie
-
-::: incremental
-- Utilisez les bonnes pratiques et outils de développement logiciel : git, versioning, CI/CD, [code coverage](https://covr.r-lib.org/)...
-- Améliorer et maintenir la documentation, pourquoi pas avec [`pkgdown`](https://pkgdown.r-lib.org/) et des vignettes détaillées.
-:::
-
-# Ressources additionnelles
-
-## Ressources additionnelles
-
-- [Writing an R package from scratch - Hilary Parker](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/)
-- [How to develop good R packages - Maëlle Salmon](https://masalmon.eu/2017/12/11/goodrpackages/)
-- [Making your first R package - Fong Chun Chan](https://tinyheero.github.io/jekyll/update/2015/07/26/making-your-first-R-package.html)
-- [Writing an R package from scratch - Tomas Westlake](https://r-mageddon.netlify.app/post/writing-an-r-package-from-scratch/)
-- [R packages](https://r-pkgs.org)
-- [devtools library](https://devtools.r-lib.org/)
-- [usethis library](https://usethis.r-lib.org/)
-
-# Questions ?
-
-
+# Dates

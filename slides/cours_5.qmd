@@ -13,340 +13,533 @@ knitr:
     comment: "#>" 
 ---
 
-# Introduction à Git et à Github
+# Programmation littéraire et science reproductible
 
-## Rappels
+## Avoir un 'workflow' de datascience reproductible
 
 ::: incremental
-- Rappels des notions importantes en R
-- Conseils de bonnes pratiques
-- Fonctions, Packages
-- Reproductibilité : `quarto`, `targets`, `renv`
+-   Pouvoir expliquer et reproduire ses résultats aujourd'hui comme dans N jours/mois/années.
+-   En datascience, il est aussi important de s'adresser correctement à ses collègues qu'à sa machine.
+-   Avoir un workflow efficace lorsque les calculs et les processus sont compliqués.
+-   Pouvoir travailler de manière collaborative.
+:::
+
+## Agenda
+
+::: incremental
+-   Programmation littéraire avec [`quarto`](https://quarto.org/)
+-   Simplification du workflow et reproductibilité avec [`targets`](https://docs.ropensci.org/targets/)
+-   Gestion des dépendances avec [`renv`](https://rstudio.github.io/renv/articles/renv.html)
+-   `Version control` : [git](https://git-scm.com/) au prochain cours !
+:::
+
+# Programmation littéraire avec `quarto`
+
+## Programmation littéraire
+
+> Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do.
+
+[Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth)
+
+## Motivation originelle de Yuhie Xie (créateur de knitr/rmarkdown)
+
+![](images/literate_prog_1.png){fig-align="center"}
+
+## Programmation littéraire pour la datascience
+
+::: incremental
+-   Reproductibilité des résultats
+-   Explications, codes et résultats dans le même document
 :::
 
 . . .
 
-Et maintenant, [Git](https://git-scm.com/) et [Github](https://github.com/) !
+Un outil et une méthode précieuse pour rendre intelligibles et reproductibles ses études. Un gain précieux en efficacité.
 
-# Motivation
+::: callout-note
+## Outils
 
-----
-
-![](images/git-2.gif){fig-align="center"}
-
-----
-
-![](images/git-3.webp){fig-align="center"}
-
-## Où même ça
-
-```{r}
-#| code-line-numbers: "|7-12"
-
-# study.R
-data |>
-  transform() |>
-  normalize() |>
-  model() |>
-  plot()
-
-# Ancienne version --
-# data |>
-#   transform() |>
-#   normalize() |>
-#   plot()
-
-data |>
-  summarize()
-```
-
-
-## Contrôle de version
-
-Git est un outil de contrôle de version.
-
-::: incremental
-- Git permet de tracer l'historique des fichiers d'un projet en le représentant sous forme de graphe
-- Modèle distribué
-- Léger et performant
-- Facilité pour créer des branches
-- Libre et disponible sous toutes les plateformes
+Notebook (jupyter), Rmarkdown, Quarto
 :::
 
-## Contrôle de version
+## rmarkdown
 
-![](images/git-11.png){fig-align="center"}
-
-## Collaboration
-
-![](images/git-5.png){fig-align="center"}
-
-# Fonctionnement de Git
-
-## Git is hard
-
-![](images/git-1.png){fig-align="center"}
-
-## Utilisation de Git
+Un peu d'histoire
 
 ::: incremental
-- en ligne de commande : terminal unix, mac, wsl2 sous windows > 10, mingw, ...
-- avec des outils graphiques ou dans des IDE/environnements de développement : RStudio, VSCode, gitkraken, et de multiples autres...
+-   Engine `knitr` (2011), avec des dialectes \Latex, markdown
+-   `rmarkdown` (2015)
+-   Et désormais, `quarto` (2022)
 :::
 
 . . .
 
 ::: callout-note
-## Dans la suite
-Nous nous concentrerons sur les lignes de commande et l'interface graphique RStudio
+## Histoire de rmarkdown par l'auteur de la librairie
+
+<https://slides.yihui.org/2021-Brazilian-R-Day.html#1>
 :::
 
-## Installation de Git
+## rmarkdown vs quarto
 
-<https://git-scm.com/book/en/v2/Getting-Started-Installing-Git>
-
-## git config {auto-animate="true"}
-
-
-
-```bash
-# Voir les options de configuration
-git config user.name
-git config user.email
-```
-
-## git config {auto-animate="true"}
-
-
-```bash
-# Paramètrer son nom et son email.
-git config user.name "<votre user name>"
-git config user.email "<votre email>"
-```
-. . .
-
-![](images/git-6.png){fig-align="center"}
-
-## git init
-
-
-
-```bash
-# Initialiser un projet git dans un dossier
-git init
-```
-
-. . .
-
-![](images/git-7.png){fig-align="center"}
-
-## git status {auto-animate="true"}
-
-![](images/git-9.png){fig-align="center"}
-
-## git status {auto-animate="true"}
-
-![](images/git-8.png){fig-align="center"}
-
-## git add
-
-Pour ajouter des changements en vue de la prochaine validation (prochain commit).
-
-```bash
-# on ajoute le fichier renv.lock
-git add renv.lock
-git status
-```
-
-. . .
-
-![](images/git-10.png){fig-align="center"}
-
-
-
-## git commit
-
-> Un "commit"  - une validation, représente une image de votre projet à un instant donné. C'est un état qui va être enregistré dans l'historique et qui sera donc atteignable dans le futur.
-
-```bash
-git commit -m "mon premier commit"
-# -m pour spécifier un message informatif associé au commit
-```
-
-## git commit
-
-![](images/git-12.png){fig-align="center"}
-
-## Après le commit {auto-animate="true"}
-
-![](images/git-13.png){fig-align="center"}
-
-## Après le commit {auto-animate="true"}
-
-![](images/git-14.png){fig-align="center"}
-
-
-## git push
-
-> La commande `git push` est utilisée pour uploader des données locales vers un répertoire distant, par exemple, un projet partagé sur github.
-
-. . .
-
-```bash
-git push origin main
-# origin : nom du serveur distant
-# main : branche
-```
-
-Pour pousser sur le dépôt distant origin le contenu de la branche main
-
-## Avant de push
-
-Il faut définir un `remote`(dépôt distant), par exemple un dépôt github :
-
-```bash
-# origin est le nom par convention du dépôt distant principal
-git remote add origin git@github.com:<username>/<projectname>.git
-```
-
-![](images/git-15.png){fig-align="center"}
-
---- 
-
-## {auto-animate="true"}
-
-![](images/git-4.webp){fig-align="center"}
-
---- 
-
-## {auto-animate="true"}
-
-:::: {.columns}
-
-::: {.column width="50%"}
-![](images/git-4.webp){fig-align="center"}
+::: incremental
+-   `quarto` reprend la philosophie de rmarkdown
+-   mais est agnostique au langage (compatible R, python, ...)
+-   les fichiers .rmd peuvent être compilés avec `quarto` (pour la plupart)
+-   aujourd'hui, sauf exceptions, privilégier `quarto`
 :::
 
-::: {.column width="50%"}
-1. `git add` pour lister les fichiers à `commit`
-2. `git commit` pour sauvegarder un état donné
-3. `git push` pour synchroniser ces changements avec un dépôt distant
-:::
-::::
-
-## git pull
-
-> La commande `git pull` est utilisée pour mettre à jour des données locales depuis un répertoire distant, par exemple, un projet partagé sur github.
-
-```bash
-git pull origin main
-# origin : nom du serveur distant, main : branche
-```
-
-On merge la branche `main` du dépôt `origine` avec notre branche courante de travail. 
-
-::: callout-note
-## git pull
-Un `git pull` est équivalent à un `git fetch` + `git merge`. L'option un est jugée moins sûre que l'option 2 mais plus simple pour démarrer sur des projets avec des workflow simples.
-:::
-
-## git branch, git switch, git checkout
-
-La commande `git branch` sert à créer des branches en parallèle de la branche principale `main` ou `master`.
-Utile lorsque l'on collabore à plusieurs, pour créer des branches de fonctionnalités (feature branch), dans de nombreux workflow..
-
-Voir [ici](https://www.atlassian.com/git/tutorials/comparing-workflows#:~:text=A%20Git%20workflow%20is%20a,in%20how%20users%20manage%20changes.) pour une présentation de workflows possibles.
-
-La commande `git switch` permet de changer de branche. La commande `git checkout` permet entre autres de changer de branche.
-
-```bash
-git branch feature-1
-git switch branch feature-1
-git checkout main
-```
-
-## git merge, git rebase
-
-Lorsque l'on souhaite fusionner deux branches, on peut réaliser deux types d'opérations :
-
-- `git merge` 
-- `git rebase`
-
-Ces deux opérations diffèrent par la manière de fusionner les historiques (`merge` préserve l'historique complet, quand `rebase` réécrit l'historique).
-
-## .gitignore
-
-Il est possible d'écrire un fichier .gitignore pour ne pas traquer certains fichiers:
-
-- fichiers volumineux
-- fichiers générés à la volée qui ne doivent pas être sauvegardés (.pdf quand les sources sont dispos)
-- fichiers sensibles
+. . .
 
 ::: callout-warning
-## Secrets
-Il est facile de glisser des 'secrets' dans ses scripts et que ceux-ci se retrouvent dans un historique git : mots de passe, token, informations sensibles. Attention aux fichiers que vous enregistrez dans vos commits (comme le .Rhistory). Soyez vigilants.
+## Vignettes
+
+Le CRAN ne supporte pas (encore) les vignettes générées par `quarto` aujourd'hui. C'est un des rares cas où privilégier `rmarkdown`.
 :::
+
+## rmarkdown vs quarto
+
+::: columns
+::: {.column width="45%"}
+Avec quarto :
+
+```{r}
+#| eval: false
+#| echo: fenced
+#| label: chunk-quarto
+
+1 + 1
+
+```
+:::
+
+::: {.column width="55%"}
+Avec rmarkdown :
+
+```{r chunk-rmarkdown, eval=FALSE}
+#| echo: fenced
+
+1 + 1
+```
+:::
+:::
+
+. . .
+
+Paramètres du 'bloc' dans les accolades en rmarkdown, après `#|` en quarto.
+
+## quarto
+
+Metadata du document : YAML
+
+``` yaml
+---
+title: "first quarto"
+author: "Raphaël Nedellec"
+date: "27/01/2023"
+format: 
+  html:
+    code-fold: true
+---
+```
+
+. . .
+
+Multiples formats : [html](https://quarto.org/docs/reference/formats/html.html), [PDF](https://quarto.org/docs/reference/formats/pdf.html), [MS Word](https://quarto.org/docs/reference/formats/docx.html), [OpenOffice](https://quarto.org/docs/reference/formats/odt.html), [ePub](https://quarto.org/docs/reference/formats/epub.html), [Revealjs](https://quarto.org/docs/reference/formats/presentations/revealjs.html), [PowerPoint](https://quarto.org/docs/reference/formats/presentations/pptx.html), [Beamer](https://quarto.org/docs/reference/formats/presentations/beamer.html), et de nombreux autres
+
+## quarto : project
+
+Documents, présentations, mais aussi 'websites' ou 'books'
+
+``` yaml
+---
+project:
+  type: website
+website:
+  title: R Manuals
+  navbar:
+    background: primary
+  ...
+---
+```
+
+Exemple : ce cours est hébergé sur un [site](https://github.com/papa-rapha/r-advanced-git/blob/master/_quarto.yaml) quarto. Les [slides](https://github.com/papa-rapha/r-advanced-git/blob/master/slides/cours_1.qmd) des cours sont aussi écrites en quarto avec revealjs, les [sujets d'exercices](https://github.com/papa-rapha/r-advanced-git/blob/master/exercises/sem_1.qmd) en quarto - pdf.
+
+## quarto : 'code chunk' R {auto-animate="true"}
+
+```{r}
+#| label: fig-airquality-unfolded
+#| fig-cap: Temperature and ozone level.
+#| warning: false
+#| code-fold: false
+#| echo: fenced
+#| eval: false
+
+library(ggplot2)
+
+ggplot(airquality, aes(Temp, Ozone)) + 
+  geom_point() + 
+  geom_smooth(method = "loess")
+```
+
+## quarto : 'code chunk' R {auto-animate="true"}
+
+```{r}
+#| label: fig-airquality-folded
+#| fig-cap: Temperature and ozone level.
+#| warning: false
+#| code-fold: true
+#| echo: fenced
+#| eval: true
+
+library(ggplot2)
+
+ggplot(airquality, aes(Temp, Ozone)) + 
+  geom_point() + 
+  geom_smooth(method = "loess")
+```
+
+## quarto : 'code chunk' R
+
+``` {{r}}
+#| echo: true/false/fenced
+#| eval: true/false
+#| warning: true/false
+#| error: true/false
+#| label: "my-chunk"
+#| fig-*: ...
+#| tab-*: ...
+```
+
+Liste complète des options de blocs de code avec knitr disponible [ici](https://yihui.org/knitr/options/)
+
+## quarto : aussi en Python
+
+::: incremental
+-   Tout comme rmarkdown, les blocs de code ne sont pas nécessairement en R.
+-   Autres langages : Python, R, Julia, Observable.js
+-   Quarto, à la différence de rmarkdown, est totalement agnostique envers le langage. C'est un outil aussi très utile en Python !
+:::
+
+## quarto en résumé
+
+::: incremental
+-   Programmation littéraire.
+-   Document auto-portant avec texte, code et résultats réunis.
+-   Hautement configurable, multiples formats de projets disponibles.
+-   Templates et thèmes customisables.
+:::
+
+. . .
+
+::: callout-tip
+## quarto
+
+À utiliser aussi souvent que possible pour une analyse de données ou un projet de datascience.
+:::
+
+## Mais alors, quand utiliser des fichiers .R ?
+
+::: incremental
+-   pour définir des fonctions, dans des packages
+-   avec parcimonie, pour sourcer des fonctions (`source()`)
+-   lorsque l'on écrit un vrai script à appeler en ligne de commande avec [Rscript](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/Rscript)
+-   avec targets
+:::
+
+# Études reproductibles avec `targets`
+
+## `targets` : motivation
+
+> The targets package is a Make-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. targets learns how your pipeline fits together, skips costly runtime for tasks that are already up to date, runs only the necessary computation, supports implicit parallel computing, abstracts files as R objects, and shows tangible evidence that the results match the underlying code and data.
+
+Developpé par Will Landau
+
+## `targets` : motivation
+
+Expérience classique lors d'un projet de data science :
+
+::: incremental
+1.  Ecrire du code, l'exécuter
+2.  Attendre (longtemps...) la fin de l'exécution
+3.  Découvrir une erreur, corriger
+4.  Redémarrer à l'étape 1.
+:::
+
+## Outils de 'pipeline'
+
+::: incremental
+-   Des solutions et outils de 'pipeline' permettent de mettre fin à ce cercle vicieux
+-   [GNU-make](https://www.gnu.org/software/make/)
+-   targets : spécialement désigné pour exécuter du code R
+:::
+
+. . .
+
+::: callout-tip
+## Vidéo d'intro
+
+Vidéo d'intro à targets de 4 minutes : <https://vimeo.com/700982360>
+:::
+
+## targets workflow
+
+Organisation du projet :
+
+    ├── _targets.R      # fichier de configuration du workflow
+    ├── data.csv        # jeu de données
+    ├── R/ 
+    │   ├── functions.R # fichier de fonctions
+
+. . .
+
+::: callout-tip
+## Organisation du projet
+
+`targets::use_targets` permet d'initialiser la structure du projet. Cette structure peut être adaptée.
+:::
+
+## example : data.csv
+
+    Ozone,Solar.R,Wind,Temp,Month,Day
+    36,118,8.0,72,5,2
+    12,149,12.6,74,5,3
+    ...
+
+## example : functions.R
+
+```{r}
+#| eval: false
+
+# R/functions.R
+get_data <- function(file) {
+  read_csv(file, col_types = cols()) %>%
+    filter(!is.na(Ozone))
+}
+
+fit_model <- function(data) {
+  lm(Ozone ~ Temp, data) %>%
+    coefficients()
+}
+
+plot_model <- function(model, data) {
+  ggplot(data) +
+    geom_point(aes(x = Temp, y = Ozone)) +
+    geom_abline(intercept = model[1], slope = model[2])
+}
+```
+
+## `targets` : fichier de configuration
+
+```{r}
+#| eval: false
+
+library(targets)
+source("R/functions.R")
+tar_option_set(packages = c("readr", "dplyr", "ggplot2"))
+list(
+  tar_target(file, "data.csv", format = "file"),
+  tar_target(data, get_data(file)),
+  tar_target(model, fit_model(data)),
+  tar_target(plot, plot_model(model, data))
+)
+```
+
+## Inspecter la pipeline avec `tar_manifest`
+
+```{r}
+tar_manifest(fields = all_of("command"))
+#> # A tibble: 4 × 2
+#>   name  command                  
+#>   <chr> <chr>                    
+#> 1 file  "\"data.csv\""           
+#> 2 data  "get_data(file)"         
+#> 3 model "fit_model(data)"        
+#> 4 plot  "plot_model(model, data)"
+```
+
+## Inspecter la pipeline avec `tar_visnetwork`
+
+```{r}
+tar_visnetwork()
+```
+
+![](images/targets_0.png)
+
+## Executer la pipeline avec `tar_make`
+
+```{r}
+tar_make()
+#> • start target file
+#> • built target file [0.494 seconds]
+#> • start target data
+#> • built target data [0.203 seconds]
+#> • start target model
+#> • built target model [0.004 seconds]
+#> • start target plot
+#> • built target plot [0.015 seconds]
+#> • end pipeline [0.864 seconds]
+```
+
+## Collecter les objets intermédiaires avec `tar_read`
+
+```{r}
+tar_read(plot)
+```
+
+![](images/targets_1.png)
+
+## Nouvelle inspection
+
+```{r}
+tar_visnetwork()
+```
+
+![](images/targets_2.png)
+
+## Nouveau run
+
+```{r}
+tar_make()
+#> ✔ skip target file
+#> ✔ skip target data
+#> ✔ skip target model
+#> ✔ skip target plot
+#> ✔ skip pipeline [0.092 seconds]
+```
+
+## Edition du fichier de fonctions
+
+```{r}
+# Edit functions.R...
+plot_model <- function(model, data) {
+  ggplot(data) +
+    geom_point(aes(x = Temp, y = Ozone)) +
+    geom_abline(intercept = model[1], slope = model[2]) +
+    theme_gray(24) # Increased the font size.
+}
+```
+
+## Nouvelle inspection
+
+```{r}
+tar_visnetwork
+```
+
+![](images/targets_3.png)
+
+## targets et programmation littéraire
+
+1.  Programmation littéraire dans le workflow :
+
+::: incremental
+-   En exécutant la pipeline en premier, puis en appelant les résultats de la pipeline dans le document (avec les fonctions `tar_read` ou `tar_load`).
+-   On peut aussi intégrer une étape de rendering d'un document rmarkdown ou quarto directement avec la fonction `tarchetypes::tar_render` ou `tarchetypes::tar_quarto`
+:::
+
+. . .
+
+2.  `target markdown`: le workflow est embarqué dans le document.
+
+## `targets` en résumé
+
+::: incremental
+-   Outil de pipeline avancé en R
+-   Optimisation des calculs
+-   Evite la gestion manuelle du 'cache'
+-   Integré avec `quarto` et `rmarkdown`
+:::
+
+. . .
+
+::: callout-tip
+## Projets de datascience
+
+À utiliser sur les projets de datascience et d'analyse de données avec de multiples étapes et des analyses longues.
+:::
+
+# Gestion des dépendances avec `renv`
+
+## Information de la session
+
+```{r}
+#| eval: true
+
+devtools::session_info() # alternative à sessionInfo()
+```
+
+## Reproductibilité
+
+Pour s'assurer de la reproductibilité, il faut pouvoir reproduire son environnement :
+
+::: incremental
+-   Savoir quelle version de R a été utilisée
+-   Savoir quelles librairies ont été appelées, et quelle était leur version
+-   Pouvoir reconstruire cet environnement
+:::
+
+. . .
+
+Un outil : `renv`
+
+## `renv`
+
+::: incremental
+-   Librairie [`renv`](https://rstudio.github.io/renv/articles/renv.html)
+-   Philosophie : isoler les dépendances d'un projet pour le rendre reproductible dans le temps
+-   Management local des dépendances et des environnements
+-   Similaire à [`venv`](https://docs.python.org/3/library/venv.html) en Python
+:::
+
+. . .
+
+::: callout-note
+## .libPaths()
+
+L'utilisation de `renv` facilite la gestion des versions et la configurations des libPaths()...
+:::
+
+## `renv` : workflow
+
+::: incremental
+-   `renv::init()` : pour initialiser un projet avec `renv`
+-   `renv::snapshot()` : sauvegarder les références aux dépendances dans un fichier `renv.lock`
+-   `renv::restore()` : pour retourner à l'état référencé dans le fichier `renv.lock`
+:::
+
+. . .
+
+::: callout-warning
+## Limites
+
+-   Dépendances systèmes : [docker](https://www.docker.com/) ? Voir [ce post de blog](https://colinfay.me/docker-r-reproducibility/) pour une intro.
+-   Librairies archivées du CRAN
+:::
+
+## `renv` : avantages
+
+::: incremental
+-   Gestion globale d'un cache : optimisation d'espace disque et de temps de sauvegarde
+-   Possible d'utiliser des versions différentes de librairies dans différents projets sans avoir à configurer manuellement les `.libPaths()`
+-   Facilite la [collaboration](https://rstudio.github.io/renv/articles/collaborating.html)
+:::
+
+# En résumé
 
 ## En résumé
 
 ::: incremental
-- Utile pour créer de (nombreux) points de sauvegarde de vos projets
-- Indispensable à la collaboration
-- Outil de référence en développement logiciel
-- 95% de vos usages sont couverts par les instructions `add`, `commit`, `push` et `pull`.
-- Outil extrêmement versatile et complexe (impossible ?) à maitriser dans sa totalité : c'est normal !
-- **Outil indispensable pour le data scientist**
+1.  `quarto` : programmation littéraire. Utile pour les rapports, blogs, EDA... Et pour vous faire un 'portfolio' facilement !
+2.  `targets` : pour les études longues. Renforce la reproductibilité et facilite la vie au quotidien en gagnant en qualité de rendu et en productivité
+3.  `renv` : gestion de l'environnement, un point essentiel de la reproductibilité des résultats
 :::
 
----
+# Annexes
 
-![](images/git-16.jpg){fig-align="center"}
+## Liens complémentaires
 
-## Documentation
-
-- [git cheatsheet](https://training.github.com/downloads/fr/github-git-cheat-sheet.pdf)
-- [Github training](https://skills.github.com/)
-- [Pro Git](https://git-scm.com/book/en/v2)
-- [Documentation officielle](https://git-scm.com/docs)
-
-# Github et cie
-
-## Plateforme de collaboration
-
-- [Github](https://github.com/)
-- [Gitlab](https://about.gitlab.com/)
-- [Atlassian BitBucket](https://bitbucket.org/product/)
-
-## Github
-
-- Compte personnel gratuit
-- Possibilité de créer des projets publics et privés
-- Possibilité d'automatiser des tâches avec des Github Actions
-- Possibilité d'héberger des sites webs statiques (blog, sites perso, documentation) depuis Github Pages
-
-# Visite de github
-
-## Github Actions
-
-Les github actions sont des outils de CI/CD (continuous integration / continuous delivery) qui permettent l'automatisation de certaines tâches en réponse à un évenement (un push, un commit, sur une branche, ...).
-
-- [Documentation](https://docs.github.com/fr/actions) github actions
-- [Actions workflow R](https://github.com/r-lib/actions)
-- [Actions quarto](https://github.com/quarto-dev/quarto-actions)
-
-## Github Pages
-
-Github permet l'hébergement de sites web statiques par le biais des Github Pages. Ceci rend possible une intégration forte entre votre code et le déploiement d'un site. C'est très pratique pour héberger la documentation d'un package, un site personnel, ou tout site statique.
-
-- [Documentation](https://pages.github.com/) des Github Pages
-
-# En résumé
-
-::: incremental
-- Git est un outil complexe mais indispensable au data scientist
-- Une maîtrise premiers concepts simples suffira amplement à couvrir la majorité de vos besoins
-- Github est la plateforme leader, des alternatives existent
-- Utile pour se créer un portfolio, collaborer avec des camarades, persister du code de manière fiable
-- Github doit aussi être une source d'inspiration et d'information pour vous !
-:::
-
+-   [documentation quarto](https://quarto.org/) Documentation officielle `quarto`.
+-   [targets package](https://docs.ropensci.org/targets/) Documentation du package `targets`.
+-   [2018 - targets tutorial](https://github.com/wlandau/targets-tutorial) Un tuto `targets` qui date de 2018 - mais toujours valide dans les grandes lignes.
+-   [targets manual](https://books.ropensci.org/targets/) Manuel avancé de `targets`.
+-   [renv](https://rstudio.github.io/renv/index.html) Documentation du package `renv`, avec beaucoup d'articles explicatifs.

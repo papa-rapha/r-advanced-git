@@ -13,533 +13,678 @@ knitr:
     comment: "#>" 
 ---
 
-# Programmation littéraire et science reproductible
+# Les packages 
 
-## Avoir un 'workflow' de datascience reproductible
+## Un package
 
-::: incremental
--   Pouvoir expliquer et reproduire ses résultats aujourd'hui comme dans N jours/mois/années.
--   En datascience, il est aussi important de s'adresser correctement à ses collègues qu'à sa machine.
--   Avoir un workflow efficace lorsque les calculs et les processus sont compliqués.
--   Pouvoir travailler de manière collaborative.
-:::
-
-## Agenda
+Un 'package' ou une 'librairie' rassemble du code, des données, de la documentation et des tests ensemble et est facile à partager.
 
 ::: incremental
--   Programmation littéraire avec [`quarto`](https://quarto.org/)
--   Simplification du workflow et reproductibilité avec [`targets`](https://docs.ropensci.org/targets/)
--   Gestion des dépendances avec [`renv`](https://rstudio.github.io/renv/articles/renv.html)
--   `Version control` : [git](https://git-scm.com/) au prochain cours !
+- Pourquoi faire un package ?
+- Qu'est-ce qu'un package et comment développer un package ?
+- Tester et documenter son package.
 :::
 
-# Programmation littéraire avec `quarto`
 
-## Programmation littéraire
+# Pourquoi faire un package ?
 
-> Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do.
+## Motivation
 
-[Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth)
-
-## Motivation originelle de Yuhie Xie (créateur de knitr/rmarkdown)
-
-![](images/literate_prog_1.png){fig-align="center"}
-
-## Programmation littéraire pour la datascience
+Pour le développeur :
 
 ::: incremental
--   Reproductibilité des résultats
--   Explications, codes et résultats dans le même document
+- Se faciliter la vie, s'organiser ;
+- mutualiser et maintenir des fonctions en un seul endroit ;
+- monter en compétence ;
+- documenter et partager avec la communauté sous un format standardisé.
 :::
+
+## Motivation
+
+Pour l'utilisateur :
+
+::: incremental
+- Utiliser des outils testés et validés par la communauté ;
+- gagner en efficacité et optimalité ;
+- accélérer les différents processus de data science.
+:::
+
+## [CRAN](https://cran.r-project.org/)
+
+::: incremental
+- Dépôt officiel historique
+- [Plusieurs miroirs disponibles](https://cran.r-project.org/)
+- ["Validation"](https://cran.r-project.org/doc/manuals/R-exts.html#Checking-and-building-packages) des packages
+- [Liste de librairie par thèmes](https://cran.r-project.org/)
+:::
+
+## [Github](https://github.com/) {auto-animate="true"}
+
+![](images/github.png){fig-align="center"}
+
+## [Github](https://github.com/) {auto-animate="true"}
+
+![](images/github.png){fig-align="left"}
+
+::: callout-note
+## Github et Git
+Plus sur ce sujet lors du cours 5
+:::
+
+## Installer, charger
+
+Installer un package :
+```{r}
+#| eval: false
+install.packages("tidyverse") # base R
+remotes::install_github("r-lib/conflicted") # using remotes
+```
+
+- `install.packages` en R base, depuis le CRAN ou des sources
+- `remotes` : library permettant l'installation depuis le CRAN et différents dépôt de code, tels que [github](https://github.com/), [gitlab](https://gitlab.com/), [bitbucket](https://bitbucket.org/product), ainsi que [Bioconductor](https://www.bioconductor.org/).
 
 . . .
 
-Un outil et une méthode précieuse pour rendre intelligibles et reproductibles ses études. Un gain précieux en efficacité.
+Charger un package :
 
-::: callout-note
-## Outils
+```{r}
+#| eval: false
 
-Notebook (jupyter), Rmarkdown, Quarto
-:::
+library(dplyr)
+```
 
-## rmarkdown
 
-Un peu d'histoire
 
-::: incremental
--   Engine `knitr` (2011), avec des dialectes \Latex, markdown
--   `rmarkdown` (2015)
--   Et désormais, `quarto` (2022)
-:::
+# Structure d'un package
 
-. . .
+## Arborescence : [randomForest](https://github.com/cran/randomForest)
 
-::: callout-note
-## Histoire de rmarkdown par l'auteur de la librairie
+![](images/randomForst_gh.png){fig-align="center"}
 
-<https://slides.yihui.org/2021-Brazilian-R-Day.html#1>
-:::
 
-## rmarkdown vs quarto
+## Code R/ {auto-animate="true"}
 
-::: incremental
--   `quarto` reprend la philosophie de rmarkdown
--   mais est agnostique au langage (compatible R, python, ...)
--   les fichiers .rmd peuvent être compilés avec `quarto` (pour la plupart)
--   aujourd'hui, sauf exceptions, privilégier `quarto`
-:::
+Contient le code R du package. 
+
+- Ce code est exécuté au `build time` ;
+- différent d'un script/ d'une analyse interactive dans RStudio où le code est exécuté au `run time`.
 
 . . .
 
 ::: callout-warning
-## Vignettes
-
-Le CRAN ne supporte pas (encore) les vignettes générées par `quarto` aujourd'hui. C'est un des rares cas où privilégier `rmarkdown`.
+## Pas de sous-dossier
+Utilisez des préfixes "smthing-*.R" pour organiser les fichiers par thème
 :::
 
-## rmarkdown vs quarto
+## Code R/ {auto-animate="true"}
 
-::: columns
-::: {.column width="45%"}
-Avec quarto :
+Contient le code R du package. 
 
-```{r}
-#| eval: false
-#| echo: fenced
-#| label: chunk-quarto
+- Ce code est exécuté au `build time` ;
+- différent d'un script/ d'une analyse interactive dans RStudio où le code est exécuté au `run time`.
 
-1 + 1
 
-```
+::: callout-warning
+## Points de vigilance
+- Ne modifiez pas le système de l'utilisateur ! Pas d'appels aux fonctions `source`, `library` dans le code d'un package
+- Utilisez avec vigilance `par`, `options`, `setwd` ...
 :::
 
-::: {.column width="55%"}
-Avec rmarkdown :
+## Exemple R/
 
-```{r chunk-rmarkdown, eval=FALSE}
-#| echo: fenced
-
-1 + 1
-```
-:::
-:::
+![](images/R_folder_1.png){fig-align="center"}
 
 . . .
 
-Paramètres du 'bloc' dans les accolades en rmarkdown, après `#|` en quarto.
 
-## quarto
+::: callout-note
+## Contenu des fichiers
+Rester cohérent et clair sur le contenu des fichiers - ni trop, ni pas assez. Dépend du contexte.
+:::
 
-Metadata du document : YAML
-
-``` yaml
----
-title: "first quarto"
-author: "Raphaël Nedellec"
-date: "27/01/2023"
-format: 
-  html:
-    code-fold: true
----
-```
-
-. . .
-
-Multiples formats : [html](https://quarto.org/docs/reference/formats/html.html), [PDF](https://quarto.org/docs/reference/formats/pdf.html), [MS Word](https://quarto.org/docs/reference/formats/docx.html), [OpenOffice](https://quarto.org/docs/reference/formats/odt.html), [ePub](https://quarto.org/docs/reference/formats/epub.html), [Revealjs](https://quarto.org/docs/reference/formats/presentations/revealjs.html), [PowerPoint](https://quarto.org/docs/reference/formats/presentations/pptx.html), [Beamer](https://quarto.org/docs/reference/formats/presentations/beamer.html), et de nombreux autres
-
-## quarto : project
-
-Documents, présentations, mais aussi 'websites' ou 'books'
-
-``` yaml
----
-project:
-  type: website
-website:
-  title: R Manuals
-  navbar:
-    background: primary
-  ...
----
-```
-
-Exemple : ce cours est hébergé sur un [site](https://github.com/papa-rapha/r-advanced-git/blob/master/_quarto.yaml) quarto. Les [slides](https://github.com/papa-rapha/r-advanced-git/blob/master/slides/cours_1.qmd) des cours sont aussi écrites en quarto avec revealjs, les [sujets d'exercices](https://github.com/papa-rapha/r-advanced-git/blob/master/exercises/sem_1.qmd) en quarto - pdf.
-
-## quarto : 'code chunk' R {auto-animate="true"}
-
-```{r}
-#| label: fig-airquality-unfolded
-#| fig-cap: Temperature and ozone level.
-#| warning: false
-#| code-fold: false
-#| echo: fenced
-#| eval: false
-
-library(ggplot2)
-
-ggplot(airquality, aes(Temp, Ozone)) + 
-  geom_point() + 
-  geom_smooth(method = "loess")
-```
-
-## quarto : 'code chunk' R {auto-animate="true"}
-
-```{r}
-#| label: fig-airquality-folded
-#| fig-cap: Temperature and ozone level.
-#| warning: false
-#| code-fold: true
-#| echo: fenced
-#| eval: true
-
-library(ggplot2)
-
-ggplot(airquality, aes(Temp, Ozone)) + 
-  geom_point() + 
-  geom_smooth(method = "loess")
-```
-
-## quarto : 'code chunk' R
-
-``` {{r}}
-#| echo: true/false/fenced
-#| eval: true/false
-#| warning: true/false
-#| error: true/false
-#| label: "my-chunk"
-#| fig-*: ...
-#| tab-*: ...
-```
-
-Liste complète des options de blocs de code avec knitr disponible [ici](https://yihui.org/knitr/options/)
-
-## quarto : aussi en Python
+## data/
 
 ::: incremental
--   Tout comme rmarkdown, les blocs de code ne sont pas nécessairement en R.
--   Autres langages : Python, R, Julia, Observable.js
--   Quarto, à la différence de rmarkdown, est totalement agnostique envers le langage. C'est un outil aussi très utile en Python !
-:::
-
-## quarto en résumé
-
-::: incremental
--   Programmation littéraire.
--   Document auto-portant avec texte, code et résultats réunis.
--   Hautement configurable, multiples formats de projets disponibles.
--   Templates et thèmes customisables.
-:::
-
-. . .
-
-::: callout-tip
-## quarto
-
-À utiliser aussi souvent que possible pour une analyse de données ou un projet de datascience.
-:::
-
-## Mais alors, quand utiliser des fichiers .R ?
-
-::: incremental
--   pour définir des fonctions, dans des packages
--   avec parcimonie, pour sourcer des fonctions (`source()`)
--   lorsque l'on écrit un vrai script à appeler en ligne de commande avec [Rscript](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/Rscript)
--   avec targets
-:::
-
-# Études reproductibles avec `targets`
-
-## `targets` : motivation
-
-> The targets package is a Make-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. targets learns how your pipeline fits together, skips costly runtime for tasks that are already up to date, runs only the necessary computation, supports implicit parallel computing, abstracts files as R objects, and shows tangible evidence that the results match the underlying code and data.
-
-Developpé par Will Landau
-
-## `targets` : motivation
-
-Expérience classique lors d'un projet de data science :
-
-::: incremental
-1.  Ecrire du code, l'exécuter
-2.  Attendre (longtemps...) la fin de l'exécution
-3.  Découvrir une erreur, corriger
-4.  Redémarrer à l'étape 1.
-:::
-
-## Outils de 'pipeline'
-
-::: incremental
--   Des solutions et outils de 'pipeline' permettent de mettre fin à ce cercle vicieux
--   [GNU-make](https://www.gnu.org/software/make/)
--   targets : spécialement désigné pour exécuter du code R
-:::
-
-. . .
-
-::: callout-tip
-## Vidéo d'intro
-
-Vidéo d'intro à targets de 4 minutes : <https://vimeo.com/700982360>
-:::
-
-## targets workflow
-
-Organisation du projet :
-
-    ├── _targets.R      # fichier de configuration du workflow
-    ├── data.csv        # jeu de données
-    ├── R/ 
-    │   ├── functions.R # fichier de fonctions
-
-. . .
-
-::: callout-tip
-## Organisation du projet
-
-`targets::use_targets` permet d'initialiser la structure du projet. Cette structure peut être adaptée.
-:::
-
-## example : data.csv
-
-    Ozone,Solar.R,Wind,Temp,Month,Day
-    36,118,8.0,72,5,2
-    12,149,12.6,74,5,3
-    ...
-
-## example : functions.R
-
-```{r}
-#| eval: false
-
-# R/functions.R
-get_data <- function(file) {
-  read_csv(file, col_types = cols()) %>%
-    filter(!is.na(Ozone))
-}
-
-fit_model <- function(data) {
-  lm(Ozone ~ Temp, data) %>%
-    coefficients()
-}
-
-plot_model <- function(model, data) {
-  ggplot(data) +
-    geom_point(aes(x = Temp, y = Ozone)) +
-    geom_abline(intercept = model[1], slope = model[2])
-}
-```
-
-## `targets` : fichier de configuration
-
-```{r}
-#| eval: false
-
-library(targets)
-source("R/functions.R")
-tar_option_set(packages = c("readr", "dplyr", "ggplot2"))
-list(
-  tar_target(file, "data.csv", format = "file"),
-  tar_target(data, get_data(file)),
-  tar_target(model, fit_model(data)),
-  tar_target(plot, plot_model(model, data))
-)
-```
-
-## Inspecter la pipeline avec `tar_manifest`
-
-```{r}
-tar_manifest(fields = all_of("command"))
-#> # A tibble: 4 × 2
-#>   name  command                  
-#>   <chr> <chr>                    
-#> 1 file  "\"data.csv\""           
-#> 2 data  "get_data(file)"         
-#> 3 model "fit_model(data)"        
-#> 4 plot  "plot_model(model, data)"
-```
-
-## Inspecter la pipeline avec `tar_visnetwork`
-
-```{r}
-tar_visnetwork()
-```
-
-![](images/targets_0.png)
-
-## Executer la pipeline avec `tar_make`
-
-```{r}
-tar_make()
-#> • start target file
-#> • built target file [0.494 seconds]
-#> • start target data
-#> • built target data [0.203 seconds]
-#> • start target model
-#> • built target model [0.004 seconds]
-#> • start target plot
-#> • built target plot [0.015 seconds]
-#> • end pipeline [0.864 seconds]
-```
-
-## Collecter les objets intermédiaires avec `tar_read`
-
-```{r}
-tar_read(plot)
-```
-
-![](images/targets_1.png)
-
-## Nouvelle inspection
-
-```{r}
-tar_visnetwork()
-```
-
-![](images/targets_2.png)
-
-## Nouveau run
-
-```{r}
-tar_make()
-#> ✔ skip target file
-#> ✔ skip target data
-#> ✔ skip target model
-#> ✔ skip target plot
-#> ✔ skip pipeline [0.092 seconds]
-```
-
-## Edition du fichier de fonctions
-
-```{r}
-# Edit functions.R...
-plot_model <- function(model, data) {
-  ggplot(data) +
-    geom_point(aes(x = Temp, y = Ozone)) +
-    geom_abline(intercept = model[1], slope = model[2]) +
-    theme_gray(24) # Increased the font size.
-}
-```
-
-## Nouvelle inspection
-
-```{r}
-tar_visnetwork
-```
-
-![](images/targets_3.png)
-
-## targets et programmation littéraire
-
-1.  Programmation littéraire dans le workflow :
-
-::: incremental
--   En exécutant la pipeline en premier, puis en appelant les résultats de la pipeline dans le document (avec les fonctions `tar_read` ou `tar_load`).
--   On peut aussi intégrer une étape de rendering d'un document rmarkdown ou quarto directement avec la fonction `tarchetypes::tar_render` ou `tarchetypes::tar_quarto`
-:::
-
-. . .
-
-2.  `target markdown`: le workflow est embarqué dans le document.
-
-## `targets` en résumé
-
-::: incremental
--   Outil de pipeline avancé en R
--   Optimisation des calculs
--   Evite la gestion manuelle du 'cache'
--   Integré avec `quarto` et `rmarkdown`
-:::
-
-. . .
-
-::: callout-tip
-## Projets de datascience
-
-À utiliser sur les projets de datascience et d'analyse de données avec de multiples étapes et des analyses longues.
-:::
-
-# Gestion des dépendances avec `renv`
-
-## Information de la session
-
-```{r}
-#| eval: true
-
-devtools::session_info() # alternative à sessionInfo()
-```
-
-## Reproductibilité
-
-Pour s'assurer de la reproductibilité, il faut pouvoir reproduire son environnement :
-
-::: incremental
--   Savoir quelle version de R a été utilisée
--   Savoir quelles librairies ont été appelées, et quelle était leur version
--   Pouvoir reconstruire cet environnement
-:::
-
-. . .
-
-Un outil : `renv`
-
-## `renv`
-
-::: incremental
--   Librairie [`renv`](https://rstudio.github.io/renv/articles/renv.html)
--   Philosophie : isoler les dépendances d'un projet pour le rendre reproductible dans le temps
--   Management local des dépendances et des environnements
--   Similaire à [`venv`](https://docs.python.org/3/library/venv.html) en Python
+- Partage de dataset utiles au package pour la documentation, les exemples, le fonctionnement interne du package ;
+- data packages : [nycflights13](https://nycflights13.tidyverse.org/), [babynames](https://github.com/hadley/babynames) ;
+- organisation différentes en fonction des données et de leur utilité.
 :::
 
 . . .
 
 ::: callout-note
-## .libPaths()
-
-L'utilisation de `renv` facilite la gestion des versions et la configurations des libPaths()...
+## usethis
+Voir `usethis::use_data()`
 :::
 
-## `renv` : workflow
+## data/
 
 ::: incremental
--   `renv::init()` : pour initialiser un projet avec `renv`
--   `renv::snapshot()` : sauvegarder les références aux dépendances dans un fichier `renv.lock`
--   `renv::restore()` : pour retourner à l'état référencé dans le fichier `renv.lock`
+- Stocker des objets R pour qu'ils soient disponibles pour les utilisateurs : `data/` au format `.rda/.RData`
+- Stocker des objets à des fins de développement : `R/sysdata.rda`
+- Stocker des objets au format brut (xls, xlsx, json, ..) : `inst/extdata/`
 :::
 
 . . .
 
-::: callout-warning
-## Limites
-
--   Dépendances systèmes : [docker](https://www.docker.com/) ? Voir [ce post de blog](https://colinfay.me/docker-r-reproducibility/) pour une intro.
--   Librairies archivées du CRAN
+::: callout-important
+## Préserver la reproducibilité des datasets
+Voir `usethis::use_data_raw()`
 :::
 
-## `renv` : avantages
+## man/
+
+![](images/man-0.png){fig-align="center"}
+
+
+## man/
+
+![](images/man-1.png){fig-align="center"}
+
+## vignettes/
+
+![](images/vignette-1.png){fig-align="center"}
+
+## vignettes/
+
+![](images/vignette-2.png){fig-align="center"}
+
+## man/ et vignettes/
+
+- Il est possible d'écrire les documents .Rd à la main. Mais il recommandé d'utiliser `roxygen2` pour les générer automatiquement !
+- `roxygen2` est bien intégré au workflow `devtools`
+- Les *vignettes* sont des guides d'utilisation détaillés pour le package ou certaines de ses fonctionnalités.
+- À écrire en Rmarkdown
+
+## Autres dossiers
 
 ::: incremental
--   Gestion globale d'un cache : optimisation d'espace disque et de temps de sauvegarde
--   Possible d'utiliser des versions différentes de librairies dans différents projets sans avoir à configurer manuellement les `.libPaths()`
--   Facilite la [collaboration](https://rstudio.github.io/renv/articles/collaborating.html)
+- `inst/` : pour les fichiers additionnels à inclure dans la librairie ;
+- `src/`: pour stocker des fichiers sources et "header" C/C++/... et utiliser du code compilé dans un package R ;
+- `demo/`, `exec/`, `po/`, `tools/`, ...
 :::
 
-# En résumé
+. . .
 
-## En résumé
+::: callout-note
+## Plus d'informations
+Voir le chapitre dédié dans [R packages](https://r-pkgs.org/misc.html)
+:::
+
+## Metadata : DESCRIPTION {auto-animate="true"}
+
+```{}
+Package: mynewpackage
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+```
+
+
+## Metadata : DESCRIPTION {auto-animate="true"}
 
 ::: incremental
-1.  `quarto` : programmation littéraire. Utile pour les rapports, blogs, EDA... Et pour vous faire un 'portfolio' facilement !
-2.  `targets` : pour les études longues. Renforce la reproductibilité et facilite la vie au quotidien en gagnant en qualité de rendu et en productivité
-3.  `renv` : gestion de l'environnement, un point essentiel de la reproductibilité des résultats
+- `Title` : Décrire en une phrase la librairie
+- `Description` : Décrire de manière plus détaillée l'intérêt et les fonctionnalités de la librairie
+- `Authors@R` : Les auteurs. Voir `?person()`.
+- `Version` : Version du package. Important de le maintenir à jour, voir [chapitre dédié dans R avancé](https://r-pkgs.org/lifecycle.html).
+- `License` : Quelle licence et quels droits d'utilisation ?
+- `Suggests`, `Imports`, and others : Gestion des dépendances avec des librairies tierces.
 :::
 
-# Annexes
+## Quand utiliser des dépendances ?
 
-## Liens complémentaires
+Plusieurs critères et questions à se poser :
 
--   [documentation quarto](https://quarto.org/) Documentation officielle `quarto`.
--   [targets package](https://docs.ropensci.org/targets/) Documentation du package `targets`.
--   [2018 - targets tutorial](https://github.com/wlandau/targets-tutorial) Un tuto `targets` qui date de 2018 - mais toujours valide dans les grandes lignes.
--   [targets manual](https://books.ropensci.org/targets/) Manuel avancé de `targets`.
--   [renv](https://rstudio.github.io/renv/index.html) Documentation du package `renv`, avec beaucoup d'articles explicatifs.
+::: incremental
+- Type de dépendance
+- Nombre de dépendances indirectes induites
+- Coût d'installation des dépendances (dépendances systèmes, code compilé, taille des packages)
+- Maintenance et suivi des librairies
+- Criticité des fonctionnalités
+:::
+
+## Dépendances : DESCRIPTION
+
+- `Imports` : Les packages listés ici doivent être présents et installés pour que votre librairie fonctionne.
+- `Suggests`: Votre package peut utiliser ces dépendances, mais ne sont pas nécessaires à son fonctionnement. Par exemple, ces packages peuvent être utilisés dans les vignettes ou les tests.
+
+::: callout-note
+## DESCRIPTION
+Les dépendances déclarées dans le fichier DESCRIPTION aident R à valider la présence des packages nécessaires et à les installer lors de l'installation de votre package.
+:::
+
+## Dépendances : NAMESPACE
+
+Quelle fonction `here()` est disponible dans l'environnement global ?
+
+```{r}
+#| eval: false
+library(lubridate)    |  library(here)
+library(here)         |  library(lubridate)
+
+here() # here::here() |  here() # lubridate::here()
+```
+
+. . .
+
+Opérateur `::`
+
+```{r}
+#| eval: false
+lubridate::here() # always gets lubridate::here()
+here::here()      # always gets here::here()
+```
+
+## Dépendances : NAMESPACE {auto-animate="true"}
+
+```{r}
+sd
+#> function (x, na.rm = FALSE) 
+#> sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
+#>     na.rm = na.rm))
+#> <bytecode: 0x563eba6f48a0>
+#> <environment: namespace:stats>
+```
+
+. . .
+
+Que se passe-t-il lorsque l'on déclare une nouvelle fonction `var` ?
+
+```{r}
+#| eval: false
+var <- function(x) -5
+var(1:5)
+#> [1] -5
+sd(1:5)
+```
+
+
+## Dépendances : NAMESPACE {auto-animate="true"}
+
+```{r}
+sd
+#> function (x, na.rm = FALSE) 
+#> sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
+#>     na.rm = na.rm))
+#> <bytecode: 0x563eba6f48a0>
+#> <environment: namespace:stats>
+```
+
+
+Que se passe-t-il lorsque l'on déclare une nouvelle fonction `var` ?
+
+```{r}
+#| eval: false
+var <- function(x) -5
+var(1:5)
+#> [1] -5
+sd(1:5)
+#> [1] 1.58
+```
+
+Cela est possible grâce au `namespace` du package `stats` où la fonction `var` du package `stats` est déjà référencée.  
+
+## Dépendances : NAMESPACE
+
+Exemple tiré du package `remotes`
+
+```{}
+# Generated by roxygen2: do not edit by hand
+
+S3method(format,bioc_git2r_remote)
+S3method(format,bioc_xgit_remote)
+...
+export(add_metadata)
+export(available_packages)
+...
+importFrom(stats,update)
+importFrom(tools,file_ext)
+```
+
+::: callout-note
+## roxygen2
+Une bonne pratique aujourd'hui est d'utiliser roxygen2 pour générer automatiquement le fichier NAMESPACE
+::: 
+
+## Dépendances : NAMESPACE
+
+::: incremental
+- `importFrom` : importe un objet (fonction) d'une dépendance
+- `import` : importe tous les objets exportés
+- `S3method` : pour exporter une méthode S3
+- `export` : pour exporter une fonction (rendre une fonction publique)
+:::
+
+. . .
+
+::: callout-note
+## Autres instructions
+Plus rares : `useDynLib()`, `exportPattern()`, `exportClasses()`, `exportMethods()`, `importClassesFrom()`, `importMethodsFrom()`
+:::
+
+# Développer un package
+
+## Un exemple de workflow avec Devtools
+
+::: incremental
+- [devtools](https://devtools.r-lib.org/), librairie "chapeau" pour tous les outils de développement
+- [usethis](https://usethis.r-lib.org/), pour automatiser l'initialisation d'un nouveau package
+- [roxygen2](https://roxygen2.r-lib.org/), pour la gestion de la documentation
+:::
+. . .
+
+::: callout-note
+## Cheatsheet
+Voir <https://raw.githubusercontent.com/rstudio/cheatsheets/main/package-development.pdf>
+:::
+
+## Setup 
+
+Création d'un squelette de package :
+
+```{r}
+# package name may only contain 
+# letters, numbers
+# dots are allowed but not recommended
+usethis::create_package("mynewpackage")
+```
+
+. . .
+
+![](images/package_01.png){fig-align="center"}
+
+RStudio initialise un nouveau projet. 
+
+## Setup : nouveau projet
+
+![](images/new_project_package.png){fig-align="center"}
+
+::: callout-note
+## Nouveau projet
+En utilisant l'interface graphique, il est possible de créer des projets avec des templates, dont des packages. Ceci utilise *in fine* `usethis`.
+:::
+
+## Écrire et documenter ses fonctions
+
+- les fonctions sont dans des fichiers .R au sein du répertoire R/
+- il faut documenter ses fonctions en utilisant les balises `roxygen2`
+
+::: callout-note
+## usethis
+`usethis::use_r` pour créer un fichier .R dans le répertoire R/, ou naviguer dans celui-ci dans RStudio.
+:::
+
+## roxygen2 {auto-animate="true"}
+
+```{r}
+compute_stats_by_levels <- function(
+    data, col, by, stats
+) {
+  if (stats %in% c("mean", "max", "min")) {
+    res <- tapply(data[[col]], data[[by]], stats)
+  } else {
+    stop("wrong stats")
+  }
+  return(res)
+}
+```
+
+Resultats ?
+
+```{r}
+#| eval: false
+#| error: true
+compute_stats_by_levels(mtcars, "mpg", "cyl", mean)
+compute_stats_by_levels(mtcars, "mpg", "cyl", "mean")
+```
+## roxygen2 {auto-animate="true"}
+
+```{r}
+#| eval: true
+compute_stats_by_levels <- function(
+    data, col, by, stats
+) {
+  if (stats %in% c("mean", "max", "min")) {
+    res <- tapply(data[[col]], data[[by]], stats)
+  } else {
+    stop("wrong stats")
+  }
+  return(res)
+}
+```
+
+Résultats :
+
+```{r}
+#| eval: true
+#| error: true
+compute_stats_by_levels(mtcars, "mpg", "cyl", mean)
+compute_stats_by_levels(mtcars, "mpg", "cyl", "mean")
+```
+
+## roxygen2 {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "|1-5,7"
+#' @param data A data.frame
+#' @param col A string, the column name for which we compute the stats
+#' @param by A string, the column name by which we group
+#' @param stats A string, the name of the function. Must be one of "mean",
+#'   "min", "max".
+compute_stats_by_levels <- function(
+    data, col, by, stats
+) {
+  if (stats %in% c("mean", "max", "min")) {
+    res <- tapply(data[[col]], data[[by]], stats)
+  } else {
+    stop("wrong stats")
+  }
+  return(res)
+}
+```
+
+## roxygen2 {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "|7-8,10,17"
+#' @param data A data.frame
+#' @param col A string, the column name for which we compute the stats
+#' @param by A string, the column name by which we group
+#' @param stats A string, the name of the function. Must be one of "mean",
+#'   "min", "max".
+#' 
+#' @export
+compute_stats_by_levels <- function(
+    data, col, by, stats
+) {
+  if (stats %in% c("mean", "max", "min")) {
+    res <- tapply(data[[col]], data[[by]], stats)
+  } else {
+    stop("wrong stats")
+  }
+  return(res)
+}
+```
+
+## roxygen2 {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "|1-3,12-13"
+#' A Function to Compute Group Statistics
+#' 
+#' @description This function is designed for example only and is not really usefull..
+#'
+#' @param data A data.frame
+#' @param col A string, the column name for which we compute the stats
+#' @param by A string, the column name by which we group
+#' @param stats A string, the name of the function. Must be one of "mean", "min", "max".
+#' @return A named vector statistics, of size `length(unique(data[[col]]))`
+#' 
+#' @export
+#' @examples
+#' compute_stats_by_levels(mtcars, "mpg", "cyl", "mean")
+compute_stats_by_levels <- function(
+    data, col, by, stats
+) {
+  if (stats %in% c("mean", "max", "min")) {
+    res <- tapply(data[[col]], data[[by]], stats)
+  } else {
+    stop("wrong stats")
+  }
+  return(res)
+}
+```
+
+## roxygen2 : balises
+
+::: incremental
+- `@title`, `@description`, `@detail` : pour présenter et détailler sa fonction. Peuvent être implicites.
+- `@param` : pour documenter les paramètres de la fonction
+- `@return` : quel est l'output de la fonction 
+- `@examples` : suite d'examples
+- `@export` : pour exposer la fonction dans le NAMESPACE
+- `@importFrom` : quand la fonction importe une fonction depuis une librairie tierce
+- `@noRd` : pour documenter la fonction mais ne pas exposer la documentation publiquement
+:::
+
+## roxygen2
+
+::: incremental
+- Possibilité d'utiliser [des balises Mardown](https://roxygen2.r-lib.org/articles/rd-formatting.html) dans la documentation.
+- Possibilité de réutiliser/mutualiser de la documentation entre fonctions, en utilisant les balises `@describe`, `@rdname`,
+`@inheritParams`, `@inheritSection`, `@inherit`
+- Pour documenter des fonctions, mais aussi des datasets.
+:::
+
+. . .
+
+::: callout-note
+## Liste des balises
+<https://roxygen2.r-lib.org/articles/rd.html> pour le processus de base
+<https://roxygen2.r-lib.org/reference/tags-rd.html> pour la liste exhaustive
+:::
+
+## roxygen2 : en résumé
+
+::: incremental
+- documentez vos fonctions avec les balises roxygen2
+- roxygen2 générera la documentation et le NAMESPACE de votre package
+- multiples balises disponibles, et il est possible de moduler la documentation ;
+- s'intègre au workflow de développement `devtools`
+:::
+
+# Testing
+
+# Comment testez-vous une fonction ?
+
+## Tester vos fonctions {auto-animate="true"}
+
+En développement logiciel (donc quand vous développez une librairie / des fonctions en R) :
+
+::: incremental
+- il faut tester vos fonctions pour s'assurer qu'elles se comportent comme attendu ;
+- de manière reproductible et non de manière informelle et ad'hoc ;
+- un bug : un nouveau test à ajouter ;
+- évaluer la couverture des tests et la robustesse du code.
+:::
+
+## [testthat](https://testthat.r-lib.org/index.html)
+
+Framework dominant pour l'écriture de tests en R.
+
+```{r}
+# from dplyr test suite
+# https://github.com/tidyverse/dplyr/blob/2af5c86112c697a8abf114eb5dc323e5116777bc/tests/testthat/test-bind-cols.R#L33
+test_that("bind_cols() handles all-NULL values (#2303)", {
+  expect_identical(bind_cols(list(a = NULL, b = NULL)), tibble())
+  expect_identical(bind_cols(NULL), tibble())
+})
+```
+
+## testthat, exemple
+
+Dans R/
+```{r}
+# myfunction.R
+my_function <- f(x, y) {
+  stopifnot(!is.numeric(x), !is.numeric(y))
+  return(x * y)
+}
+```
+
+Dans  tests/testthat/test-myfunction.R
+
+```{r}
+# test-myfunction.R
+test_that("my_function multiply works", {
+  expect_identical(my_function(1, 2), 1 * 2)
+  expect_identical(my_function(TRUE, FALSE), 0)
+  expect_error(my_function("x", 1))
+})
+```
+
+## Quelques assertions 
+
+- `expect_equal()` `expect_identical()` 
+- `expect_type()` `expect_s3_class()` 
+- `expect_length()`
+- `expect_true()` `expect_false()`
+- `expect_error()` `expect_warning()` `expect_message()` `expect_condition()`
+
+Liste exhaustive [ici](https://testthat.r-lib.org/reference/index.html)
+
+# En résumé : processus de développement
+
+## Processus de développement d'une fonction
+
+::: incremental
+- Écrire sa fonction
+- Documenter
+- Écrire les tests associés (voir `usethis::use_testthat()` et `?usethis::use_test()`)
+- Charger son package en émulant son installation avec `?devtools::load_all()`
+- Itérer
+:::
+
+## Développement d'une librairie
+
+::: incremental
+- Développez vos fonctions et ajoutez vos datasets.
+- Documenter. `devtools::document()` permet de générer et mettre à jour automatiquement les différents documents (.Rd, NAMESPACE).
+- Testez régulièrement vos fonctions en utilisant `devtools::test()` qui exécutera la suite de test de la librairie en développement.
+- Utilisez `devtools::check()` si vous voulez tester la compatibilité avec le CRAN.
+:::
+
+## Développement d'une librairie
+
+::: incremental
+- Utilisez les bonnes pratiques et outils de développement logiciel : git, versioning, CI/CD, [code coverage](https://covr.r-lib.org/)...
+- Améliorer et maintenir la documentation, pourquoi pas avec [`pkgdown`](https://pkgdown.r-lib.org/) et des vignettes détaillées.
+:::
+
+# Ressources additionnelles
+
+## Ressources additionnelles
+
+- [Writing an R package from scratch - Hilary Parker](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/)
+- [How to develop good R packages - Maëlle Salmon](https://masalmon.eu/2017/12/11/goodrpackages/)
+- [Making your first R package - Fong Chun Chan](https://tinyheero.github.io/jekyll/update/2015/07/26/making-your-first-R-package.html)
+- [Writing an R package from scratch - Tomas Westlake](https://r-mageddon.netlify.app/post/writing-an-r-package-from-scratch/)
+- [R packages](https://r-pkgs.org)
+- [devtools library](https://devtools.r-lib.org/)
+- [usethis library](https://usethis.r-lib.org/)
+
+# Questions ?
+
+

@@ -9,7 +9,7 @@ format: html
 - Lors de la troisième séance, nous ferons un zoom particuliers sur quelques librairies dédiées à la lecture et manipulation des données, avec un focus sur les données textuelles et les dates.
 - Lors de la quatrième séance, nous nous intéresserons à la créations de librairies R.
 - Lors de la cinquième session, nous nous initierons à la programmation littéraire et aux outils de la science reproductible avec l'outil quarto et le package renv.
-- Enfin, lors de la cinquième séance, nous ferons une introduction à git, et à la plateforme github.
+- Enfin, lors de la dernière séance, nous ferons une introduction à git, et à la plateforme github.
 
 ## Matériel et supports de cours
 
@@ -17,7 +17,7 @@ format: html
 
 | Date       | Objectifs                        | Cours               | Exercices                           | Input              |
 |------------|----------------------------------|:-------------------:|:-----------------------------------:|:------------------:|
-| 12 janvier | **IDE Rstudio, Rappels de R**    | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
+| 12 janvier | **IDE Rstudio, Rappels de R**    | [{{< fa book >}}](/slides/cours_1.html) | [{{< fa file-circle-question >}}](/exercises/sem_1.pdf) ||
 | 19 janvier | **Fonctions, Objets S3**         | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
 | 24 janvier | **Données, Texte, Dates**        | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
 | 2 février  | **Ecrire une librairie R**       | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |

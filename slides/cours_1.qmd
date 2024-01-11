@@ -3,8 +3,6 @@ title: "R avancé et introduction à Git"
 author: "Raphaël Nedellec"
 format: 
   revealjs:
-    chalkboard: true
-    preview-links: true
     theme: default
 knitr:
   opts_chunk: 
@@ -135,7 +133,9 @@ Facteur ordonné (*`ordered`*) :
 ```{r}
 #| eval: true
 
-factor(c("a", "b", "b", "c"), levels = c("a", "b", "c", "d"), ordered = TRUE)
+factor(c("a", "b", "b", "c"), 
+      levels = c("a", "b", "c", "d"),
+      ordered = TRUE)
 ```
 
 . . .
@@ -507,110 +507,6 @@ Les librairies externes facilitent et accélèrent grandement les études, mais 
 ## Info
 Nous nous intéresserons à la gestion propre des dépendances lors du 4ème cours.
 :::
-
-# Lire des données
-
-## Fichiers plats (.txt, .csv)
-
-Traditionnellement, les fichiers de données de petite taille sont disponibles au format **.csv** ou **.txt**
-
-```{r}
-# base R
-read.csv()
-read.table()
-# R package readr
-readr::read_csv()
-# autres solutions :
-datatable::fread()
-vroom::vroom()
-```
-
-
-::: {.callout-warning}
-Même s'il est possible d'importer des données directement depuis RStudio, il est primordial de coder les imports pour rendre les études reproductibles.
-:::
-
-## Fichiers .json
-
-Format omni-présent sur le web. Permet de représenter des données hiérarchiques.
-
-```{js}
-{"employees":[
-  { "firstName":"John", "lastName":"Doe" },
-  { "firstName":"Anna", "lastName":"Smith" },
-  { "firstName":"Peter", "lastName":"Jones" }
-]}
-```
-
-Pour lire les fichiers json, on utilisera en priorité la librairie [`jsonlite`](https://cran.r-project.org/web/packages/jsonlite/vignettes/json-aaquickstart.html).
-
-```{r}
-library(jsonlite)
-read_json("some_json_file.json")
-?fromJSON()
-?toJSON()
-```
-
-Possibilité de lire et écrire du json depuis R.
-
-
-## Requêter une base de données {auto-animate="true"}
-
-Enfin, de nos jours, beaucoup de données d'analyse résident dans des bases de données, souvent dites relationnelles.
-
-. . .
-
-En R, le backend [`DBI`](https://dbi.r-dbi.org/) a été développé pour fournir une interface unique à de nombreux systèmes de bases de données ou data warehouse existants : mysql, postgresql, snowflake, etc.
-
-. . .
-
-```{r}
-library(DBI)
-# Create an ephemeral in-memory RSQLite database
-con <- dbConnect(RSQLite::SQLite(), dbname = ":memory:")
-
-dbListTables(con)
-dbWriteTable(con, "mtcars", mtcars)
-dbListTables(con)
-
-dbDisconnect(con)
-```
-
-
-
-## Requêter une base de données {auto-animate="true"}
-```{r}
-#| eval: true
-
-
-library(DBI)
-# Create an ephemeral in-memory RSQLite database
-con <- dbConnect(RSQLite::SQLite(), dbname = ":memory:")
-
-dbListTables(con)
-dbWriteTable(con, "mtcars", mtcars)
-dbListTables(con)
-dbListFields(con, "mtcars")
-```
-
-## Requêter une base de données {auto-animate="true"}
-```{r}
-#| eval: false
-head(dbReadTable(con, "mtcars"))
-res <- dbSendQuery(con, "SELECT * from mtcars LIMIT 6")
-dbFetch(res)
-```
-
-## Requêter une base de données {auto-animate="true"}
-```{r}
-#| eval: true
-head(dbReadTable(con, "mtcars"))
-res <- dbSendQuery(con, "SELECT * from mtcars LIMIT 6")
-dbFetch(res)
-dbClearResult(res)
-dbDisconnect(con)
-```
-
 
 
 # Aide et fonctions utiles
