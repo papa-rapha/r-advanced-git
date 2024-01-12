@@ -8,7 +8,6 @@ format: pdf
 
 1. Vérifiez que les options globales de RStudio sont conformes aux options recommandées dans le cours.
 2. Créez un projet RStudio intitulé `cours_r_semaine_1`. Ce projet sera créé vide. Les options utilisation de renv et de git peuvent être ignorées.
-3. Créez un dossier data au sein du projet. Téléchargez le .zip correspondant à la semaine 1 sur le site du cours et le décompresser dans le dossier data.
 
 ## Exercice 
 
