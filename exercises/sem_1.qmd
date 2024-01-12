@@ -15,7 +15,7 @@ format: pdf
 Pour cet exercice, nous allons télécharger un jeu de données issu de [https://data.gouv.fr]() sur les infrastructures olympiques des JO 2024 à Paris. Le jeu de données est [disponible ici](https://www.data.gouv.fr/fr/datasets/paris-2024-sites-olympiques-et-paralympiques-franciliens/). L'objectif de cet exercice est d'utiliser uniquement des fonctions de R base. N'utilisez pas de librairie tierce sauf mention contraire.
 
 1. Créez un script .R intitulé `exercice.R`.
-2. Lisez le fichier `exo_1_ex.txt` avec la fonction `read.table`. Le résultat sera affecté à l'objet de nom `data_ex`. Le jeux de données contient 4 colonnes. Quels sont les noms et la nature des colonnes ? Combien de lignes contient la data.frame ?
+2. Lisez le fichier téléchargé (ou directement depuis le site, cf aide plus bas) avec la fonction `read.table`. Le résultat sera affecté à l'objet de nom `data_ex`. Le jeux de données contient 4 colonnes. Quels sont les noms et la nature des colonnes ? Combien de lignes contient la data.frame ?
 3. Combien y a t'il de sites olympiques ?
 4. Combien y a t'il de sites paralympiques ?
 5. Quels sont les sites qui accueillent plusieurs disciplines sportives ?
