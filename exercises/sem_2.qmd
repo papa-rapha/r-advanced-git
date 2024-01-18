@@ -1,5 +1,5 @@
 ---
-title: "Exercices - Semaine 1"
+title: "Exercices - Semaine 2"
 author: "Raphaël Nedellec"
 format: pdf
 ---
@@ -14,7 +14,8 @@ Installez la library `rvest` en utilisant la commande `install.packages("rvest")
 
 1. Lancez la commande suivante :
 
-```
+```{r}
+#| eval: false
 list_tables <- 
   session("https://fr.wikipedia.org/wiki/Liste_des_m%C3%A9daill%C3%A9s_olympiques") |> 
   html_elements(".wikitable") |> 
