@@ -616,6 +616,7 @@ test_that("bind_cols() handles all-NULL values (#2303)", {
 ## testthat, exemple
 
 Dans R/
+
 ```{r}
 # myfunction.R
 my_function <- f(x, y) {
