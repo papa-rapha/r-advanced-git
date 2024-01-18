@@ -708,7 +708,7 @@ class(date_cours)
 attributes(date_cours)
 ```
 
-Les objets de type `Date`sont de classe `Date`, même si leur représentation interne est `double`^[On s'attend à un entier - nombre de jours depuis une certaine date de référence - mais non-forcé dans la représentation interne].
+Les objets de type `Date` sont de classe `Date`, même si leur représentation interne est `double`^[On s'attend à un entier - nombre de jours depuis une certaine date de référence - mais non-forcé dans la représentation interne].
 
 ## Attribut de classe
 
