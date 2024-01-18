@@ -18,7 +18,7 @@ format: html
 | Date       | Objectifs                        | Cours               | Exercices                           | Input              |
 |------------|----------------------------------|:-------------------:|:-----------------------------------:|:------------------:|
 | 12 janvier | **IDE Rstudio, Rappels de R**    | [{{< fa book >}}](/slides/cours_1.html) | [{{< fa file-circle-question >}}](/exercises/sem_1.pdf) ||
-| 19 janvier | **Fonctions, Objets S3**         | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
+| 19 janvier | **Fonctions, Objets S3**         | [{{< fa book >}}](/slides/cours_2.html) | [{{< fa file-circle-question >}}](/exercises/sem_2.pdf) ||
 | 24 janvier | **Données, Texte, Dates**        | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
 | 2 février  | **Ecrire une librairie R**       | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
 | 9 février  | **Science reproductible**        | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
