@@ -386,6 +386,9 @@
       margin-right: 0; 
     }
   </style>
+  <script src="cours_3_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+  <link href="cours_3_files/libs/str_view-0.1.0/str_view.css" rel="stylesheet">
+  <script src="cours_3_files/libs/str_view-binding-1.4.1/str_view.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -423,8 +426,9 @@ Raphaël Nedellec
 <span id="cb1-4"><a href="#cb1-4"></a><span class="co"># R package readr</span></span>
 <span id="cb1-5"><a href="#cb1-5"></a>readr<span class="sc">::</span><span class="fu">read_csv</span>()</span>
 <span id="cb1-6"><a href="#cb1-6"></a><span class="co"># autres solutions :</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>datatable<span class="sc">::</span><span class="fu">fread</span>()</span>
-<span id="cb1-8"><a href="#cb1-8"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7"></a>data.table<span class="sc">::</span><span class="fu">fread</span>()</span>
+<span id="cb1-8"><a href="#cb1-8"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>()</span>
+<span id="cb1-9"><a href="#cb1-9"></a>arrow<span class="sc">::</span><span class="fu">read_csv</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
@@ -459,6 +463,26 @@ Raphaël Nedellec
 </div>
 <p>Possibilité de lire et écrire du json depuis R.</p>
 </section>
+<section id="lire-un-fichier-parquet" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Lire un fichier parquet</h2>
+<p>Format parquet, très utilisé pour le traitement des “big data”.</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb4-1" class="hljs-ln-code"><a href="#cb4-1"></a><span class="fu">library</span>(arrow)</span>
+<span id="cb4-2" class="hljs-ln-code"><a href="#cb4-2"></a></span>
+<span id="cb4-3" class="hljs-ln-code"><a href="#cb4-3"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb4-4" class="hljs-ln-code"><a href="#cb4-4"></a>arrow<span class="sc">::</span><span class="fu">read_parquet</span>()</span>
+<span id="cb4-5" class="hljs-ln-code"><a href="#cb4-5"></a>arrow<span class="sc">::</span><span class="fu">write_parquet</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Stockage orienté colonne</li>
+<li>Fichier binaire compressé, efficient et typé</li>
+<li>Devient très courant - format de référence dans les data lake, lisible en python (<code>pandas.read_parquet</code>)</li>
+</ul>
+</div>
+</section>
 <section id="requêter-une-base-de-données" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Requêter une base de données</h2>
 <p>Enfin, de nos jours, beaucoup de données d’analyse résident dans des bases de données, souvent dites relationnelles.</p>
@@ -467,35 +491,35 @@ Raphaël Nedellec
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb4-1" class="hljs-ln-code"><a href="#cb4-1"></a><span class="fu">library</span>(DBI)</span>
-<span id="cb4-2" class="hljs-ln-code"><a href="#cb4-2"></a><span class="co"># Create an ephemeral in-memory RSQLite database</span></span>
-<span id="cb4-3" class="hljs-ln-code"><a href="#cb4-3"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="at">dbname =</span> <span class="st">":memory:"</span>)</span>
-<span id="cb4-4" class="hljs-ln-code"><a href="#cb4-4"></a></span>
-<span id="cb4-5" class="hljs-ln-code"><a href="#cb4-5"></a><span class="fu">dbListTables</span>(con)</span>
-<span id="cb4-6" class="hljs-ln-code"><a href="#cb4-6"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"mtcars"</span>, mtcars)</span>
-<span id="cb4-7" class="hljs-ln-code"><a href="#cb4-7"></a><span class="fu">dbListTables</span>(con)</span>
-<span id="cb4-8" class="hljs-ln-code"><a href="#cb4-8"></a></span>
-<span id="cb4-9" class="hljs-ln-code"><a href="#cb4-9"></a><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb5-1" class="hljs-ln-code"><a href="#cb5-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb5-2" class="hljs-ln-code"><a href="#cb5-2"></a><span class="co"># Create an ephemeral in-memory RSQLite database</span></span>
+<span id="cb5-3" class="hljs-ln-code"><a href="#cb5-3"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="at">dbname =</span> <span class="st">":memory:"</span>)</span>
+<span id="cb5-4" class="hljs-ln-code"><a href="#cb5-4"></a></span>
+<span id="cb5-5" class="hljs-ln-code"><a href="#cb5-5"></a><span class="fu">dbListTables</span>(con)</span>
+<span id="cb5-6" class="hljs-ln-code"><a href="#cb5-6"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"mtcars"</span>, mtcars)</span>
+<span id="cb5-7" class="hljs-ln-code"><a href="#cb5-7"></a><span class="fu">dbListTables</span>(con)</span>
+<span id="cb5-8" class="hljs-ln-code"><a href="#cb5-8"></a></span>
+<span id="cb5-9" class="hljs-ln-code"><a href="#cb5-9"></a><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="requêter-une-base-de-données-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Requêter une base de données</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(DBI)</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># Create an ephemeral in-memory RSQLite database</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="at">dbname =</span> <span class="st">":memory:"</span>)</span>
-<span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="fu">dbListTables</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co"># Create an ephemeral in-memory RSQLite database</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="at">dbname =</span> <span class="st">":memory:"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="fu">dbListTables</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; character(0)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"mtcars"</span>, mtcars)</span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">dbListTables</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"mtcars"</span>, mtcars)</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">dbListTables</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "mtcars"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">dbListFields</span>(con, <span class="st">"mtcars"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">dbListFields</span>(con, <span class="st">"mtcars"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"
 #&gt; [11] "carb"</code></pre>
@@ -505,15 +529,15 @@ Raphaël Nedellec
 <section id="requêter-une-base-de-données-2" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Requêter une base de données</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb11-1" class="hljs-ln-code"><a href="#cb11-1"></a><span class="fu">head</span>(<span class="fu">dbReadTable</span>(con, <span class="st">"mtcars"</span>))</span>
-<span id="cb11-2" class="hljs-ln-code"><a href="#cb11-2"></a>res <span class="ot">&lt;-</span> <span class="fu">dbSendQuery</span>(con, <span class="st">"SELECT * from mtcars LIMIT 6"</span>)</span>
-<span id="cb11-3" class="hljs-ln-code"><a href="#cb11-3"></a><span class="fu">dbFetch</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb12-1" class="hljs-ln-code"><a href="#cb12-1"></a><span class="fu">head</span>(<span class="fu">dbReadTable</span>(con, <span class="st">"mtcars"</span>))</span>
+<span id="cb12-2" class="hljs-ln-code"><a href="#cb12-2"></a>res <span class="ot">&lt;-</span> <span class="fu">dbSendQuery</span>(con, <span class="st">"SELECT * from mtcars LIMIT 6"</span>)</span>
+<span id="cb12-3" class="hljs-ln-code"><a href="#cb12-3"></a><span class="fu">dbFetch</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="requêter-une-base-de-données-3" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Requêter une base de données</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">head</span>(<span class="fu">dbReadTable</span>(con, <span class="st">"mtcars"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">head</span>(<span class="fu">dbReadTable</span>(con, <span class="st">"mtcars"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;    mpg cyl disp  hp drat    wt  qsec vs am gear carb
 #&gt; 1 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
@@ -523,8 +547,8 @@ Raphaël Nedellec
 #&gt; 5 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 #&gt; 6 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>res <span class="ot">&lt;-</span> <span class="fu">dbSendQuery</span>(con, <span class="st">"SELECT * from mtcars LIMIT 6"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">dbFetch</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>res <span class="ot">&lt;-</span> <span class="fu">dbSendQuery</span>(con, <span class="st">"SELECT * from mtcars LIMIT 6"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">dbFetch</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;    mpg cyl disp  hp drat    wt  qsec vs am gear carb
 #&gt; 1 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
@@ -534,22 +558,724 @@ Raphaël Nedellec
 #&gt; 5 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 #&gt; 6 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">dbClearResult</span>(res)</span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">dbClearResult</span>(res)</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
+<section>
 <section id="manipulation-de-dataframes" class="title-slide slide level1 center">
 <h1>Manipulation de dataframes</h1>
 
 </section>
-
+<section id="data.frame" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">data.frame</h2>
+<p>En R, les data.frame sont un élément essentiel du succès du langage pour le traitement des données.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">col1 =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">col2 =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>))</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">class</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">str</span>(df, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 'data.frame':    3 obs. of  2 variables:
+#&gt;  $ col1: num  1 2 3
+#&gt;  $ col2: chr  "a" "b" "c"</code></pre>
+</div>
+</div>
+</section>
+<section id="tibble" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">tibble</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb22-2"><a href="#cb22-2"></a></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="fu">data</span>(starwars)</span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="fu">class</span>(starwars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">head</span>(starwars, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 4 × 14
+#&gt;   name         height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
+#&gt;   &lt;chr&gt;         &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
+#&gt; 1 Luke Skywal…    172    77 blond   fair    blue       19   male  mascu… Tatooi…
+#&gt; 2 C-3PO           167    75 &lt;NA&gt;    gold    yellow    112   none  mascu… Tatooi…
+#&gt; 3 R2-D2            96    32 &lt;NA&gt;    white,… red        33   none  mascu… Naboo  
+#&gt; 4 Darth Vader     202   136 none    white   yellow     41.9 male  mascu… Tatooi…
+#&gt; # … with 4 more variables: species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;,
+#&gt; #   starships &lt;list&gt;, and abbreviated variable names ¹​hair_color, ²​skin_color,
+#&gt; #   ³​eye_color, ⁴​birth_year, ⁵​homeworld</code></pre>
+</div>
+</div>
+</section>
+<section id="tibble-1" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">tibble</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb26-1" class="hljs-ln-code"><a href="#cb26-1"></a><span class="fu">class</span>(starwars) <span class="ot">&lt;-</span> <span class="st">"data.frame"</span></span>
+<span id="cb26-2" class="hljs-ln-code"><a href="#cb26-2"></a><span class="fu">head</span>(starwars, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;             name height mass hair_color  skin_color eye_color birth_year  sex
+#&gt; 1 Luke Skywalker    172   77      blond        fair      blue       19.0 male
+#&gt; 2          C-3PO    167   75       &lt;NA&gt;        gold    yellow      112.0 none
+#&gt; 3          R2-D2     96   32       &lt;NA&gt; white, blue       red       33.0 none
+#&gt; 4    Darth Vader    202  136       none       white    yellow       41.9 male
+#&gt;      gender homeworld species
+#&gt; 1 masculine  Tatooine   Human
+#&gt; 2 masculine  Tatooine   Droid
+#&gt; 3 masculine     Naboo   Droid
+#&gt; 4 masculine  Tatooine   Human
+#&gt;                                                                                                                                       films
+#&gt; 1                                           The Empire Strikes Back, Revenge of the Sith, Return of the Jedi, A New Hope, The Force Awakens
+#&gt; 2                    The Empire Strikes Back, Attack of the Clones, The Phantom Menace, Revenge of the Sith, Return of the Jedi, A New Hope
+#&gt; 3 The Empire Strikes Back, Attack of the Clones, The Phantom Menace, Revenge of the Sith, Return of the Jedi, A New Hope, The Force Awakens
+#&gt; 4                                                              The Empire Strikes Back, Revenge of the Sith, Return of the Jedi, A New Hope
+#&gt;                             vehicles                starships
+#&gt; 1 Snowspeeder, Imperial Speeder Bike X-wing, Imperial shuttle
+#&gt; 2                                                            
+#&gt; 3                                                            
+#&gt; 4                                             TIE Advanced x1</code></pre>
+</div>
+</div>
+</section>
+<section id="tibble-2" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">tibble</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb28-1" class="hljs-ln-code"><a href="#cb28-1"></a><span class="fu">class</span>(starwars) <span class="ot">&lt;-</span> <span class="st">"data.frame"</span></span>
+<span id="cb28-2" class="hljs-ln-code"><a href="#cb28-2"></a><span class="fu">head</span>(starwars, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="tibble-3" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">tibble</h2>
+<ul>
+<li><code>tibble</code> surcharge les <code>data.frame</code> classiques</li>
+<li>meilleur <code>print</code>, meilleurs “défauts”</li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb29-1" class="hljs-ln-code"><a href="#cb29-1"></a><span class="fu">class</span>(starwars[, <span class="dv">1</span>])</span>
+<span id="cb29-2" class="hljs-ln-code"><a href="#cb29-2"></a><span class="fu">class</span>(<span class="fu">as.tibble</span>(starwars)[, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="tibble-4" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">tibble</h2>
+<ul>
+<li><code>tibble</code> surcharge les <code>data.frame</code> classiques</li>
+<li>meilleur <code>print</code>, meilleurs “défauts”</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">class</span>(starwars[, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">class</span>(<span class="fu">as_tibble</span>(starwars)[, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><code>tibble</code> renvoie une <strong>data.frame</strong> à une colonne</li>
+<li><code>data.frame</code> renvoie un <strong>vecteur</strong></li>
+</ul>
+</div>
+</section>
+<section id="dplyr" class="slide level2">
+<h2>dplyr</h2>
+</section>
+<section id="dplyr-1" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">dplyr</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb34-1" class="hljs-ln-code"><a href="#cb34-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2" class="hljs-ln-code"><a href="#cb34-2"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Droid"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dplyr-2" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">dplyr</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb35-1" class="hljs-ln-code"><a href="#cb35-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2" class="hljs-ln-code"><a href="#cb35-2"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Droid"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 6 × 14
+#&gt;   name   height  mass hair_color skin_color eye_c…¹ birth…² sex   gender homew…³
+#&gt;   &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
+#&gt; 1 C-3PO     167    75 &lt;NA&gt;       gold       yellow      112 none  mascu… Tatooi…
+#&gt; 2 R2-D2      96    32 &lt;NA&gt;       white, bl… red          33 none  mascu… Naboo  
+#&gt; 3 R5-D4      97    32 &lt;NA&gt;       white, red red          NA none  mascu… Tatooi…
+#&gt; 4 IG-88     200   140 none       metal      red          15 none  mascu… &lt;NA&gt;   
+#&gt; 5 R4-P17     96    NA none       silver, r… red, b…      NA none  femin… &lt;NA&gt;   
+#&gt; 6 BB8        NA    NA none       none       black        NA none  mascu… &lt;NA&gt;   
+#&gt; # … with 4 more variables: species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;,
+#&gt; #   starships &lt;list&gt;, and abbreviated variable names ¹​eye_color, ²​birth_year,
+#&gt; #   ³​homeworld</code></pre>
+</div>
+</div>
+</section>
+<section id="dplyr-3" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">dplyr</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb37-1" class="hljs-ln-code"><a href="#cb37-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2" class="hljs-ln-code"><a href="#cb37-2"></a>  <span class="fu">select</span>(name, <span class="fu">ends_with</span>(<span class="st">"color"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dplyr-4" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">dplyr</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb38-1" class="hljs-ln-code"><a href="#cb38-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2" class="hljs-ln-code"><a href="#cb38-2"></a>  <span class="fu">select</span>(name, <span class="fu">ends_with</span>(<span class="st">"color"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 87 × 4
+#&gt;    name               hair_color    skin_color  eye_color
+#&gt;    &lt;chr&gt;              &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;    
+#&gt;  1 Luke Skywalker     blond         fair        blue     
+#&gt;  2 C-3PO              &lt;NA&gt;          gold        yellow   
+#&gt;  3 R2-D2              &lt;NA&gt;          white, blue red      
+#&gt;  4 Darth Vader        none          white       yellow   
+#&gt;  5 Leia Organa        brown         light       brown    
+#&gt;  6 Owen Lars          brown, grey   light       blue     
+#&gt;  7 Beru Whitesun lars brown         light       blue     
+#&gt;  8 R5-D4              &lt;NA&gt;          white, red  red      
+#&gt;  9 Biggs Darklighter  black         light       brown    
+#&gt; 10 Obi-Wan Kenobi     auburn, white fair        blue-gray
+#&gt; # … with 77 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="dplyr-5" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">dplyr</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb40-1" class="hljs-ln-code"><a href="#cb40-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2" class="hljs-ln-code"><a href="#cb40-2"></a>  <span class="fu">mutate</span>(name, <span class="at">bmi =</span> mass <span class="sc">/</span> ((height <span class="sc">/</span> <span class="dv">100</span>)  <span class="sc">^</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb40-3" class="hljs-ln-code"><a href="#cb40-3"></a>  <span class="fu">select</span>(name<span class="sc">:</span>mass, bmi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dplyr-6" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">dplyr</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb41-1" class="hljs-ln-code"><a href="#cb41-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2" class="hljs-ln-code"><a href="#cb41-2"></a>  <span class="fu">mutate</span>(name, <span class="at">bmi =</span> mass <span class="sc">/</span> ((height <span class="sc">/</span> <span class="dv">100</span>)  <span class="sc">^</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb41-3" class="hljs-ln-code"><a href="#cb41-3"></a>  <span class="fu">select</span>(name<span class="sc">:</span>mass, bmi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 87 × 4
+#&gt;    name               height  mass   bmi
+#&gt;    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 Luke Skywalker        172    77  26.0
+#&gt;  2 C-3PO                 167    75  26.9
+#&gt;  3 R2-D2                  96    32  34.7
+#&gt;  4 Darth Vader           202   136  33.3
+#&gt;  5 Leia Organa           150    49  21.8
+#&gt;  6 Owen Lars             178   120  37.9
+#&gt;  7 Beru Whitesun lars    165    75  27.5
+#&gt;  8 R5-D4                  97    32  34.0
+#&gt;  9 Biggs Darklighter     183    84  25.1
+#&gt; 10 Obi-Wan Kenobi        182    77  23.2
+#&gt; # … with 77 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="dplyr-7" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">dplyr</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb43-1" class="hljs-ln-code"><a href="#cb43-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2" class="hljs-ln-code"><a href="#cb43-2"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dplyr-8" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">dplyr</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb44-1" class="hljs-ln-code"><a href="#cb44-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2" class="hljs-ln-code"><a href="#cb44-2"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 87 × 14
+#&gt;    name        height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
+#&gt;    &lt;chr&gt;        &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
+#&gt;  1 Jabba Desi…    175  1358 &lt;NA&gt;    green-… orange    600   herm… mascu… Nal Hu…
+#&gt;  2 Grievous       216   159 none    brown,… green,…    NA   male  mascu… Kalee  
+#&gt;  3 IG-88          200   140 none    metal   red        15   none  mascu… &lt;NA&gt;   
+#&gt;  4 Darth Vader    202   136 none    white   yellow     41.9 male  mascu… Tatooi…
+#&gt;  5 Tarfful        234   136 brown   brown   blue       NA   male  mascu… Kashyy…
+#&gt;  6 Owen Lars      178   120 brown,… light   blue       52   male  mascu… Tatooi…
+#&gt;  7 Bossk          190   113 none    green   red        53   male  mascu… Trando…
+#&gt;  8 Chewbacca      228   112 brown   unknown blue      200   male  mascu… Kashyy…
+#&gt;  9 Jek Tono P…    180   110 brown   fair    blue       NA   male  mascu… Bestin…
+#&gt; 10 Dexter Jet…    198   102 none    brown   yellow     NA   male  mascu… Ojom   
+#&gt; # … with 77 more rows, 4 more variables: species &lt;chr&gt;, films &lt;list&gt;,
+#&gt; #   vehicles &lt;list&gt;, starships &lt;list&gt;, and abbreviated variable names
+#&gt; #   ¹​hair_color, ²​skin_color, ³​eye_color, ⁴​birth_year, ⁵​homeworld</code></pre>
+</div>
+</div>
+</section>
+<section id="dplyr-9" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">dplyr</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb46-1" class="hljs-ln-code"><a href="#cb46-1"></a>starwars <span class="sc">%&gt;%</span></span>
+<span id="cb46-2" class="hljs-ln-code"><a href="#cb46-2"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3" class="hljs-ln-code"><a href="#cb46-3"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb46-4" class="hljs-ln-code"><a href="#cb46-4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb46-5" class="hljs-ln-code"><a href="#cb46-5"></a>    <span class="at">mass =</span> <span class="fu">mean</span>(mass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb46-6" class="hljs-ln-code"><a href="#cb46-6"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb46-7" class="hljs-ln-code"><a href="#cb46-7"></a>  <span class="fu">filter</span>(</span>
+<span id="cb46-8" class="hljs-ln-code"><a href="#cb46-8"></a>    n <span class="sc">&gt;</span> <span class="dv">1</span>,</span>
+<span id="cb46-9" class="hljs-ln-code"><a href="#cb46-9"></a>    mass <span class="sc">&gt;</span> <span class="dv">50</span></span>
+<span id="cb46-10" class="hljs-ln-code"><a href="#cb46-10"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dplyr-10" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">dplyr</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb47-1" class="hljs-ln-code"><a href="#cb47-1"></a>starwars <span class="sc">%&gt;%</span></span>
+<span id="cb47-2" class="hljs-ln-code"><a href="#cb47-2"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb47-3" class="hljs-ln-code"><a href="#cb47-3"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb47-4" class="hljs-ln-code"><a href="#cb47-4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb47-5" class="hljs-ln-code"><a href="#cb47-5"></a>    <span class="at">mass =</span> <span class="fu">mean</span>(mass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb47-6" class="hljs-ln-code"><a href="#cb47-6"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb47-7" class="hljs-ln-code"><a href="#cb47-7"></a>  <span class="fu">filter</span>(</span>
+<span id="cb47-8" class="hljs-ln-code"><a href="#cb47-8"></a>    n <span class="sc">&gt;</span> <span class="dv">1</span>,</span>
+<span id="cb47-9" class="hljs-ln-code"><a href="#cb47-9"></a>    mass <span class="sc">&gt;</span> <span class="dv">50</span></span>
+<span id="cb47-10" class="hljs-ln-code"><a href="#cb47-10"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 8 × 3
+#&gt;   species      n  mass
+#&gt;   &lt;chr&gt;    &lt;int&gt; &lt;dbl&gt;
+#&gt; 1 Droid        6  69.8
+#&gt; 2 Gungan       3  74  
+#&gt; 3 Human       35  82.8
+#&gt; 4 Kaminoan     2  88  
+#&gt; 5 Mirialan     2  53.1
+#&gt; 6 Twi'lek      2  55  
+#&gt; 7 Wookiee      2 124  
+#&gt; 8 Zabrak       2  80</code></pre>
+</div>
+</div>
+</section></section>
+<section>
 <section id="données-textuelles" class="title-slide slide level1 center">
 <h1>Données textuelles</h1>
 
 </section>
+<section id="manipulation-de-chaines-de-caractères" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Manipulation de chaines de caractères</h2>
+<p>Élément important des tâches de manipulation de données, de nettoyage, de transformation, souvent basé sur les <a href="https://fr.wikipedia.org/wiki/Expression_r%C3%A9guli%C3%A8re">expressions régulières</a>.</p>
+<div class="fragment">
+<p>En R base, possibilité de manipuler des chaînes de caractères, mais :</p>
+<ul>
+<li>API des fonctions inconsistantes</li>
+<li>naming difficile à comprendre</li>
+<li>documentation parfois cryptique</li>
+</ul>
+</div>
+</section>
+<section id="manipulation-de-chaines-de-caractères-1" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Manipulation de chaines de caractères</h2>
+<p>Élément important des tâches de manipulation de données, de nettoyage, de transformation, souvent basé sur les <a href="https://fr.wikipedia.org/wiki/Expression_r%C3%A9guli%C3%A8re">expressions régulières</a>.</p>
+<p>En R base, possibilité de manipuler des chaînes de caractères, mais :</p>
+<ul>
+<li>API des fonctions inconsistantes</li>
+<li>naming difficile à comprendre</li>
+<li>documentation parfois cryptique</li>
+<li>une librairie <code>user friendly</code> : <a href="https://stringr.tidyverse.org/index.html">stringr</a></li>
+</ul>
+</section>
+<section id="expressions-régulières" class="slide level2">
+<h2>Expressions régulières</h2>
+<p>Simple <em>match</em> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb49-2"><a href="#cb49-2"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"pear"</span>)</span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="fu">str_view</span>(x, <span class="st">"an"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="str_view html-widget html-fill-item" id="htmlwidget-d3894f5acd5740a69395" style="width:960px;height:100%;"></div>
+<script type="application/json" data-for="htmlwidget-d3894f5acd5740a69395">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="expressions-régulières-1" class="slide level2">
+<h2>Expressions régulières</h2>
+<p>“.” match tous les caractères</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"pear"</span>)</span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="fu">str_view</span>(x, <span class="st">".a."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="str_view html-widget html-fill-item" id="htmlwidget-4c107bb4b6bc0baa6fd1" style="width:960px;height:100%;"></div>
+<script type="application/json" data-for="htmlwidget-4c107bb4b6bc0baa6fd1">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>p<span class='match'>ear<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="expressions-régulières-2" class="slide level2">
+<h2>Expressions régulières</h2>
+<p><code>Escaping</code> avec le symbole <code>\</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"abc"</span>, <span class="st">"a.c"</span>, <span class="st">"bef"</span>), <span class="st">"a</span><span class="sc">\\</span><span class="st">.c"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="str_view html-widget html-fill-item" id="htmlwidget-37145e5f2b948c72c587" style="width:960px;height:100%;"></div>
+<script type="application/json" data-for="htmlwidget-37145e5f2b948c72c587">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n  <li>bef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="expressions-régulières-3" class="slide level2">
+<h2>Expressions régulières</h2>
+<ul>
+<li><code>\d</code> : match tous les symboles numériques</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">str_view_all</span>(<span class="st">"10 + 20 = 30"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">d+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="str_view html-widget html-fill-item" id="htmlwidget-b886caf473f90b12c562" style="width:960px;height:100%;"></div>
+<script type="application/json" data-for="htmlwidget-b886caf473f90b12c562">{"x":{"html":"<ul>\n  <li><span class='match'>10<\/span> + <span class='match'>20<\/span> = <span class='match'>30<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="expressions-régulières-4" class="slide level2">
+<h2>Expressions régulières</h2>
+<ul>
+<li><code>\s</code> : caractères d’espacement</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>(text <span class="ot">&lt;-</span> <span class="st">"Some  </span><span class="sc">\t</span><span class="st"> badly</span><span class="sc">\n\t\t</span><span class="st">spaced </span><span class="sc">\f</span><span class="st"> text"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "Some  \t badly\n\t\tspaced \f text"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">str_replace_all</span>(text, <span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "Some badly spaced text"</code></pre>
+</div>
+</div>
+</section>
+<section id="expressions-régulières-5" class="slide level2">
+<h2>Expressions régulières</h2>
+<ul>
+<li><code>\w</code> et <code>\W</code> : mots</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="fu">str_extract_all</span>(<span class="st">"Don't eat that!"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">w+"</span>)[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "Don"  "t"    "eat"  "that"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">str_split</span>(<span class="st">"Don't eat that!"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">W"</span>)[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "Don"  "t"    "eat"  "that" ""</code></pre>
+</div>
+</div>
+</section>
+<section id="expressions-régulières-6" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Expressions régulières</h2>
+<div>
+<ul>
+<li class="fragment">[abc] : match a, b, c</li>
+<li class="fragment">[a-z] : match tous les caractères minuscules</li>
+<li class="fragment">[^abc] : match tous les caractères exceptés a, b, c</li>
+<li class="fragment">[\^\-] : match les caractères <code>^</code> et <code>-</code></li>
+</ul>
+</div>
+</section>
+<section id="expressions-régulières-7" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Expressions régulières</h2>
+<ul>
+<li>[abc] : match a, b, c</li>
+<li>[a-z] : match tous les caractères minuscules</li>
+<li>[^abc] : match tous les caractères exceptés a, b, c</li>
+<li>[\^\-] : match les caractères <code>^</code> et <code>-</code></li>
+</ul>
+<p>Voir <a href="https://stringr.tidyverse.org/articles/regular-expressions.html">R et expressions régulières</a></p>
+</section>
+<section id="fonctions-stringr-vs-r-base" class="slide level2">
+<h2><a href="https://stringr.tidyverse.org/articles/from-base.html">Fonctions stringr vs R base</a></h2>
+<div class="cell">
+<div class="cell-output-display">
+<table>
+<colgroup>
+<col style="width: 43%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">stringr</th>
+<th style="text-align: left;">base R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">str_detect(string, pattern)</td>
+<td style="text-align: left;">grepl(pattern, x)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">str_dup(string, times)</td>
+<td style="text-align: left;">strrep(x, times)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">str_extract(string, pattern)</td>
+<td style="text-align: left;">regmatches(x, m = regexpr(pattern, text))</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">str_extract_all(string, pattern)</td>
+<td style="text-align: left;">regmatches(x, m = gregexpr(pattern, text))</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">str_length(string)</td>
+<td style="text-align: left;">nchar(x)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="fonctions-stringr-vs-r-base-1" class="slide level2">
+<h2><a href="https://stringr.tidyverse.org/articles/from-base.html">Fonctions stringr vs R base</a></h2>
+<div class="cell">
+<div class="cell-output-display">
+<table>
+<colgroup>
+<col style="width: 52%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">stringr</th>
+<th style="text-align: left;">base R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">str_locate(string, pattern)</td>
+<td style="text-align: left;">regexpr(pattern, text)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">str_locate_all(string, pattern)</td>
+<td style="text-align: left;">gregexpr(pattern, text)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">str_match(string, pattern)</td>
+<td style="text-align: left;">regmatches(x, m = regexec(pattern, text))</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">str_order(string)</td>
+<td style="text-align: left;">order(…)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">str_replace(string, pattern, replacement)</td>
+<td style="text-align: left;">sub(pattern, replacement, x)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">str_replace_all(string, pattern, replacement)</td>
+<td style="text-align: left;">gsub(pattern, replacement, x)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section class="slide level2">
 
-<section id="dates" class="title-slide slide level1 center">
-<h1>Dates</h1>
+<div class="cell">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">stringr</th>
+<th style="text-align: left;">base R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">str_sort(string)</td>
+<td style="text-align: left;">sort(x)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">str_split(string, pattern)</td>
+<td style="text-align: left;">strsplit(x, split)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">str_sub(string, start, end)</td>
+<td style="text-align: left;">substr(x, start, stop)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">str_subset(string, pattern)</td>
+<td style="text-align: left;">grep(pattern, x, value = TRUE)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">str_to_lower(string)</td>
+<td style="text-align: left;">tolower(x)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">str_to_title(string)</td>
+<td style="text-align: left;">tools::toTitleCase(text)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">str_to_upper(string)</td>
+<td style="text-align: left;">toupper(x)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">str_trim(string)</td>
+<td style="text-align: left;">trimws(x)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">str_which(string, pattern)</td>
+<td style="text-align: left;">grep(pattern, x)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">str_wrap(string)</td>
+<td style="text-align: left;">strwrap(x)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section></section>
+<section>
+<section id="données-calendaires" class="title-slide slide level1 center">
+<h1>Données calendaires</h1>
+
+</section>
+<section id="unix-time" class="slide level2">
+<h2><a href="https://fr.wikipedia.org/wiki/Heure_Unix">Unix time</a></h2>
+<blockquote>
+<p>L’heure Unix ou heure Posix est une mesure du temps fondée sur le nombre de secondes écoulées depuis le 1er janvier 1970 00:00:00 UTC, hors secondes intercalaires. Elle est utilisée principalement dans les systèmes qui respectent la norme POSIX, dont les systèmes de type Unix, d’où son nom. C’est la représentation POSIX du temps.</p>
+</blockquote>
+</section>
+<section id="timezone-utc" class="slide level2">
+<h2>Timezone &amp; UTC</h2>
+<p>Est-ce une date valide ?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="st">"2022-01-01 03:40:54"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div>
+<ul>
+<li class="fragment">Importance des timezones</li>
+<li class="fragment">Universal Time Coordinated</li>
+</ul>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>UTC</strong></p>
+</div>
+<div class="callout-content">
+<p>Le temps universel coordonné ou UTC (en anglais : coordinated universal time) est une échelle de temps adoptée comme base du temps civil international par la majorité des pays du globe.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="r-base-vs-lubridate" class="slide level2">
+<h2>R base vs lubridate</h2>
+<p>Les dates sont des objets très fréquents et essentiels dans de multiple projets de datascience :</p>
+<ul>
+<li>séries temporelles</li>
+<li>données et messages horodatés</li>
+</ul>
+<div class="fragment">
+<p>Il est possible de manipuler des objets de date en R base, mais <a href="https://lubridate.tidyverse.org/"><code>lubridate</code></a> propose une API plus consistante et accessible et peut faciliter vos traitements de données.</p>
+</div>
+</section>
+<section id="parsing-de-dates" class="slide level2">
+<h2><a href="https://lubridate.tidyverse.org/reference/index.html#date-time-parsing">“Parsing” de dates</a></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">ymd</span>(</span>
+<span id="cb62-2"><a href="#cb62-2"></a>  ...,</span>
+<span id="cb62-3"><a href="#cb62-3"></a>  <span class="at">quiet =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb62-4"><a href="#cb62-4"></a>  <span class="at">tz =</span> <span class="cn">NULL</span>,</span>
+<span id="cb62-5"><a href="#cb62-5"></a>  <span class="at">locale =</span> <span class="fu">Sys.getlocale</span>(<span class="st">"LC_TIME"</span>),</span>
+<span id="cb62-6"><a href="#cb62-6"></a>  <span class="at">truncated =</span> <span class="dv">0</span></span>
+<span id="cb62-7"><a href="#cb62-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Exemple :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb63-2"><a href="#cb63-2"></a>date <span class="ot">&lt;-</span> <span class="fu">ymd</span>(<span class="st">"2020-02-22"</span>)</span>
+<span id="cb63-3"><a href="#cb63-3"></a><span class="fu">str</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;  Date[1:1], format: "2020-02-22"</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="extraction-déléments" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Extraction d’éléments</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb65-1" class="hljs-ln-code"><a href="#cb65-1"></a>date <span class="ot">&lt;-</span> <span class="fu">ymd</span>(<span class="st">"2020-02-22"</span>)</span>
+<span id="cb65-2" class="hljs-ln-code"><a href="#cb65-2"></a><span class="fu">year</span>(date)</span>
+<span id="cb65-3" class="hljs-ln-code"><a href="#cb65-3"></a><span class="fu">month</span>(date)</span>
+<span id="cb65-4" class="hljs-ln-code"><a href="#cb65-4"></a><span class="fu">isoweek</span>(date)</span>
+<span id="cb65-5" class="hljs-ln-code"><a href="#cb65-5"></a><span class="fu">minute</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="extraction-déléments-1" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Extraction d’éléments</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>date <span class="ot">&lt;-</span> <span class="fu">ymd</span>(<span class="st">"2020-02-22"</span>)</span>
+<span id="cb66-2"><a href="#cb66-2"></a><span class="fu">year</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 2020</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">month</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="fu">isoweek</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="fu">minute</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0</code></pre>
+</div>
+</div>
+</section>
+<section id="extraction-déléments-2" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Extraction d’éléments</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb74-1" class="hljs-ln-code"><a href="#cb74-1"></a>date <span class="ot">&lt;-</span> <span class="fu">ymd</span>(<span class="st">"2020-02-22"</span>)</span>
+<span id="cb74-2" class="hljs-ln-code"><a href="#cb74-2"></a><span class="fu">wday</span>(date)</span>
+<span id="cb74-3" class="hljs-ln-code"><a href="#cb74-3"></a><span class="fu">Sys.setlocale</span>(<span class="at">category =</span> <span class="st">"LC_ALL"</span>, <span class="at">locale =</span> <span class="st">"de_DE.UTF-8"</span>)</span>
+<span id="cb74-4" class="hljs-ln-code"><a href="#cb74-4"></a>date <span class="ot">&lt;-</span> <span class="fu">ymd</span>(<span class="st">"2020-02-22"</span>)</span>
+<span id="cb74-5" class="hljs-ln-code"><a href="#cb74-5"></a><span class="fu">wday</span>(date, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">abbr =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb74-6" class="hljs-ln-code"><a href="#cb74-6"></a><span class="fu">Sys.setlocale</span>(<span class="at">category =</span> <span class="st">"LC_ALL"</span>, <span class="at">locale =</span> <span class="st">"en_US.UTF-8"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="extraction-déléments-3" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Extraction d’éléments</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a>date <span class="ot">&lt;-</span> <span class="fu">ymd</span>(<span class="st">"2020-02-22"</span>)</span>
+<span id="cb75-2"><a href="#cb75-2"></a><span class="fu">wday</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a><span class="fu">Sys.setlocale</span>(<span class="at">category =</span> <span class="st">"LC_ALL"</span>, <span class="at">locale =</span> <span class="st">"de_DE.UTF-8"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/en_US.UTF-8"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a>date <span class="ot">&lt;-</span> <span class="fu">ymd</span>(<span class="st">"2020-02-22"</span>)</span>
+<span id="cb79-2"><a href="#cb79-2"></a><span class="fu">wday</span>(date, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">abbr =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] Samstag
+#&gt; 7 Levels: Sonntag &lt; Montag &lt; Dienstag &lt; Mittwoch &lt; Donnerstag &lt; ... &lt; Samstag</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a><span class="fu">format_ISO8601</span>(<span class="fu">as.POSIXct</span>(<span class="st">"2018-02-01 03:04:05"</span>, <span class="at">tz =</span> <span class="st">"EST"</span>), <span class="at">usetz =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "2018-02-01T03:04:05-0500"</code></pre>
+</div>
+</div>
+</section>
+<section id="interval-duration-period" class="slide level2">
+<h2>Interval, duration, period</h2>
+<ul>
+<li><code>interval</code> : période temporelle entre deux dates</li>
+<li><code>duration</code> : durée définie en temps calendaire “humain” : en jours, en semaines, en mois..</li>
+<li><code>period</code> : durée définie en nombre de secondes</li>
+</ul>
+</section></section>
+<section id="questions" class="title-slide slide level1 center">
+<h1>Questions ?</h1>
 <div class="footer footer-default">
 
 </div>

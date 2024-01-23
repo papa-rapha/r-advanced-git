@@ -29,8 +29,9 @@ read.table()
 # R package readr
 readr::read_csv()
 # autres solutions :
-datatable::fread()
+data.table::fread()
 vroom::vroom()
+arrow::read_csv()
 ```
 
 
@@ -61,6 +62,26 @@ read_json("some_json_file.json")
 
 Possibilité de lire et écrire du json depuis R.
 
+## Lire un fichier parquet {auto-animate="true"}
+
+Format parquet, très utilisé pour le traitement des "big data".
+
+. . .
+
+```{r}
+library(arrow)
+
+data(mtcars)
+arrow::read_parquet()
+arrow::write_parquet()
+
+```
+
+. . .
+
+- Stockage orienté colonne
+- Fichier binaire compressé, efficient et typé
+- Devient très courant - format de référence dans les data lake, lisible en python (`pandas.read_parquet`)
 
 ## Requêter une base de données {auto-animate="true"}
 
@@ -122,6 +143,487 @@ dbDisconnect(con)
 
 # Manipulation de dataframes
 
+## data.frame {auto-animate="true"}
+
+En R, les data.frame sont un élément essentiel du succès du langage pour le traitement des données.
+
+```{r}
+#| eval: true
+
+df <- data.frame(col1 = c(1, 2, 3), col2 = c("a", "b", "c"))
+class(df)
+str(df, 1)
+```
+
+## tibble {auto-animate="true"}
+
+```{r}
+#| eval: true
+library(dplyr)
+
+data(starwars)
+class(starwars)
+
+head(starwars, 4)
+```
+
+## tibble {auto-animate="true"}
+
+```{r}
+#| eval: true
+class(starwars) <- "data.frame"
+head(starwars, 4)
+```
+
+## tibble {auto-animate="true"}
+
+```{r}
+#| eval: false
+class(starwars) <- "data.frame"
+head(starwars, 4)
+```
+
+## tibble {auto-animate="true"}
+
+- `tibble` surcharge les `data.frame` classiques
+- meilleur `print`, meilleurs "défauts"
+
+. . .
+
+```{r}
+#| eval: false
+class(starwars[, 1])
+class(as.tibble(starwars)[, 1])
+```
+
+
+
+## tibble {auto-animate="true"}
+
+- `tibble` surcharge les `data.frame` classiques
+- meilleur `print`, meilleurs "défauts"
+
+```{r}
+#| eval: true
+class(starwars[, 1])
+class(as_tibble(starwars)[, 1])
+```
+
+. . .
+
+- `tibble` renvoie une **data.frame** à une colonne
+- `data.frame` renvoie un **vecteur**
+
+## dplyr
+
+## dplyr {auto-animate="true"}
+
+```{r}
+#| eval: true
+#| echo: false
+starwars <- as_tibble(starwars)
+```
+
+```{r}
+starwars %>% 
+  filter(species == "Droid")
+```
+
+## dplyr {auto-animate="true"}
+
+```{r}
+#| eval: true
+starwars %>% 
+  filter(species == "Droid")
+```
+
+## dplyr {auto-animate="true"}
+
+```{r}
+starwars %>% 
+  select(name, ends_with("color"))
+```
+
+## dplyr {auto-animate="true"}
+
+```{r}
+#| eval: true
+starwars %>% 
+  select(name, ends_with("color"))
+```
+
+
+## dplyr {auto-animate="true"}
+
+```{r}
+starwars %>% 
+  mutate(name, bmi = mass / ((height / 100)  ^ 2)) %>%
+  select(name:mass, bmi)
+```
+
+## dplyr {auto-animate="true"}
+
+```{r}
+#| eval: true
+starwars %>% 
+  mutate(name, bmi = mass / ((height / 100)  ^ 2)) %>%
+  select(name:mass, bmi)
+```
+
+
+## dplyr {auto-animate="true"}
+
+```{r}
+starwars %>% 
+  arrange(desc(mass))
+```
+
+## dplyr {auto-animate="true"}
+
+```{r}
+#| eval: true
+starwars %>% 
+  arrange(desc(mass))
+```
+
+
+## dplyr {auto-animate="true"}
+
+```{r}
+starwars %>%
+  group_by(species) %>%
+  summarise(
+    n = n(),
+    mass = mean(mass, na.rm = TRUE)
+  ) %>%
+  filter(
+    n > 1,
+    mass > 50
+  )
+```
+
+## dplyr {auto-animate="true"}
+
+```{r}
+#| eval: true
+starwars %>%
+  group_by(species) %>%
+  summarise(
+    n = n(),
+    mass = mean(mass, na.rm = TRUE)
+  ) %>%
+  filter(
+    n > 1,
+    mass > 50
+  )
+```
+
+
 # Données textuelles
 
-# Dates
+## Manipulation de chaines de caractères {auto-animate="true"}
+
+Élément important des tâches de manipulation de données, de nettoyage, de transformation, souvent basé sur les [expressions régulières](https://fr.wikipedia.org/wiki/Expression_r%C3%A9guli%C3%A8re).
+
+. . .
+
+En R base, possibilité de manipuler des chaînes de caractères, mais :
+
+- API des fonctions inconsistantes
+- naming difficile à comprendre
+- documentation parfois cryptique
+
+## Manipulation de chaines de caractères {auto-animate="true"}
+
+Élément important des tâches de manipulation de données, de nettoyage, de transformation, souvent basé sur les [expressions régulières](https://fr.wikipedia.org/wiki/Expression_r%C3%A9guli%C3%A8re).
+
+
+En R base, possibilité de manipuler des chaînes de caractères, mais :
+
+- API des fonctions inconsistantes
+- naming difficile à comprendre
+- documentation parfois cryptique
+- une librairie `user friendly` : [stringr](https://stringr.tidyverse.org/index.html)
+
+## Expressions régulières
+
+Simple *match* : 
+
+```{r}
+#| eval: true
+library(stringr)
+x <- c("apple", "banana", "pear")
+str_view(x, "an")
+```
+
+## Expressions régulières
+
+"." match tous les caractères
+
+```{r}
+#| eval: true
+x <- c("apple", "banana", "pear")
+str_view(x, ".a.")
+```
+
+## Expressions régulières
+
+`Escaping` avec le symbole `\` :
+```{r}
+#| eval: true
+str_view(c("abc", "a.c", "bef"), "a\\.c")
+```
+
+## Expressions régulières
+
+- `\d` :  match tous les symboles numériques
+
+```{r}
+#| eval: true
+str_view_all("10 + 20 = 30", "\\d+")
+```
+
+## Expressions régulières
+
+- `\s` : caractères d'espacement
+
+```{r}
+#| eval: true
+(text <- "Some  \t badly\n\t\tspaced \f text")
+str_replace_all(text, "\\s+", " ")
+```
+
+## Expressions régulières
+
+- `\w` et `\W` : mots
+
+```{r}
+#| eval: true
+
+str_extract_all("Don't eat that!", "\\w+")[[1]]
+str_split("Don't eat that!", "\\W")[[1]]
+```
+
+## Expressions régulières {auto-animate="true"}
+
+::: incremental
+- [abc] : match a, b, c
+- [a-z] : match tous les caractères minuscules
+- [^abc] : match tous les caractères exceptés a, b, c
+- [\\^\\-] : match les caractères `^` et `-`
+:::
+
+## Expressions régulières {auto-animate="true"}
+
+- [abc] : match a, b, c
+- [a-z] : match tous les caractères minuscules
+- [^abc] : match tous les caractères exceptés a, b, c
+- [\\^\\-] : match les caractères `^` et `-`
+
+Voir [R et expressions régulières](https://stringr.tidyverse.org/articles/regular-expressions.html)
+
+## [Fonctions stringr vs R base](https://stringr.tidyverse.org/articles/from-base.html)
+
+```{r}
+#| echo: false
+#| eval: true
+
+knitr::kable(
+  tibble::tribble(
+    ~stringr, ~`base R`,
+    "str_detect(string, pattern)", "grepl(pattern, x)",
+    "str_dup(string, times)",
+    "strrep(x, times)",
+    "str_extract(string, pattern)",
+    "regmatches(x, m = regexpr(pattern, text))",
+    "str_extract_all(string, pattern)",
+    "regmatches(x, m = gregexpr(pattern, text))",
+    "str_length(string)",
+    "nchar(x)"
+  )
+)
+
+```
+
+
+## [Fonctions stringr vs R base](https://stringr.tidyverse.org/articles/from-base.html)
+
+```{r}
+#| echo: false
+#| eval: true
+
+knitr::kable(
+  tibble::tribble(
+    ~stringr, ~`base R`,
+    "str_locate(string, pattern)",
+    "regexpr(pattern, text)",
+    "str_locate_all(string, pattern)",
+    "gregexpr(pattern, text)",
+    "str_match(string, pattern)",
+    "regmatches(x, m = regexec(pattern, text))",
+    "str_order(string)",
+    "order(...)",
+    "str_replace(string, pattern, replacement)",
+    "sub(pattern, replacement, x)",
+    "str_replace_all(string, pattern, replacement)",
+    "gsub(pattern, replacement, x)"
+  )
+)
+```
+
+----
+
+```{r}
+#| echo: false
+#| eval: true
+
+knitr::kable(
+  tibble::tribble(
+    ~stringr, ~`base R`,
+    "str_sort(string)",
+    "sort(x)",
+    "str_split(string, pattern)",
+    "strsplit(x, split)",
+    "str_sub(string, start, end)",
+    "substr(x, start, stop)",
+    "str_subset(string, pattern)",
+    "grep(pattern, x, value = TRUE)",
+    "str_to_lower(string)",
+    "tolower(x)",
+    "str_to_title(string)",
+    "tools::toTitleCase(text)",
+    "str_to_upper(string)",
+    "toupper(x)",
+    "str_trim(string)",
+    "trimws(x)",
+    "str_which(string, pattern)",
+    "grep(pattern, x)",
+    "str_wrap(string)",
+    "strwrap(x)"
+  )
+)
+```
+
+# Données calendaires
+
+## [Unix time](https://fr.wikipedia.org/wiki/Heure_Unix)
+
+> L'heure Unix ou heure Posix est une mesure du temps fondée sur le nombre de secondes écoulées depuis le 1er janvier 1970 00:00:00 UTC, hors secondes intercalaires. Elle est utilisée principalement dans les systèmes qui respectent la norme POSIX, dont les systèmes de type Unix, d'où son nom. C'est la représentation POSIX du temps.
+
+## Timezone \& UTC
+
+Est-ce une date valide ?
+```{r}
+"2022-01-01 03:40:54"
+```
+
+. . .
+
+::: incremental
+- Importance des timezones
+- Universal Time Coordinated
+:::
+
+. . .
+
+:::::: {.callout-tip}
+## UTC
+Le temps universel coordonné ou UTC (en anglais : coordinated universal time) est une échelle de temps adoptée comme base du temps civil international par la majorité des pays du globe.
+:::
+
+## R base vs lubridate
+
+Les dates sont des objets très fréquents et essentiels dans de multiple projets de datascience :
+
+- séries temporelles
+- données et messages horodatés
+
+. . .
+
+Il est possible de manipuler des objets de date en R base, mais [`lubridate`](https://lubridate.tidyverse.org/) propose une API plus consistante et accessible et peut faciliter vos traitements de données.
+
+## ["Parsing" de dates](https://lubridate.tidyverse.org/reference/index.html#date-time-parsing)
+
+```{r}
+ymd(
+  ...,
+  quiet = FALSE,
+  tz = NULL,
+  locale = Sys.getlocale("LC_TIME"),
+  truncated = 0
+)
+```
+
+. . .
+
+Exemple :
+
+```{r}
+#| eval: true
+library(lubridate)
+date <- ymd("2020-02-22")
+str(date)
+```
+
+## Extraction d'éléments {auto-animate="true"}
+
+```{r}
+date <- ymd("2020-02-22")
+year(date)
+month(date)
+isoweek(date)
+minute(date)
+```
+
+## Extraction d'éléments {auto-animate="true"}
+
+```{r}
+#| eval: true
+date <- ymd("2020-02-22")
+year(date)
+month(date)
+isoweek(date)
+minute(date)
+```
+
+## Extraction d'éléments {auto-animate="true"}
+
+```{r}
+date <- ymd("2020-02-22")
+wday(date)
+Sys.setlocale(category = "LC_ALL", locale = "de_DE.UTF-8")
+date <- ymd("2020-02-22")
+wday(date, label = TRUE, abbr = FALSE)
+Sys.setlocale(category = "LC_ALL", locale = "en_US.UTF-8")
+```
+
+## Extraction d'éléments {auto-animate="true"}
+
+```{r}
+#| eval: true
+date <- ymd("2020-02-22")
+wday(date)
+Sys.setlocale(category = "LC_ALL", locale = "de_DE.UTF-8")
+date <- ymd("2020-02-22")
+wday(date, label = TRUE, abbr = FALSE)
+```
+
+```{r}
+#| echo: false
+#| eval: true
+invisible(Sys.setlocale(category = "LC_ALL", locale = "en_US.UTF-8"))
+```
+
+```{r}
+#| eval: true
+format_ISO8601(as.POSIXct("2018-02-01 03:04:05", tz = "EST"), usetz = TRUE)
+```
+
+## Interval, duration, period
+
+- `interval` : période temporelle entre deux dates
+- `duration` : durée définie en temps calendaire "humain" : en jours, en semaines, en mois..
+- `period` : durée définie en nombre de secondes
+
+
+# Questions ?
