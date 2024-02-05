@@ -15,7 +15,7 @@ format:
 ### Intervenant
 
 - {{< fa user >}} &nbsp; [{{< var instructor.name >}}]({{< var instructor.url >}})
-- {{< fa envelope >}} &nbsp; <a href="mailto:{{< var instructor.email >}}">{{< var instructor.email >}}</a>
+- {{< fa envelope >}} &nbsp; <a href="mailto:{{< var instructor.email >}}"> {{< var instructor.email >}}</a>
 
 ::: {.g-col-12 .g-col-sm-6 .g-col-md-4}
 ### Informations pratiques 
