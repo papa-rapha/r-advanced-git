@@ -20,7 +20,7 @@ format: html
 | 12 janvier | **IDE Rstudio, Rappels de R**    | [{{< fa book >}}](/slides/cours_1.html) | [{{< fa file-circle-question >}}](/exercises/sem_1.pdf) ||
 | 19 janvier | **Fonctions, Objets S3**         | [{{< fa book >}}](/slides/cours_2.html) | [{{< fa file-circle-question >}}](/exercises/sem_2.pdf) ||
 | 26 janvier | **Données, Texte, Dates**        | [{{< fa book >}}](/slides/cours_3.html) | [{{< fa file-circle-question >}}](/exercises/sem_3.pdf) | [{{< fa box >}}](/material/semaine_3/tp3.zip) |
-| 2 février  | **Ecrire une librairie R**       | [{{< fa book >}}](/slides/cours_4.html) | [{{< fa file-circle-question >}}](/exercises/sem_4.pdf) | [{{< fa box >}}]() |
+| 2 février  | **Ecrire une librairie R**       | [{{< fa book >}}](/slides/cours_4.html) | [{{< fa file-circle-question >}}](/exercises/sem_4.pdf) | |
 | 9 février  | **Science reproductible**        | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
 | 16 février | **Introduction à git et github** | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
 | 23 février | **Projet final**                 |                     | [{{< fa list-check >}}]()           | [{{< fa box >}}]() |
