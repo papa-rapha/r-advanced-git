@@ -68,7 +68,7 @@ Pour l'utilisateur :
 
 ::: callout-note
 ## Github et Git
-Plus sur ce sujet lors du cours 5
+Plus sur ce sujet lors du cours 6
 :::
 
 ## Installer, charger
@@ -78,22 +78,12 @@ Installer un package :
 #| eval: false
 install.packages("tidyverse") # base R
 remotes::install_github("r-lib/conflicted") # using remotes
+pak::pkg_install("tibble") # using pak
 ```
 
 - `install.packages` en R base, depuis le CRAN ou des sources
-- `remotes` : library permettant l'installation depuis le CRAN et différents dépôt de code, tels que [github](https://github.com/), [gitlab](https://gitlab.com/), [bitbucket](https://bitbucket.org/product), ainsi que [Bioconductor](https://www.bioconductor.org/).
-
-. . .
-
-Charger un package :
-
-```{r}
-#| eval: false
-
-library(dplyr)
-```
-
-
+- `remotes` : librairie permettant l'installation depuis le CRAN et différents dépôt de code programmaticalement, tels que [github](https://github.com/), [gitlab](https://gitlab.com/), [bitbucket](https://bitbucket.org/product), ainsi que [Bioconductor](https://www.bioconductor.org/).
+- `pak` : librairie pour l'installation interactive de packages
 
 # Structure d'un package
 
