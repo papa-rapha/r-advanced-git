@@ -1,0 +1,17 @@
+---
+title: "Exercices - Semaine 5"
+author: "Raphaël Nedellec"
+format: pdf
+---
+
+## Exercice :
+
+Reprendre les exercices des semaines 1, 2, 3. Pour chaque exercice, reprenez vos réponses et produisez un document quarto pour chaque exercice. Ces documents quarto seront compilés au format html. Présentez vos résultats de manière didactique et professionnelle, à la manière d'un rapport. Ces pages seront chargées lors de la séance 6 sur votre site.
+
+Note : les exercices des semaines 1 à 3 seront pris en compte de la manière suivante dans la note finale :
+
+- si moins de 50% des exercices sont réalisés, alors des points de pénalités pourront être enlevés.
+- si la moitié des questions sont traitées, alors il n'y aura ni point de pénalité, ni point de bonus.
+- enfin, si plus de la moitié des exercices sont réalisés, alors des points bonus seront donnés.
+
+Attention à prendre soin à la rédaction. L'utilisation de quarto vous permet de rédiger vos réponses et d'alterner code et justifications. Entrainez-vous à la présentation de vos travaux de manière claire et propre. Bon courage !

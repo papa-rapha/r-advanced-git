@@ -6,7 +6,7 @@ format: pdf
 
 
 
-## Exercice 1 : Créer son premier package: olympicsWeather
+## Exercice : Créer son premier package: olympicsWeather
 
 L'objectif de cet exercice sera de créer un package nous permettant d'accéder en temps réel à des prévisions météo, en s'adressant à l'API publique <https://api.open-meteo.com/v1/forecast>. L'objectif du package est de pouvoir obtenir depuis R des prévisions météo pour les différents sites olympiques.
 
@@ -65,7 +65,7 @@ Définir une fonction `get_forecast` générique, et deux implémentations `get_
 14. Documentez la fonction `get_forecast` en utilisant les balises Roxygen appropriées.
 15. Mettez à jour le fichier DESCRIPTION. Assurez-vous d'avoir un NAMESPACE à jour en utilisant `devtools::document`.
  
-## Questions Bonus
+## Question Bonus
 
 16. Quelle stratégie employeriez-vous pour fournir une sortie visuelle aux utilisateurs ? Essayez de proposer une fonction dans le package pour rendre visuelle la sortie du package.
  
