@@ -22,8 +22,8 @@ format: html
 | 26 janvier | **Données, Texte, Dates**        | [{{< fa book >}}](/slides/cours_3.html) | [{{< fa file-circle-question >}}](/exercises/sem_3.pdf) | [{{< fa box >}}](/material/semaine_3/tp3.zip) |
 | 2 février  | **Ecrire une librairie R**       | [{{< fa book >}}](/slides/cours_4.html) | [{{< fa file-circle-question >}}](/exercises/sem_4.pdf) | |
 | 9 février  | **Science reproductible**        | [{{< fa book >}}](/slides/cours_5.html) | [{{< fa file-circle-question >}}](/exercises/sem_5.pdf) | |
-| 16 février | **Introduction à git et github** | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() | [{{< fa box >}}]() |
-| 23 février | **Projet final**                 |                     | [{{< fa list-check >}}]()           | [{{< fa box >}}]() |
+| 16 février | **Introduction à git et github** | [{{< fa book >}}](/slides/cours_6.html) | [{{< fa file-circle-question >}}](/exercises/sem_6.pdf) | [{{< fa box >}}]() |
+| 10 mars | **Projet final**                 |                     | [{{< fa list-check >}}](/dm/projet.pdf)           | |
 
 
 : {tbl-colwidths="\[15,55,10,10,15\]"}

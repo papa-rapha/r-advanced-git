@@ -8,7 +8,7 @@ format: pdf
 
 L'objectif du projet est le suivant :
 
-- manipuler les différents concepts R vu lors des différents cours : fonctions et packages, documents `quarto`, et études reproductibles avec `targets` et `renv` notamment.
+- manipuler les différents concepts R vu lors des différents cours : fonctions et packages, documents `quarto`, et études reproductibles avec `renv` notamment.
 - vous faire intéragir avec git et github pour vous familiariser avec les outils et vous donner à voir aux potentialités de ces outils.
 
 L'utilisation de git doit se faire de manière continue. Néanmoins, certaines questions vous demanderont d'exécuter certaines commandes à un moment donné. Ce n'est pas pour ça qu'il faut se restreindre à ces moments précis.
@@ -20,15 +20,15 @@ Le dossier projet sous github et le site seront le rendu, ainsi qu'un document .
 - Le site devra être conforme aux demandes des questions suivantes.
 - Le dossier projet devra être structuré comme attendu.
 
-La date finale du rendu est le 19 février 2023.
+La date finale du rendu est le 10 mars 2024.
 
 ## Création d'un blog R quarto
 
-À la fin du projet, vous aurez créé un site de blog perso en quarto, hébergé sur github. Votre premier post de blog sera issu d'un travail reproductible généré en R.
+À la fin du projet, vous aurez créé un site de blog perso en quarto, hébergé sur github. Votre premier post de blog sera issu d'un travail reproductible généré en R à partir du package développé dans les séances précédentes.
 
 ### Création du projet de site sous github
 
-1. Créez un nouveau projet sous RStudio, que vous appelerez `my_blog`. Ce projet sera créé en utilisant le template quarto blog. Décrivez la structure du projet.
+1. Créez un nouveau projet sous RStudio, que vous appelerez `my_blog`. Ce projet sera créé en utilisant le template quarto blog. Cochez les options `renv` et `git` pour les utiliser. Décrivez la structure du projet.
 2. Personnalisez les documents `index.qmd` et `about.qmd` *a minima*. De la même manière, modifiez le post `posts/welcome/index.qmd`.
 3. Créez un nouveau projet github, que vous appelerez `my_blog`. 
 4. De retour sur RStudio, ouvrez le terminal. Configurez les paramètres user.name et user.email en utilisant les instructions `git config user.name "<votre username>"` et `git config user.email "<votre email>"`. Vous pourrez utilisez le paramètre `--global` pour modifier ces valeurs pour tous vos projets par défaut `git config --global user.name "<votre username>"`.
@@ -38,65 +38,28 @@ La date finale du rendu est le 19 février 2023.
 
 ### Un package sous github
 
-1. En utilisant `usethis`, créez un nouveau projet de package intitulé `heron`.
-2. Créez une fonction `heron` qui prend en paramètre trois variables `a` , `b`, et `c`. La fonction `heron` permettra de calculer la formule de héron, qui permet de calculer l'aire d'un triangle à partir de la longueur de ses trois côtés. L'aire d'un triangle de trois côtés a, b, c se calcule comme suit :
+1. Reprenez votre package `olympicsWeather` développé dans l'exercice de la semaine 4. Votre package doit être fonctionnel et pouvoir s'installer ! Ouvrez le projet associé au package.
+2. Créez un nouveau projet github, que vous appelerez `olympicsWeather`. 
+3. Initiez un projet git à l'aide de la commande `git init`. Configurez le `remote` de manière à le faire pointer vers le projet github récemment créé. L'instruction devrait ressembler à `git remote add git@github.com:<votre username github>/olympicsWeather.git`.
+4. Ajoutez l'ensemble des fichiers du dossier R à la pile des fichiers en utilisant la commande `git add`.
+5. Faites un premier commit intitulé "code R" en utilisant la commande `git commit -m "<insérez les infos du commit ici>"`. N'oubliez pas de faire un message informatif.
+6. Ajoutez un fichier .gitignore dans lequel vous excluerez les fichiers `'.Rproj.user', '.Rhistory', '.Rdata', '.httr-oauth', '.DS_Store'`.
+7. Faites un `git status`. Ajoutez les fichiers restants à la pile avec un `git add`, puis faites un nouveau commit.
+8. Synchronisez votre projet local avec le répertoire distant à l'aide de la commande `git push origin main`.
+9. Fermez le projet RStudio et redémarrez un nouveau terminal R. Depuis ce terminal, installez le packages `remotes`. Que se passe t'il quand vous exécutez la commande `remotes::install_github("<votre username>/olympicsWeather")` (remplacez `<votre username>` par votre username github) ?
 
-$$
-Aire = \sqrt{p(p-a)(p-b)(p-c)}\space \mathrm{avec}\space p = \frac{a + b + c}{2}
-$$
+### Posts de blog
 
-On définira une fonction intermédiaire `demi_perimetre` pour calculer le demi périmètre du triangle.
+1. Ouvrez à nouveau votre projet de blog, `my_blog`. Ouvrez le fichier `posts/post-with-code/index.qmd`. Vérifiez que `renv` est bien actif en utilisant la fonction `renv::status()`. Installez le package `c("quarto")`.
+2. Vous créerez une première section de niveau `h2.`, soit avec deux `##`, intitulée `Librairie olympicsWeather`. Après avoir introduit et présenté le package, vous décrirez comment installer le package en utilisant le package `remotes` depuis github. Vous utiliserez un bloc de code pour décrire les commandes. Attention, le code ne devra pas être exécuté !
+3. Installez le package `olympicsWeather` depuis votre dépôt github en utilisant le package `remotes`. Utilisez `renv::snapshot()` et vérifiez que le package `olympicsWeather` est bien mentionné dans votre fichier `renv.lock` à la racine de votre projet de blog.
 
-3. Documentez les deux fonctions en utilisant des balises roxygen2. Veillez à spécifier que seule la fonction `heron` soit exportée. On précisera que la documentation de la fonction `demi_perimetre` doit être cachée en utilisant la balise `@noRd`. Ajoutez deux exemples à la fonction héron.
-4. Modifiez la fonction `heron` pour que la fonction envoie une erreur si un des arguments n'est pas un numérique, ou si une des valeurs est négative. De même, vous renverrez un warning si une des valeurs est égale à 0.
-5. Testez la fonction `demi_perimetre` avec trois tests. La fonction `heron` devra être testée sur chacune de ses erreurs, ainsi que pour plusieurs exemples de triangles.
-6. Modifiez le fichier DESCRIPTION. Assurez vous que les tests passent bien et que la documentation est à jour, et installez votre package. Vérifiez que l'aide est accessible et que la fonction marche comme prévu.
-7. Créez un nouveau projet github, que vous appelerez `heron`. 
-8. Dans le terminal, initialisez un projet git en appelant la commande `git init`. Configurez le `remote` de manière à le faire pointer vers le projet github récemment créé. L'instruction devrait ressembler à `git remote add git@github.com:<votre username github>/heron.git`.
-9. Ajoutez les fichiers du dossier au prochain commit, faites un commit, puis un push. Attention, vérifiez que vous n'ajoutez pas de fichiers confidentiels !
-10. Fermez le projet RStudio. Dans un terminal R, installez le packages `remotes`. Que se passe t'il quand vous exécutez la commande `remotes::install_github("<votre username>/heron")` (remplacez `<votre username>` par votre username github) ?
-
-### Post de blog
-
-1. Ouvrez à nouveau votre projet de blog, `my_blog`. Ouvrez le fichier `posts/post-with-code/index.qmd`. Vérifiez que `renv` est bien actif en utilisant la fonction `renv::status()`. Installez les packages `c("quarto", "targets")`.
-2. Vous créerez une première section de niveau `h2.`, soit avec deux `##`, intitulée `Librairie heron`. Après avoir introduit et présenté le package, vous décrirez comment installer le package en utilisant le package `remotes` depuis github. Vous utiliserez un bloc de code pour décrire les commandes. Attention, le code ne devra pas être exécuté !
-
-3. Triangle de Sierpiński. Créez un dossier `R/` dans le dossier `posts/post-with-code/`. Créez un script `fonctions.R` dans ce dossier. Créez un fonction `divide_triangle` dans ce fichier qui en prenant en entrée les coordonnées `(x,y)` de trois points A, B, C renvoie trois triangles issus de la première itération de Sierpiński : on identifie le milieu de chaque côté, on découpe le triangle en 4 triangles, et on retire le triangle intérieur. En image, voici le résultat de l'itération 1 :
-
-![Itérations 0 et 1](images/triangle-1.png){#fig-triangle fig-align="center"}
-
-NB : la fonction prend en entrée un triangle et renvoie en sortie une liste de triangles
-
-4. Créez une deuxième fonction `divide_list_triangle` qui prend en entrée une liste de triangles et renvoie en sortie un nouvelle liste de triangle, une fois appliquée la fonction `divide_triangle` sur chacun des triangles de la liste. Cette fonction sera documentée, tout comme la fonction `divide_triangle`, et ajoutée au script `fonctions.R`
-
-5. Installez le package `heron` depuis votre dépôt github en utilisant le package `remotes`. Utilisez `renv::snapshot()` et vérifier que le package `heron` est bien mentionné dans votre fichier `renv.lock` à la racine de votre projet de blog.
-6. Créez un fichier `_targets.R` à la racine du dossier `posts/post-with-code/` en utilisant la fonction `tar_script` et l'argument `script`.
-7. Configurez `targets` pour référencer le bon fichier de pipeline en utilisant la fonction `tar_config_set` et en affectant à l'argument `script`  et `store`le chemin du fichier `_targets` et du dossier `_targets/`, ici normalement `posts/post-with-code/_targets.R`.
-
-```
-tar_config_set(store = "posts/post-with-code/_targets",
- script = "posts/post-with-code/_targets.R")
-```
-
-
-NB : cette étape est nécessaire car nous travaillons dans un projet relativement complexe, et que le fichier targets doit se trouver à la racine du dossier correspondant au post de blog, et non du projet. Cela nous permettra d'avoir une pipeline targets pour chaque post de blog, par exemple.
-
-8. Soit A, B et C trois points de coordonnées $(0, 0), (0, 1), (0.5, \sqrt{3}/2)$. Supprimez les étapes non pertinentes et les imports non nécessaires et ajoutez trois étapes dans le fichier `_targets` qui correspondent à 4 itérations successives de `divide_list_triangle` à partir des points d'origine.
-9. Implémentez une fonction `plot_triangles` qui trace une liste de triangle à la manière de @fig-triangle dans le fichier `fonctions.R`.
-10. Ajoutez à la suite de chaque itération une étape de plot pour tracer les graphiques à l'issue de chaque itération.
-11. Ajoutez à la suite de chaque itération une étape de calcul des aires de tous les triangles en utilisant la fonction `heron` du package `heron`. Cela pourra nécéssiter l'écriture d'une nouvelle fonction qui peut calculer l'aire de tous les triangles d'une liste et renverra la somme.
-12. Modifiez votre post de blog `posts/post-with-code/index.qmd` de manière à rajouter une section par itération, afficher un graphique et la mesure de l'aire. On utilisera les fonction `tar_read` et `tar_load` pour charger les résultats directement depuis les objets calculés par la pipeline targets.
-13. Ajouter une étape de render du post de blog dans la pipeline targets en utilisant la fonction `tar_quarto` de la librairie `tarchetypes`.
-14. Ajoutez un fichier `.gitignore` à la racine du dossier `posts/post-with-code/`. Ajoutez la ligne suivante pour ne pas traquer les fichiers intermédiaires targets :
-
-```bash
-_targets/*
-```
-15. Exécutez une dernière fois la commande `tar_make`. Dans le terminal ou dans la console R, faites une étape de preview de votre site complet. Par exemple, on pourra utiliser la commande `quarto preview` dans le terminal.
-
-16. Vérifiez que vous ajouter bien tous les documents et les dossiers à votre commit. Faire un commit, en particulier assurez vous que votre dossier `_site` est bien commit.
-17. Faites un git push et vérifiez que votre projet est à jour sur github.
-18. Configurez github pages. Assurez-vous que votre projet est public. Configurez votre `github pages` à la manière de :
+4. Modifiez votre post de blog `posts/post-with-code/index.qmd` de manière à ajouter une section pour chacune des requêtes suivantes : quelles sont les prévisions météo à 7 jours pour le `stade de France` ? Pour `Tahiti` ? Pour les coordonnées gps `43.276703, 5.334791` ?
+5. Ajoutez un fichier `.gitignore` à la racine du dossier `posts/post-with-code/` pour ne pas traquer les fichiers indésirables comme `.Rhistory`, ou autres.
+6. Dans le terminal ou dans la console R, faites une étape de preview de votre site complet. Par exemple, on pourra utiliser la commande `quarto preview` dans le terminal.
+7. Vérifiez que vous ajoutez bien tous les documents et les dossiers à votre commit. Faire un commit, en particulier assurez-vous que votre dossier `_site` est bien commit.
+8. Faites un git push et vérifiez que votre projet est à jour sur github.
+9. Configurez github pages. Assurez-vous que votre projet est public. Configurez votre `github pages` à la manière de :
 
 ![](images/githubpages.png)
 
@@ -105,5 +68,11 @@ Assurez-vous que les pages pointent vers le sous dossier `_site/` et non root.
 
 Si tout va bien, vous devriez avoir un github pages setup et un site web accessible ! Félicitations.
 
+### Exercices des semaines 1 à 3
 
+1. Créez un nouvel article de blog pour chacun des exercices des semaines 1 à 3.
+2. Répétez le processus décrit précédemment pour uploader et commit l'ensemble des articles relatifs à ces exercices. N'oubliez pas de `quarto render` ou de `quarto preview` avant le dernier commit pour pousser une version à jour du site contenue dans le dossier `_site`.
 
+### Bonus
+
+Le processus utilisé dans le projet nécessite que le site soit construit préalablement au commit. Il est possible d'utiliser une `github action` pour construire le site dynamiquement à chaque commit, et faire en sorte que le code soit exécuté à nouveau à chaque modification de la branche principale. Essayez de mettre ce processus en place en utilisant les instructions décrites ici https://quarto.org/docs/publishing/github-pages.html#example-knitr-with-renv. Ceci à l'avantage de ne pas nécessiter l'exécution préalable et donc allège les commits, tout en assurant que le site soit toujours à jour !
