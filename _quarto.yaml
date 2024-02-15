@@ -12,6 +12,7 @@ project:
     - "exercises/sem_3.qmd"
     - "exercises/sem_4.qmd"
     - "exercises/sem_5.qmd"
+    - "exercises/sem_6.qmd"
     # - "dm/01-dm.qmd"
     # - "dm/02-dm.qmd"
     - "dm/projet.qmd"
