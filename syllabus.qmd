@@ -11,7 +11,7 @@ Les objectifs du cours de {{< var course.name >}} sont multiples :
 - comprendre le concept de fonctions, de fonctions génériques et d'objets S3 en parcourant les objets S3 importants, tels que les dates, ou encore les [tibble](https://tibble.tidyverse.org/);
 - construire un package R, notamment en utilisant les librairies [devtools](https://devtools.r-lib.org/), [usethis](https://usethis.r-lib.org/) et [testthat](https://testthat.r-lib.org/) ;
 - sensibiliser à la science reproductible, notamment à l'aide des packages [quarto](https://quarto.org/) et [renv](https://rstudio.github.io/renv/index.html) ;
-- s'initier à [git](https://git-scm.com/), et à [github](https://github.com/) pour pouvoir collaborer et utiliser des gestionnaires de version.
+- s'initier à [git](https://git-scm.com/), et à [github](https://github.com/) pour pouvoir collaborer et utiliser des gestionnaires de version lors de la réalisation de projets R et de data science.
 
 ## Déroulé des cours
 
