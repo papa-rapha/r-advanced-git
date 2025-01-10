@@ -207,7 +207,7 @@ Certains attributs de vecteurs sont très communs et très importants :
 ::: callout-tip
 ## Objets S3
 
-Nous détaillerons la notion d'objets S3 lors du second cours
+Nous détaillerons la notion d'objets S3 lors du troisième cours
 :::
 
 ## Subsetting
@@ -300,7 +300,7 @@ Tous les noms ci-dessus sont des noms réservés par R et ne peuvent pas être u
 
 ::: {.callout-note}
 ## Programmation fonctionnelle
-Nous verrons lors du second cours l'introduction des fonctions \*apply ou map_\* qui sont complémentaires aux boucles `for`.
+Nous verrons lors du troisième cours l'introduction des fonctions \*apply ou map_\* qui sont complémentaires aux boucles `for`.
 :::
 
 
@@ -460,7 +460,7 @@ addition(1, 2)
 
 ::: {.callout-tip}
 ## Fonctions, fonctions génériques
-Nous détaillerons le fonctionnement et les bonnes pratiques d'écriture des fonctions lors du second cours.
+Nous détaillerons le fonctionnement et les bonnes pratiques d'écriture des fonctions lors du troisième cours.
 :::
 
 ## Librairies
@@ -484,7 +484,7 @@ library(dplyr) # chargement explicite de la libraire dplyr
 
 ::: {.callout-tip}
 ## Package
-Nous détaillerons comment construire un package lors du troisième cours.
+Nous détaillerons comment construire un package lors du quatrième cours.
 :::
 
 ## Librairies
@@ -505,7 +505,7 @@ Les librairies externes facilitent et accélèrent grandement les études, mais 
 
 ::: {.callout-note}
 ## Info
-Nous nous intéresserons à la gestion propre des dépendances lors du 4ème cours.
+Nous nous intéresserons à la gestion propre des dépendances lors du 5ème cours.
 :::
 
 
@@ -646,7 +646,7 @@ Contrôlez la qualité de votre code en utilisant un linter, par exemple, [`lint
 
 ::: {.callout-note}
 ## lintr
-S'intègre bien avec RStudio, il exite un addin. Le linter est aussi un outil utile pour la vérification automatique de code, notamment dans un processus d'intégration continue. Plus là dessus dans le cours n°5.
+S'intègre bien avec RStudio, il exite un addin. Le linter est aussi un outil utile pour la vérification automatique de code, notamment dans un processus d'intégration continue. Plus là dessus dans le cours n°2.
 :::
 
 ## styler {auto-animate="true"}
