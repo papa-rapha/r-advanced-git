@@ -29,7 +29,7 @@ project:
     #- "slides/cours_5_files/"
     #- "slides/cours_6.html"
     #- "slides/cours_6_files/"
-    #- "slides/images/"
+    - "slides/images/"
     #- "material/semaine_3/tp3.zip"
     # - "material/semaine_2.zip"
     # - "material/semaine_4.zip"
