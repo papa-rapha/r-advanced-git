@@ -19,7 +19,7 @@ format: html
 | Date       | Objectifs                        | Cours               | Exercices                           | Input              |
 |------------|----------------------------------|:-------------------:|:-----------------------------------:|:------------------:|
 | 10 janvier | **IDE Rstudio, Rappels de R**    | [{{< fa book >}}](/slides/cours_1.html) | [{{< fa file-circle-question >}}](/exercises/sem_1.pdf) ||
-| 14 janvier | **Introduction à git et github**         | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() ||
+| 14 janvier | **Introduction à git et github**         | [{{< fa book >}}](/slides/cours_2.html) | [{{< fa file-circle-question >}}](/exercises/sem_2.pdf) ||
 | 21 janvier | **Fonctions, Objets S3**        | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() |  |
 | 24 janvier  | **Données, Texte, Dates**       | [{{< fa book >}}](l) | [{{< fa file-circle-question >}}]() ||
 | 27 janvier  | **Développer une librairie R**        | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() ||

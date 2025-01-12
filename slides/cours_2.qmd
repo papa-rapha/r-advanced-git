@@ -13,782 +13,345 @@ knitr:
     comment: "#>" 
 ---
 
-# Pourquoi écrire des fonctions ?
+# Introduction à Git et à Github
 
-## Exemple
-
-Exemple de code : une data.frame contient 4 colonnes de données de températures en degrés C°. On souhaite convertir les degrés Celsius en Farheneit selon la formule $F° = C° * 9 / 5 + 32$.
-
-```{r}
-#| code-line-numbers: "|11"
-
-df <- data.frame(
-  temp_a = rnorm(20, 2),
-  temp_b = rnorm(20, 2),
-  temp_c = rnorm(20, 2),
-  temp_d = rnorm(20, 2)
-)
-
-df$a <- (df$a * 9 / 5) + 32 
-df$b <- (df$b * 9 / 5) + 32
-df$c <- (df$c * 9 / 5) + 32
-df$d <- (df$a * 9 / 5) + 32
-```
-
-## Motivation à l'écriture d'une fonction
+## Rappels
 
 ::: incremental
-- Eviter les copier/coller, et les erreurs associées, factoriser le code et réutiliser du code existant
-- Faciliter la maintenance et les évolutions du code en un seul endroit
-- Faciliter la lecture et la compréhension du code en donnant un nom évocatif
+- Rappels des notions importantes en R
+- Conseils de bonnes pratiques
+- Fonctions, Packages
+- Reproductibilité : `quarto`, `renv`
 :::
 
-## Syntaxe
-
-
-```{r}
-faire_une_fonction <- function(w, x, y = 1, z = NULL, ...) {
-  # commentaire pour les développeurs
-  if (!is.null(z)) {
-    return(z)
-  }
-  w + x + y # retourne le résultat de la dernière expression évaluée
-}
-
-fonction_sur_une_ligne <- function(x) x + 1
-```
-
 . . .
 
-- Les arguments peuvent prendre des valeurs par défaut ;
-- on peut écrire une fonction sur une ligne sans `{}` si elle est suffisament simple ;
-- lorsque ce n'est pas trivial, il faut expliciter l'instruction de retour avec la fonction `return()`.
+Et maintenant, [Git](https://git-scm.com/) et [Github](https://github.com/) !
 
+# Motivation
 
-## Convertir en fonction {auto-animate="true"}
+----
 
-Ici, combien d'input(s) doit-on définir en entrée de la fonction ?
+![](images/git-2.gif){fig-align="center"}
 
-```{r}
-# conversion celsius/farheneit
-df$a <- (df$a * 9 / 5) + 32 
-```
+----
 
-. . .
+![](images/git-3.webp){fig-align="center"}
 
-**un** seul input doit être défini, correspondant à la variable `df$a`.
-
-. . .
-
-Nommage des fonctions : les fonctions traduisent des actions. Il faut donc utiliser un verbe pour traduire cette action dans le nom. On privilégiera le `snake_case`.
-
-## Convertir en fonction {auto-animate="true"}
-
-Quelle devrait être la nature de l'objet x ? Vecteur ou data.frame ?
+## Où même ça
 
 ```{r}
-convert_celsius_to_farheneit <- function(x) {
-  
-}
+#| code-line-numbers: "|7-12"
+
+# study.R
+data |>
+  transform() |>
+  normalize() |>
+  model() |>
+  plot()
+
+# Ancienne version --
+# data |>
+#   transform() |>
+#   normalize() |>
+#   plot()
+
+data |>
+  summarize()
 ```
 
-## Convertir en fonction {auto-animate="true"}
 
-Quelle devrait être la nature de l'objet x ? Vecteur ou data.frame ?
+## Contrôle de version
 
-```{r}
-convert_celsius_to_farheneit <- function(x) {
-  x_farheneit <- (x * 9 / 5) + 32
-  return(x_farheneit)
-}
-```
-
-Il est important de définir les paramètres comme étant les objets minimaux nécessaires à la fonction, donc ici un vecteur plutôt qu'une data.frame.
-
-::: callout-note
-## Convertir du code en fonction
-`Ctrl+Alt+X` sous Windows, `Control+Option+X` sous Mac.
-:::
-
-
-## Principes de développement
-
-Il faut essayer de suivre certains principes de design de code :
+Git est un outil de contrôle de version.
 
 ::: incremental
-- Limiter le nombre d'arguments à ses fonctions (4 ? ...)
-- Utiliser des noms explicites, et des verbes
-- Définir des fonctions **pures** dans la philosophie de la *programmation fonctionnelle*.
-- Utiliser des objets : S3, S4, R6 ...
+- Git permet de tracer l'historique des fichiers d'un projet en le représentant sous forme de graphe
+- Modèle distribué
+- Léger et performant
+- Facilité pour créer des branches
+- Libre et disponible sous toutes les plateformes
 :::
 
-. . .
+## Contrôle de version
 
-::: callout-note
-## Packaging
-Nous verrons comment tester, documenter et packager ses fonctions lors du cours n° 3
-:::
+![](images/git-11.png){fig-align="center"}
 
-# Définition d'une fonction
+## Collaboration
 
-## Les fonctions {auto-animate="true"}
+![](images/git-5.png){fig-align="center"}
 
-Les fonctions sont des objets.
+# Fonctionnement de Git
 
-```{r}
-#| eval: true
+## Git is hard
 
-f <- function(x, y) {
-  # commentaire
-  x + y
-}
-```
+![](images/git-1.png){fig-align="center"}
 
-## Les fonctions {auto-animate="true"}
-
-Les fonctions sont des objets
-
-```{r}
-#| eval: true
-
-f <- function(x, y) {
-  # commentaire
-  x + y
-}
-
-body(f) # défini explicitement, code de la fonction
-```
-
-. . .
-
-```{r}
-#| eval: true
-
-formals(f) # défini explicitement, ses arguments
-```
-
-. . .
-
-```{r}
-#| eval: true
-
-environment(f) # basé sur où est définie la fonction
-```
-
-## 3 types de fonctions {auto-animate="true"}
-
-```{r}
-#| eval: false
-
-typeof(mean)
-typeof(sum)
-typeof(`[`)
-```
-
-## 3 types de fonctions {auto-animate="true"}
-
-```{r}
-#| eval: true
-#| results: hold
-
-typeof(mean)
-typeof(sum)
-typeof(`[`)
-```
-
-. . .
-
-- La plupart des fonctions sont de type `closure`
-- Sauf des fonctions spéciales maintenues et écrites par R-core, `builtin` et `special`
-
-## Scope d'une fonction {auto-animate="true"}
-
-```{r}
-#| code-line-numbers: "|1-5,7|1-5,8|1-5,9"
-x <- 4
-y <- 5
-f00 <- function(x) {
-  return (x + 1)
-}
-
-f00(1)
-f00(x)
-f00(y)
-```
-
-## Scope d'une fonction {auto-animate="true"}
-
-```{r}
-#| eval: true
-
-
-x <- 4
-y <- 5
-f00 <- function(x) {
-  return (x + 1)
-}
-
-f00(1)
-f00(x)
-f00(y)
-```
-
-## Scope d'une fonction {auto-animate="true"}
-
-
-```{r}
-#| code-line-numbers: "|6,8"
-y <- 5
-f01 <- function() {
-  return (y + 1)
-}
-
-print("premier appel", f01())
-y <- 10
-print("second appel", f01())
-```
-
-## Scope d'une fonction {auto-animate="true"}
-
-
-```{r}
-#| eval: true
-#| code-line-numbers: "1,6,7,8"
-#| results: hold
-
-
-y <- 5
-f01 <- function() {
-  return (y + 1)
-}
-
-f01()
-y <- 10
-f01()
-```
-
-. . .
-
-La valeur de y est définie au moment de l'exécution, et non au moment de la définition de `f01()`.
-
-## Scope d'une fonction {auto-animate="true"}
-
-
-```{r}
-
-x <- 3
-y <- 5
-f02 <- function() {
-  x <- 2
-  f_in <- function() {
-    x + y
-  }
-  print(environment(f_in))
-  f_in()
-}
-
-print(environment(f02))
-f02()
-x <- 5
-f02()
-```
-
-## Scope d'une fonction {auto-animate="true"}
-
-
-```{r}
-#| eval: true
-#| code-line-numbers: "2,4,8,12,13,15"
-#| results: hold
-
-x <- 3
-y <- 5
-f02 <- function() {
-  x <- 2
-  f_in <- function() {
-    x + y
-  }
-  print(environment(f_in))
-  f_in()
-}
-
-print(environment(f02))
-f02()
-x <- 5
-f02()
-```
-
-## Scope d'une fonction {.smaller}
+## Utilisation de Git
 
 ::: incremental
-- Si un nom n'est pas défini dans l'environnement d'une fonction, alors on regarde "un niveau au-dessus", dans l'environnement parent.
-- Un nom défini dans l'environnement de la fonction "masque" la valeur d'un objet de même nom défini dans un environnement parent.
-- R cherche la valeur quand la fonction est exécutée, non quand la fonction est définie.
-- R fait la différence entre les fonctions et les variables.
+- en ligne de commande : terminal unix, mac, wsl2 sous windows > 10, mingw, ...
+- avec des outils graphiques ou dans des IDE/environnements de développement : RStudio, VSCode, gitkraken, et de multiples autres...
 :::
 
 . . .
 
 ::: callout-note
-## Quelques conseils
-- Ne pas nommer ses variables du même nom qu'une fonction
-- Faire des fonctions "pures" et définir les variables utiles dans les paramètres de la fonction
+## Dans la suite
+Nous nous concentrerons sur les lignes de commande et l'interface graphique RStudio
 :::
 
-## Arguments {auto-animate="true"}
+## Installation de Git
 
-```{r}
-#| eval: false
-#| code-line-numbers: "|2|3|4"
+<https://git-scm.com/book/en/v2/Getting-Started-Installing-Git>
+
+## git config {auto-animate="true"}
 
 
-f01 <- function(a, b) a + b**2
-f01(1, 2)
-f01(b = 1, 2)
+
+```bash
+# Voir les options de configuration
+git config user.name
+git config user.email
 ```
 
-. . .
-```{r}
-#| include: false
-#| eval: true
+## git config {auto-animate="true"}
 
-f01 <- function(a, b) a + b**2
+
+```bash
+# Paramètrer son nom et son email.
+git config user.name "<votre user name>"
+git config user.email "<votre email>"
 ```
-
-- les paramètres non-nommés sont associés à l'argument positionnellement
-```{r}
-#| eval: true
-
-f01(1, 2)
-```
-
 . . .
 
-- il est possible de mélanger les paramètres nommés et non-nommés. Attention à l'ordre de ceux-ci !
-```{r}
-#| eval: true
+![](images/git-6.png){fig-align="center"}
 
-f01(b = 1, 2)
-```
+## git init
 
 
-## Matching partiel {auto-animate="true"}
 
-::: callout-warning
-## Matching partiel
-En R, les arguments sont identifiés partiellement !
-:::
-
-```{r}
-#| eval: false
-#| error: true
-#| code-line-numbers: "|2|3"
-
-f02 <- function(x, xyz, xylophone) x + xylophone**2
-f02(1, 2, xylo = 3)
-f02(1, 2, xy = 3)
-```
-
-
-## Matching partiel {auto-animate="true"}
-
-::: callout-warning
-## Matching partiel 
-En R, les arguments sont identifiés partiellement !
-:::
-
-```{r}
-#| eval: true
-#| error: true
-
-
-f02 <- function(x, xyz, xylophone) x + xylophone**2
-f02(1, 2, xylo = 3)
-f02(1, 2, xy = 3)
+```bash
+# Initialiser un projet git dans un dossier
+git init
 ```
 
 . . .
 
-::: callout-note
-- Utilisez des arguments nommés si possible
-- Essayez de respecter l'ordre des arguments
-- Privilégiez le nom exact de l'argument
-:::
+![](images/git-7.png){fig-align="center"}
 
+## git status {auto-animate="true"}
 
-## ... (dot-dot-dot) {auto-animate="true"}
+![](images/git-9.png){fig-align="center"}
 
-La notation `...` permet de propager des arguments à une autre fonction. Dans d'autres langages de programmation, on retrouve ce concept de `varargs` soit arguments variables. Ceci permet à la fonction de prendre un nombre variable d'arguments.
+## git status {auto-animate="true"}
 
-```{r}
-#| eval: false
+![](images/git-8.png){fig-align="center"}
 
-f <- function(...) list(...)
-f(a = 2, b = "hello")
-f(x = c(1, 2, 3))
-```
+## git add
 
-## ... (dot-dot-dot) {auto-animate="true"}
+Pour ajouter des changements en vue de la prochaine validation (prochain commit).
 
-La notation `...` permet de propager des arguments à une autre fonction. Dans d'autres langages de programmation, on retrouve ce concept de `varargs` soit arguments variables. Ceci permet à la fonction de prendre un nombre variable d'arguments.
-
-```{r}
-#| eval: true
-
-f <- function(...) list(...)
-f(a = 2, b = "hello")
-f(x = c(1, 2, 3))
-```
-
-## ... (dot-dot-dot)
-
-::: callout-note
-Utile pour passer des arguments supplémentaires, en particulier quand un des arguments de la fonction est lui même une fonction, par exemple pour `lapply`
-:::
-
-. . .
-
-::: callout-warning
-## Quelques points de vigilance
-- peut laisser passer des 'typos' sans lever d'erreurs ;
-- rend plus difficile la compréhension de ce que fait la fonction et nécessite une documentation précise.
-:::
-
-. . .
-
-```{r}
-#| eval: true
-sapply(list(c(1:10), c(1:10, NA)), mean, na.rm = TRUE)
-sapply(list(c(1:10), c(1:10, NA)), mean, na_rm = TRUE)
-```
-
-## Output d'une fonction
-
-```{r}
-convert_celsius_to_farheneit <- function(x) {
-  x_farheneit <- (x * 9 / 5) + 32
-  return(x_farheneit)
-}
+```bash
+# on ajoute le fichier renv.lock
+git add renv.lock
+git status
 ```
 
 . . .
 
-Similaire à :
+![](images/git-10.png){fig-align="center"}
 
-```{r}
-convert_celsius_to_farheneit <- function(x) {
-  x_farheneit <- (x * 9 / 5) + 32
-  x_farheneit 
-} 
+
+
+## git commit
+
+> Un "commit"  - une validation, représente une image de votre projet à un instant donné. C'est un état qui va être enregistré dans l'historique et qui sera donc atteignable dans le futur.
+
+```bash
+git commit -m "mon premier commit"
+# -m pour spécifier un message informatif associé au commit
 ```
 
-Une fonction retourne l'objet contenu dans l'appel explicite à `return()` ou le résultat de la dernière expression évaluée de manière implicite.
+## git commit
 
-## Contrôle d'arguments {auto-animate="true"}
+![](images/git-12.png){fig-align="center"}
 
-C'est une bonne pratique de vérifier des conditions importantes sur les arguments.
+## Après le commit {auto-animate="true"}
 
-```{r}
-f04 <- function(x, y) {
-  x + y
-}
-```
+![](images/git-13.png){fig-align="center"}
 
-## Contrôle d'arguments {auto-animate="true"}
+## Après le commit {auto-animate="true"}
 
-C'est une bonne pratique de vérifier des conditions importantes sur les arguments.
-
-```{r}
-f04 <- function(x, y) {
-  if (!is.numeric(x)) stop("x not numeric")
-  if (!is.numeric(y)) stop("y not numeric")
-  x + y
-}
-f04(1, 2)
-f04(1, "a")
-```
-
-## Contrôle d'arguments {auto-animate="true"}
-
-C'est une bonne pratique de vérifier des conditions importantes sur les arguments.
-
-```{r}
-#| eval: true
-#| error: true
-f04 <- function(x, y) {
-  if (!is.numeric(x)) stop("x not numeric")
-  if (!is.numeric(y)) stop("y not numeric")
-  x + y
-}
-f04(1, 2)
-f04(1, "a")
-```
-
-## Contrôle d'arguments {auto-animate="true"}
-
-C'est une bonne pratique de vérifier des conditions importantes sur les arguments.
-
-```{r}
-f04 <- function(x, y) {
-  stopifnot(is.numeric(x), is.numeric(y))
-  x + y
-}
-f04(1, 2)
-f04(1, "a")
-```
-
-## Contrôle d'arguments {auto-animate="true"}
-
-C'est une bonne pratique de vérifier des conditions importantes sur les arguments.
-
-```{r}
-#| eval: true
-#| error: true
-f04 <- function(x, y) {
-  stopifnot(is.numeric(x), is.numeric(y))
-  x + y
-}
-f04(1, 2)
-f04(1, "a")
-```
-
-## Erreurs, avertissements, messages
-
-Trois types de signaux : `errors`, `warning`, `message`. En R, il est possible d'attraper les erreurs ou les messages.
-
-```{r}
-?tryCatch
-?try
-?withCallingHandlers
-```
+![](images/git-14.png){fig-align="center"}
 
 
-::: callout-note
-## Pour aller plus loin
-Voir le chapitre sur les conditions dans Advanced-R 
-<https://adv-r.hadley.nz/conditions.html#conditions>
-:::
+## git push
 
-## Opérateurs et fonctions spéciales
-
-Quelques fonctions ont un comportement spécial : elles s'écrivent entre les arguments. Exemples, les opérateurs mathématiques :
-
-```{r}
-1 + 2
-3 * 4
-```
-
-On aurait pu écrire :
-
-```{r}
-`+`(1, 2)
-`*`(3, 4)
-```
-
-Liste des fonctions de ce type : `:`, `::`, `:::`, `$`, `@`, `^`, `*`, `/`, `+`, `-`, `>`, `>=`, `<`, `<=`, `==`, `!=`, `!`, `&`, `&&`, `|`, `||`, `~`, `<-`, `->`, `<<-.`, etc.
-
-## Opérateurs et fonctions spéciales
-
-Définir ses propres opérateurs :
-
-```{r}
-#| eval: true
-
-`%+%` <- function(lhs, rhs) {
-  paste0(lhs, rhs)
-}
-
-"hell" %+% "o"
-```
+> La commande `git push` est utilisée pour uploader des données locales vers un répertoire distant, par exemple, un projet partagé sur github.
 
 . . .
 
-Autres fonctions spéciales :
+```bash
+git push origin main
+# origin : nom du serveur distant
+# main : branche
+```
 
-- `(`, `{`, `[`, `[[`, `next`, `repeat`, `break`, `if`, `for`, `while`, `repeat`, `function` ... 
+Pour pousser sur le dépôt distant origin le contenu de la branche main
 
+## Avant de push
 
-## Opérateurs et fonctions spéciales : pipe et composition de fonctions
+Il faut définir un `remote`(dépôt distant), par exemple un dépôt github :
+
+```bash
+# origin est le nom par convention du dépôt distant principal
+git remote add origin git@github.com:<username>/<projectname>.git
+```
+
+![](images/git-15.png){fig-align="center"}
+
+--- 
+
+## {auto-animate="true"}
+
+![](images/git-4.webp){fig-align="center"}
+
+--- 
+
+## {auto-animate="true"}
 
 :::: {.columns}
-::: {.column width="35%"}
 
-Composition de fonctions :
-
+::: {.column width="50%"}
+![](images/git-4.webp){fig-align="center"}
 :::
 
-::: {.column width="65%"}
-```{r}
-#| eval: true
-
-square <- function(x) x^2
-deviation <- function(x) x - mean(x)
-x <- runif(100)
-# Population standard deviation
-sqrt(mean(square(deviation(x)))) 
-```
+::: {.column width="50%"}
+1. `git add` pour lister les fichiers à `commit`
+2. `git commit` pour sauvegarder un état donné
+3. `git push` pour synchroniser ces changements avec un dépôt distant
 :::
 ::::
 
-:::: {.columns}
-::: {.column width="35%"}
+## git pull
 
-Avec des pipes, `magrittr` ou R base (>4.1) :
+> La commande `git pull` est utilisée pour mettre à jour des données locales depuis un répertoire distant, par exemple, un projet partagé sur github.
 
+```bash
+git pull origin main
+# origin : nom du serveur distant, main : branche
+```
+
+On merge la branche `main` du dépôt `origine` avec notre branche courante de travail. 
+
+::: callout-note
+## git pull
+Un `git pull` est équivalent à un `git fetch` + `git merge`. L'option un est jugée moins sûre que l'option 2 mais plus simple pour démarrer sur des projets avec des workflow simples.
 :::
 
-::: {.column width="65%"}
+## git branch, git switch, git checkout
 
-```{r}
-#| include: false
-#| eval: true
+La commande `git branch` sert à créer des branches en parallèle de la branche principale `main` ou `master`.
+Utile lorsque l'on collabore à plusieurs, pour créer des branches de fonctionnalités (feature branch), dans de nombreux workflow..
 
-library(magrittr)
+Voir [ici](https://www.atlassian.com/git/tutorials/comparing-workflows#:~:text=A%20Git%20workflow%20is%20a,in%20how%20users%20manage%20changes.) pour une présentation de workflows possibles.
+
+La commande `git switch` permet de changer de branche. La commande `git checkout` permet entre autres de changer de branche.
+
+```bash
+git branch feature-1
+git switch feature-1
+git checkout main
 ```
 
+## git merge, git rebase
 
-```{r}
-#| eval: true
-x |> # R base (>4.1)
-  deviation() |>
-  square() |>
-  mean() |>
-  sqrt()
-x %>% # maggritr
-  deviation() %>%
-  square() %>% 
-  mean() %>%
-  sqrt()
-```
+Lorsque l'on souhaite fusionner deux branches, on peut réaliser deux types d'opérations :
 
+- `git merge` 
+- `git rebase`
+
+Ces deux opérations diffèrent par la manière de fusionner les historiques (`merge` préserve l'historique complet, quand `rebase` réécrit l'historique).
+
+## .gitignore
+
+Il est possible d'écrire un fichier .gitignore pour ne pas traquer certains fichiers:
+
+- fichiers volumineux
+- fichiers générés à la volée qui ne doivent pas être sauvegardés (.pdf quand les sources sont dispos)
+- fichiers sensibles
+
+::: callout-warning
+## Secrets
+Il est facile de glisser des 'secrets' dans ses scripts et que ceux-ci se retrouvent dans un historique git : mots de passe, token, informations sensibles. Attention aux fichiers que vous enregistrez dans vos commits (comme le .Rhistory). Soyez vigilants.
 :::
-::::
 
-## Fonctions anonymes
+## En résumé
 
-Parfois, il n'est pas nécessaire de choisir d'associer un nom à une fonction, et on peut utiliser des fonctions anonymes.
+::: incremental
+- Utile pour créer de (nombreux) points de sauvegarde de vos projets
+- Indispensable à la collaboration
+- Outil de référence en développement logiciel
+- 95% de vos usages sont couverts par les instructions `add`, `commit`, `push` et `pull`.
+- Outil extrêmement versatile et complexe (impossible ?) à maitriser dans sa totalité : c'est normal !
+- **Outil indispensable pour le data scientist**
+:::
 
-```{r}
-#| eval: true
+---
 
-x <- 1:3
-sapply(x, function(x) x**2 - 1)
-```
+![](images/git-16.jpg){fig-align="center"}
 
-. . .
+## Documentation
 
-```{r}
-#| eval: true
+- [git cheatsheet](https://training.github.com/downloads/fr/github-git-cheat-sheet.pdf)
+- [Github training](https://skills.github.com/)
+- [Pro Git](https://git-scm.com/book/en/v2)
+- [Documentation officielle](https://git-scm.com/docs)
 
-integrate(function(x) 1 / ((x + 1) * sqrt(x)), lower = 0, upper = Inf)
-```
+# Github et cie
 
-. . .
-```{r}
-#| eval: true
+## Plateforme de collaboration
 
-liste <- list(
-  f = function(x) x**2,
-  g = \(x) x - 1) # syntaxe possible depuis R > 4.1
-liste$f(10)
-liste$g(2)
-```
+- [Github](https://github.com/)
+- [Gitlab](https://about.gitlab.com/)
+- [Atlassian BitBucket](https://bitbucket.org/product/)
 
+## Github
 
-# Objets S3 
+- Compte personnel gratuit
+- Possibilité de créer des projets publics et privés
+- Possibilité d'automatiser des tâches avec des Github Actions
+- Possibilité d'héberger des sites webs statiques (blog, sites perso, documentation) depuis Github Pages
 
-## Exemple : Date
+# Visite de github
 
-```{r}
-#| eval: true
-date_cours <- as.Date("2023-01-13", format = "%Y-%m-%d")
-str(date_cours)
-typeof(date_cours)
-class(date_cours)
-attributes(date_cours)
-```
+## Github Actions
 
-Les objets de type `Date` sont de classe `Date`, même si leur représentation interne est `double`^[On s'attend à un entier - nombre de jours depuis une certaine date de référence - mais non-forcé dans la représentation interne].
+Les github actions sont des outils de CI/CD (continuous integration / continuous delivery) qui permettent l'automatisation de certaines tâches en réponse à un évenement (un push, un commit, sur une branche, ...).
 
-## Attribut de classe
+- [Documentation](https://docs.github.com/fr/actions) github actions
+- [Actions workflow R](https://github.com/r-lib/actions)
+- [Actions quarto](https://github.com/quarto-dev/quarto-actions)
 
-```{r}
-#| eval: true 
-x <- 1:10
-str(x)
-class(x) <- "ma_premiere_classe"
-str(x)
-class(x)
-```
+::: callout-tip
+## Quarto
+Quarto est un outil de programmation "littéraire" de type notebook : plus à propos de Quarto lors du dernier cours.
+:::
 
-. . .
+## Github Pages
 
-Un objet S3 est défini par son attribut `class`. R est très permissif.
-```{r}
-#| eval: true
-#| error: true
-mod <- lm(log(mpg) ~ log(disp), data = mtcars)
-class(mod)
-class(mod) <- "Date"
-print(mod)
-```
+Github permet l'hébergement de sites web statiques par le biais des Github Pages. Ceci rend possible une intégration forte entre votre code et le déploiement d'un site. C'est très pratique pour héberger la documentation d'un package, un site personnel, ou tout site statique.
 
-## S3
+- [Documentation](https://pages.github.com/) des Github Pages
 
-R n'a aucun moyen d'assurer que tous les objets d'une classe aient la même structure. 
-Il faut aider l'utilisateur en définissant : 
+# En résumé
 
-- un constructeur
-- un validateur
-- un wrapper user-friendly autour du constructeur si l'objet a vocation à être exposé.
-
-Voir le [chapitre 13.3](https://adv-r.hadley.nz/s3.html#s3-classes) d'Advanced R pour plus de détails et d'informations sur la philosophie des objets S3.
-
-## Fonctions et méthodes génériques
-
-Une classe S3 permet le dispatch de fonctions génériques.
-
-```{r}
-# définir une fonction générique :
-nouvelle_fonction_generique <- function(x) {
-  UseMethod("nouvelle_fonction_generique")
-}
-```
-
-Fonctions génériques courantes : `print`, `summary`, `plot`...
-
-- Facilite l'apprentissage des APIs des librairies pour les utilisateurs
-- Le dispatch permet de gérer l'héritage de classe. R applique la bonne méthode au bon objet.
-
-## Exemple
-
-```{r}
-#| eval: true
-new_integer <- function(x) {
-  stopifnot(is.integer(x))
-  structure(x, class = "new_integer") # altern. à `class<-`
-}
-
-print.new_integer <- function(x, ...) {
-  cat("new_integer object\n")
-  r <- range(x, ...)
-  cat("min_value: ", r[[1L]], " - max_value: ", r[[2L]], "\n")
-  cat(head(x), "......", tail(x), "\n")
-  invisible(x)
-}
-
-x <- new_integer(1:40L)
-print(x)
-print(unclass(x)) # le même vecteur sans attribut de classe
-```
-
-## Autres paradigmes objets en R
-
-R n'est pas connu pour être un langage de programmation objet. Et pourtant, outre S3, il existe d'autres paradigmes : [S4](https://adv-r.hadley.nz/s4.html), [RC](https://rdocumentation.org/packages/methods/versions/3.6.2/topics/ReferenceClasses), [R6](https://adv-r.hadley.nz/r6.html) ...
-
-- Paradigmes parfois différents des paradigmes courants en Java, Python, etc ;
-- S3 doit être le choix par défaut; sa simplicité et flexibilité répond à de nombreux besoins.
-
-# Questions ?
-
+::: incremental
+- Git est un outil complexe mais indispensable au data scientist
+- Une maîtrise premiers concepts simples suffira amplement à couvrir la majorité de vos besoins
+- Github est la plateforme leader, des alternatives existent
+- Utile pour se créer un portfolio, collaborer avec des camarades, persister du code de manière fiable
+- Github doit aussi être une source d'inspiration et d'information pour vous !
+:::
 

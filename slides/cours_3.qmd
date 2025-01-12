@@ -13,617 +13,782 @@ knitr:
     comment: "#>" 
 ---
 
+# Pourquoi écrire des fonctions ?
 
-# Données, Texte, Dates
+## Exemple
 
-# Lire des données
-
-## Fichiers plats (.txt, .csv)
-
-Traditionnellement, les fichiers de données de petite taille sont disponibles au format **.csv** ou **.txt**
+Exemple de code : une data.frame contient 4 colonnes de données de températures en degrés C°. On souhaite convertir les degrés Celsius en Farheneit selon la formule $F° = C° * 9 / 5 + 32$.
 
 ```{r}
-# base R
-read.csv()
-read.table()
-# R package readr
-readr::read_csv()
-# autres solutions :
-data.table::fread()
-vroom::vroom()
-arrow::read_csv()
+#| code-line-numbers: "|11"
+
+df <- data.frame(
+  temp_a = rnorm(20, 2),
+  temp_b = rnorm(20, 2),
+  temp_c = rnorm(20, 2),
+  temp_d = rnorm(20, 2)
+)
+
+df$a <- (df$a * 9 / 5) + 32 
+df$b <- (df$b * 9 / 5) + 32
+df$c <- (df$c * 9 / 5) + 32
+df$d <- (df$a * 9 / 5) + 32
 ```
 
-
-::: {.callout-warning}
-Même s'il est possible d'importer des données directement depuis RStudio, il est primordial de coder les imports pour rendre les études reproductibles.
-:::
-
-## Fichiers .json
-
-Format omni-présent sur le web. Permet de représenter des données hiérarchiques.
-
-```{js}
-{"employees":[
-  { "firstName":"John", "lastName":"Doe" },
-  { "firstName":"Anna", "lastName":"Smith" },
-  { "firstName":"Peter", "lastName":"Jones" }
-]}
-```
-
-Pour lire les fichiers json, on utilisera en priorité la librairie [`jsonlite`](https://cran.r-project.org/web/packages/jsonlite/vignettes/json-aaquickstart.html).
-
-```{r}
-library(jsonlite)
-read_json("some_json_file.json")
-?fromJSON()
-?toJSON()
-```
-
-Possibilité de lire et écrire du json depuis R.
-
-## Lire un fichier parquet {auto-animate="true"}
-
-Format parquet, très utilisé pour le traitement des "big data".
-
-. . .
-
-```{r}
-library(arrow)
-
-data(mtcars)
-arrow::read_parquet()
-arrow::write_parquet()
-
-```
-
-. . .
-
-- Stockage orienté colonne
-- Fichier binaire compressé, efficient et typé
-- Devient très courant - format de référence dans les data lake, lisible en python (`pandas.read_parquet`)
-
-## Requêter une base de données {auto-animate="true"}
-
-Enfin, de nos jours, beaucoup de données d'analyse résident dans des bases de données, souvent dites relationnelles.
-
-. . .
-
-En R, le backend [`DBI`](https://dbi.r-dbi.org/) a été développé pour fournir une interface unique à de nombreux systèmes de bases de données ou data warehouse existants : mysql, postgresql, snowflake, etc.
-
-. . .
-
-```{r}
-library(DBI)
-# Create an ephemeral in-memory RSQLite database
-con <- dbConnect(RSQLite::SQLite(), dbname = ":memory:")
-
-dbListTables(con)
-dbWriteTable(con, "mtcars", mtcars)
-dbListTables(con)
-
-dbDisconnect(con)
-```
-
-
-
-## Requêter une base de données {auto-animate="true"}
-```{r}
-#| eval: true
-
-
-library(DBI)
-# Create an ephemeral in-memory RSQLite database
-con <- dbConnect(RSQLite::SQLite(), dbname = ":memory:")
-
-dbListTables(con)
-dbWriteTable(con, "mtcars", mtcars)
-dbListTables(con)
-dbListFields(con, "mtcars")
-```
-
-## Requêter une base de données {auto-animate="true"}
-```{r}
-#| eval: false
-head(dbReadTable(con, "mtcars"))
-res <- dbSendQuery(con, "SELECT * from mtcars LIMIT 6")
-dbFetch(res)
-```
-
-## Requêter une base de données {auto-animate="true"}
-```{r}
-#| eval: true
-head(dbReadTable(con, "mtcars"))
-res <- dbSendQuery(con, "SELECT * from mtcars LIMIT 6")
-dbFetch(res)
-dbClearResult(res)
-dbDisconnect(con)
-```
-
-
-# Manipulation de dataframes
-
-## data.frame {auto-animate="true"}
-
-En R, les data.frame sont un élément essentiel du succès du langage pour le traitement des données.
-
-```{r}
-#| eval: true
-
-df <- data.frame(col1 = c(1, 2, 3), col2 = c("a", "b", "c"))
-class(df)
-str(df, 1)
-```
-
-## tibble {auto-animate="true"}
-
-```{r}
-#| eval: true
-library(dplyr)
-
-data(starwars)
-class(starwars)
-
-head(starwars, 4)
-```
-
-## tibble {auto-animate="true"}
-
-```{r}
-#| eval: true
-class(starwars) <- "data.frame"
-head(starwars, 4)
-```
-
-## tibble {auto-animate="true"}
-
-```{r}
-#| eval: false
-class(starwars) <- "data.frame"
-head(starwars, 4)
-```
-
-## tibble {auto-animate="true"}
-
-- `tibble` surcharge les `data.frame` classiques
-- meilleur `print`, meilleurs "défauts"
-
-. . .
-
-```{r}
-#| eval: false
-class(starwars[, 1])
-class(as.tibble(starwars)[, 1])
-```
-
-
-
-## tibble {auto-animate="true"}
-
-- `tibble` surcharge les `data.frame` classiques
-- meilleur `print`, meilleurs "défauts"
-
-```{r}
-#| eval: true
-class(starwars[, 1])
-class(as_tibble(starwars)[, 1])
-```
-
-. . .
-
-- `tibble` renvoie une **data.frame** à une colonne
-- `data.frame` renvoie un **vecteur**
-
-## dplyr
-
-## dplyr {auto-animate="true"}
-
-```{r}
-#| eval: true
-#| echo: false
-starwars <- as_tibble(starwars)
-```
-
-```{r}
-starwars %>% 
-  filter(species == "Droid")
-```
-
-## dplyr {auto-animate="true"}
-
-```{r}
-#| eval: true
-starwars %>% 
-  filter(species == "Droid")
-```
-
-## dplyr {auto-animate="true"}
-
-```{r}
-starwars %>% 
-  select(name, ends_with("color"))
-```
-
-## dplyr {auto-animate="true"}
-
-```{r}
-#| eval: true
-starwars %>% 
-  select(name, ends_with("color"))
-```
-
-
-## dplyr {auto-animate="true"}
-
-```{r}
-starwars %>% 
-  mutate(name, bmi = mass / ((height / 100)  ^ 2)) %>%
-  select(name:mass, bmi)
-```
-
-## dplyr {auto-animate="true"}
-
-```{r}
-#| eval: true
-starwars %>% 
-  mutate(name, bmi = mass / ((height / 100)  ^ 2)) %>%
-  select(name:mass, bmi)
-```
-
-
-## dplyr {auto-animate="true"}
-
-```{r}
-starwars %>% 
-  arrange(desc(mass))
-```
-
-## dplyr {auto-animate="true"}
-
-```{r}
-#| eval: true
-starwars %>% 
-  arrange(desc(mass))
-```
-
-
-## dplyr {auto-animate="true"}
-
-```{r}
-starwars %>%
-  group_by(species) %>%
-  summarise(
-    n = n(),
-    mass = mean(mass, na.rm = TRUE)
-  ) %>%
-  filter(
-    n > 1,
-    mass > 50
-  )
-```
-
-## dplyr {auto-animate="true"}
-
-```{r}
-#| eval: true
-starwars %>%
-  group_by(species) %>%
-  summarise(
-    n = n(),
-    mass = mean(mass, na.rm = TRUE)
-  ) %>%
-  filter(
-    n > 1,
-    mass > 50
-  )
-```
-
-
-# Données textuelles
-
-## Manipulation de chaines de caractères {auto-animate="true"}
-
-Élément important des tâches de manipulation de données, de nettoyage, de transformation, souvent basé sur les [expressions régulières](https://fr.wikipedia.org/wiki/Expression_r%C3%A9guli%C3%A8re).
-
-. . .
-
-En R base, possibilité de manipuler des chaînes de caractères, mais :
-
-- API des fonctions inconsistantes
-- naming difficile à comprendre
-- documentation parfois cryptique
-
-## Manipulation de chaines de caractères {auto-animate="true"}
-
-Élément important des tâches de manipulation de données, de nettoyage, de transformation, souvent basé sur les [expressions régulières](https://fr.wikipedia.org/wiki/Expression_r%C3%A9guli%C3%A8re).
-
-
-En R base, possibilité de manipuler des chaînes de caractères, mais :
-
-- API des fonctions inconsistantes
-- naming difficile à comprendre
-- documentation parfois cryptique
-- une librairie `user friendly` : [stringr](https://stringr.tidyverse.org/index.html)
-
-## Expressions régulières
-
-Simple *match* : 
-
-```{r}
-#| eval: true
-library(stringr)
-x <- c("apple", "banana", "pear")
-str_view(x, "an")
-```
-
-## Expressions régulières
-
-"." match tous les caractères
-
-```{r}
-#| eval: true
-x <- c("apple", "banana", "pear")
-str_view(x, ".a.")
-```
-
-## Expressions régulières
-
-`Escaping` avec le symbole `\` :
-```{r}
-#| eval: true
-str_view(c("abc", "a.c", "bef"), "a\\.c")
-```
-
-## Expressions régulières
-
-- `\d` :  match tous les symboles numériques
-
-```{r}
-#| eval: true
-str_view_all("10 + 20 = 30", "\\d+")
-```
-
-## Expressions régulières
-
-- `\s` : caractères d'espacement
-
-```{r}
-#| eval: true
-(text <- "Some  \t badly\n\t\tspaced \f text")
-str_replace_all(text, "\\s+", " ")
-```
-
-## Expressions régulières
-
-- `\w` et `\W` : mots
-
-```{r}
-#| eval: true
-
-str_extract_all("Don't eat that!", "\\w+")[[1]]
-str_split("Don't eat that!", "\\W")[[1]]
-```
-
-## Expressions régulières {auto-animate="true"}
+## Motivation à l'écriture d'une fonction
 
 ::: incremental
-- [abc] : match a, b, c
-- [a-z] : match tous les caractères minuscules
-- [^abc] : match tous les caractères exceptés a, b, c
-- [\\^\\-] : match les caractères `^` et `-`
+- Eviter les copier/coller, et les erreurs associées, factoriser le code et réutiliser du code existant
+- Faciliter la maintenance et les évolutions du code en un seul endroit
+- Faciliter la lecture et la compréhension du code en donnant un nom évocatif
 :::
 
-## Expressions régulières {auto-animate="true"}
+## Syntaxe
 
-- [abc] : match a, b, c
-- [a-z] : match tous les caractères minuscules
-- [^abc] : match tous les caractères exceptés a, b, c
-- [\\^\\-] : match les caractères `^` et `-`
-
-Voir [R et expressions régulières](https://stringr.tidyverse.org/articles/regular-expressions.html)
-
-## [Fonctions stringr vs R base](https://stringr.tidyverse.org/articles/from-base.html)
 
 ```{r}
-#| echo: false
-#| eval: true
+faire_une_fonction <- function(w, x, y = 1, z = NULL, ...) {
+  # commentaire pour les développeurs
+  if (!is.null(z)) {
+    return(z)
+  }
+  w + x + y # retourne le résultat de la dernière expression évaluée
+}
 
-knitr::kable(
-  tibble::tribble(
-    ~stringr, ~`base R`,
-    "str_detect(string, pattern)", "grepl(pattern, x)",
-    "str_dup(string, times)",
-    "strrep(x, times)",
-    "str_extract(string, pattern)",
-    "regmatches(x, m = regexpr(pattern, text))",
-    "str_extract_all(string, pattern)",
-    "regmatches(x, m = gregexpr(pattern, text))",
-    "str_length(string)",
-    "nchar(x)"
-  )
-)
-
-```
-
-
-## [Fonctions stringr vs R base](https://stringr.tidyverse.org/articles/from-base.html)
-
-```{r}
-#| echo: false
-#| eval: true
-
-knitr::kable(
-  tibble::tribble(
-    ~stringr, ~`base R`,
-    "str_locate(string, pattern)",
-    "regexpr(pattern, text)",
-    "str_locate_all(string, pattern)",
-    "gregexpr(pattern, text)",
-    "str_match(string, pattern)",
-    "regmatches(x, m = regexec(pattern, text))",
-    "str_order(string)",
-    "order(...)",
-    "str_replace(string, pattern, replacement)",
-    "sub(pattern, replacement, x)",
-    "str_replace_all(string, pattern, replacement)",
-    "gsub(pattern, replacement, x)"
-  )
-)
-```
-
-----
-
-```{r}
-#| echo: false
-#| eval: true
-
-knitr::kable(
-  tibble::tribble(
-    ~stringr, ~`base R`,
-    "str_sort(string)",
-    "sort(x)",
-    "str_split(string, pattern)",
-    "strsplit(x, split)",
-    "str_sub(string, start, end)",
-    "substr(x, start, stop)",
-    "str_subset(string, pattern)",
-    "grep(pattern, x, value = TRUE)",
-    "str_to_lower(string)",
-    "tolower(x)",
-    "str_to_title(string)",
-    "tools::toTitleCase(text)",
-    "str_to_upper(string)",
-    "toupper(x)",
-    "str_trim(string)",
-    "trimws(x)",
-    "str_which(string, pattern)",
-    "grep(pattern, x)",
-    "str_wrap(string)",
-    "strwrap(x)"
-  )
-)
-```
-
-# Données calendaires
-
-## [Unix time](https://fr.wikipedia.org/wiki/Heure_Unix)
-
-> L'heure Unix ou heure Posix est une mesure du temps fondée sur le nombre de secondes écoulées depuis le 1er janvier 1970 00:00:00 UTC, hors secondes intercalaires. Elle est utilisée principalement dans les systèmes qui respectent la norme POSIX, dont les systèmes de type Unix, d'où son nom. C'est la représentation POSIX du temps.
-
-## Timezone \& UTC
-
-Est-ce une date valide ?
-```{r}
-"2022-01-01 03:40:54"
+fonction_sur_une_ligne <- function(x) x + 1
 ```
 
 . . .
+
+- Les arguments peuvent prendre des valeurs par défaut ;
+- on peut écrire une fonction sur une ligne sans `{}` si elle est suffisament simple ;
+- lorsque ce n'est pas trivial, il faut expliciter l'instruction de retour avec la fonction `return()`.
+
+
+## Convertir en fonction {auto-animate="true"}
+
+Ici, combien d'input(s) doit-on définir en entrée de la fonction ?
+
+```{r}
+# conversion celsius/farheneit
+df$a <- (df$a * 9 / 5) + 32 
+```
+
+. . .
+
+**un** seul input doit être défini, correspondant à la variable `df$a`.
+
+. . .
+
+Nommage des fonctions : les fonctions traduisent des actions. Il faut donc utiliser un verbe pour traduire cette action dans le nom. On privilégiera le `snake_case`.
+
+## Convertir en fonction {auto-animate="true"}
+
+Quelle devrait être la nature de l'objet x ? Vecteur ou data.frame ?
+
+```{r}
+convert_celsius_to_farheneit <- function(x) {
+  
+}
+```
+
+## Convertir en fonction {auto-animate="true"}
+
+Quelle devrait être la nature de l'objet x ? Vecteur ou data.frame ?
+
+```{r}
+convert_celsius_to_farheneit <- function(x) {
+  x_farheneit <- (x * 9 / 5) + 32
+  return(x_farheneit)
+}
+```
+
+Il est important de définir les paramètres comme étant les objets minimaux nécessaires à la fonction, donc ici un vecteur plutôt qu'une data.frame.
+
+::: callout-note
+## Convertir du code en fonction
+`Ctrl+Alt+X` sous Windows, `Control+Option+X` sous Mac.
+:::
+
+
+## Principes de développement
+
+Il faut essayer de suivre certains principes de design de code :
 
 ::: incremental
-- Importance des timezones
-- Universal Time Coordinated
+- Limiter le nombre d'arguments à ses fonctions (4 ? ...)
+- Utiliser des noms explicites, et des verbes
+- Définir des fonctions **pures** dans la philosophie de la *programmation fonctionnelle*.
+- Utiliser des objets : S3, S4, R6 ...
 :::
 
 . . .
 
-:::::: {.callout-tip}
-## UTC
-Le temps universel coordonné ou UTC (en anglais : coordinated universal time) est une échelle de temps adoptée comme base du temps civil international par la majorité des pays du globe.
+::: callout-note
+## Packaging
+Nous verrons comment tester, documenter et packager ses fonctions lors du cours n° 3
 :::
 
-## R base vs lubridate
+# Définition d'une fonction
 
-Les dates sont des objets très fréquents et essentiels dans de multiple projets de datascience :
+## Les fonctions {auto-animate="true"}
 
-- séries temporelles
-- données et messages horodatés
+Les fonctions sont des objets.
+
+```{r}
+#| eval: true
+
+f <- function(x, y) {
+  # commentaire
+  x + y
+}
+```
+
+## Les fonctions {auto-animate="true"}
+
+Les fonctions sont des objets
+
+```{r}
+#| eval: true
+
+f <- function(x, y) {
+  # commentaire
+  x + y
+}
+
+body(f) # défini explicitement, code de la fonction
+```
 
 . . .
 
-Il est possible de manipuler des objets de date en R base, mais [`lubridate`](https://lubridate.tidyverse.org/) propose une API plus consistante et accessible et peut faciliter vos traitements de données.
-
-## ["Parsing" de dates](https://lubridate.tidyverse.org/reference/index.html#date-time-parsing)
-
 ```{r}
-ymd(
-  ...,
-  quiet = FALSE,
-  tz = NULL,
-  locale = Sys.getlocale("LC_TIME"),
-  truncated = 0
-)
+#| eval: true
+
+formals(f) # défini explicitement, ses arguments
 ```
 
 . . .
 
-Exemple :
+```{r}
+#| eval: true
+
+environment(f) # basé sur où est définie la fonction
+```
+
+## 3 types de fonctions {auto-animate="true"}
+
+```{r}
+#| eval: false
+
+typeof(mean)
+typeof(sum)
+typeof(`[`)
+```
+
+## 3 types de fonctions {auto-animate="true"}
 
 ```{r}
 #| eval: true
-library(lubridate)
-date <- ymd("2020-02-22")
-str(date)
+#| results: hold
+
+typeof(mean)
+typeof(sum)
+typeof(`[`)
 ```
 
-## Extraction d'éléments {auto-animate="true"}
+. . .
+
+- La plupart des fonctions sont de type `closure`
+- Sauf des fonctions spéciales maintenues et écrites par R-core, `builtin` et `special`
+
+## Scope d'une fonction {auto-animate="true"}
 
 ```{r}
-date <- ymd("2020-02-22")
-year(date)
-month(date)
-isoweek(date)
-minute(date)
+#| code-line-numbers: "|1-5,7|1-5,8|1-5,9"
+x <- 4
+y <- 5
+f00 <- function(x) {
+  return (x + 1)
+}
+
+f00(1)
+f00(x)
+f00(y)
 ```
 
-## Extraction d'éléments {auto-animate="true"}
-
-```{r}
-#| eval: true
-date <- ymd("2020-02-22")
-year(date)
-month(date)
-isoweek(date)
-minute(date)
-```
-
-## Extraction d'éléments {auto-animate="true"}
-
-```{r}
-date <- ymd("2020-02-22")
-wday(date)
-Sys.setlocale(category = "LC_ALL", locale = "de_DE.UTF-8")
-date <- ymd("2020-02-22")
-wday(date, label = TRUE, abbr = FALSE)
-Sys.setlocale(category = "LC_ALL", locale = "en_US.UTF-8")
-```
-
-## Extraction d'éléments {auto-animate="true"}
+## Scope d'une fonction {auto-animate="true"}
 
 ```{r}
 #| eval: true
-date <- ymd("2020-02-22")
-wday(date)
-Sys.setlocale(category = "LC_ALL", locale = "de_DE.UTF-8")
-date <- ymd("2020-02-22")
-wday(date, label = TRUE, abbr = FALSE)
+
+
+x <- 4
+y <- 5
+f00 <- function(x) {
+  return (x + 1)
+}
+
+f00(1)
+f00(x)
+f00(y)
 ```
+
+## Scope d'une fonction {auto-animate="true"}
+
 
 ```{r}
-#| echo: false
-#| eval: true
-invisible(Sys.setlocale(category = "LC_ALL", locale = "en_US.UTF-8"))
+#| code-line-numbers: "|6,8"
+y <- 5
+f01 <- function() {
+  return (y + 1)
+}
+
+print("premier appel", f01())
+y <- 10
+print("second appel", f01())
 ```
+
+## Scope d'une fonction {auto-animate="true"}
+
 
 ```{r}
 #| eval: true
-format_ISO8601(as.POSIXct("2018-02-01 03:04:05", tz = "EST"), usetz = TRUE)
+#| code-line-numbers: "1,6,7,8"
+#| results: hold
+
+
+y <- 5
+f01 <- function() {
+  return (y + 1)
+}
+
+f01()
+y <- 10
+f01()
 ```
 
-## Interval, duration, period
+. . .
 
-- `interval` : période temporelle entre deux dates
-- `duration` : durée définie en temps calendaire "humain" : en jours, en semaines, en mois..
-- `period` : durée définie en nombre de secondes
+La valeur de y est définie au moment de l'exécution, et non au moment de la définition de `f01()`.
 
+## Scope d'une fonction {auto-animate="true"}
+
+
+```{r}
+
+x <- 3
+y <- 5
+f02 <- function() {
+  x <- 2
+  f_in <- function() {
+    x + y
+  }
+  print(environment(f_in))
+  f_in()
+}
+
+print(environment(f02))
+f02()
+x <- 5
+f02()
+```
+
+## Scope d'une fonction {auto-animate="true"}
+
+
+```{r}
+#| eval: true
+#| code-line-numbers: "2,4,8,12,13,15"
+#| results: hold
+
+x <- 3
+y <- 5
+f02 <- function() {
+  x <- 2
+  f_in <- function() {
+    x + y
+  }
+  print(environment(f_in))
+  f_in()
+}
+
+print(environment(f02))
+f02()
+x <- 5
+f02()
+```
+
+## Scope d'une fonction {.smaller}
+
+::: incremental
+- Si un nom n'est pas défini dans l'environnement d'une fonction, alors on regarde "un niveau au-dessus", dans l'environnement parent.
+- Un nom défini dans l'environnement de la fonction "masque" la valeur d'un objet de même nom défini dans un environnement parent.
+- R cherche la valeur quand la fonction est exécutée, non quand la fonction est définie.
+- R fait la différence entre les fonctions et les variables.
+:::
+
+. . .
+
+::: callout-note
+## Quelques conseils
+- Ne pas nommer ses variables du même nom qu'une fonction
+- Faire des fonctions "pures" et définir les variables utiles dans les paramètres de la fonction
+:::
+
+## Arguments {auto-animate="true"}
+
+```{r}
+#| eval: false
+#| code-line-numbers: "|2|3|4"
+
+
+f01 <- function(a, b) a + b**2
+f01(1, 2)
+f01(b = 1, 2)
+```
+
+. . .
+```{r}
+#| include: false
+#| eval: true
+
+f01 <- function(a, b) a + b**2
+```
+
+- les paramètres non-nommés sont associés à l'argument positionnellement
+```{r}
+#| eval: true
+
+f01(1, 2)
+```
+
+. . .
+
+- il est possible de mélanger les paramètres nommés et non-nommés. Attention à l'ordre de ceux-ci !
+```{r}
+#| eval: true
+
+f01(b = 1, 2)
+```
+
+
+## Matching partiel {auto-animate="true"}
+
+::: callout-warning
+## Matching partiel
+En R, les arguments sont identifiés partiellement !
+:::
+
+```{r}
+#| eval: false
+#| error: true
+#| code-line-numbers: "|2|3"
+
+f02 <- function(x, xyz, xylophone) x + xylophone**2
+f02(1, 2, xylo = 3)
+f02(1, 2, xy = 3)
+```
+
+
+## Matching partiel {auto-animate="true"}
+
+::: callout-warning
+## Matching partiel 
+En R, les arguments sont identifiés partiellement !
+:::
+
+```{r}
+#| eval: true
+#| error: true
+
+
+f02 <- function(x, xyz, xylophone) x + xylophone**2
+f02(1, 2, xylo = 3)
+f02(1, 2, xy = 3)
+```
+
+. . .
+
+::: callout-note
+- Utilisez des arguments nommés si possible
+- Essayez de respecter l'ordre des arguments
+- Privilégiez le nom exact de l'argument
+:::
+
+
+## ... (dot-dot-dot) {auto-animate="true"}
+
+La notation `...` permet de propager des arguments à une autre fonction. Dans d'autres langages de programmation, on retrouve ce concept de `varargs` soit arguments variables. Ceci permet à la fonction de prendre un nombre variable d'arguments.
+
+```{r}
+#| eval: false
+
+f <- function(...) list(...)
+f(a = 2, b = "hello")
+f(x = c(1, 2, 3))
+```
+
+## ... (dot-dot-dot) {auto-animate="true"}
+
+La notation `...` permet de propager des arguments à une autre fonction. Dans d'autres langages de programmation, on retrouve ce concept de `varargs` soit arguments variables. Ceci permet à la fonction de prendre un nombre variable d'arguments.
+
+```{r}
+#| eval: true
+
+f <- function(...) list(...)
+f(a = 2, b = "hello")
+f(x = c(1, 2, 3))
+```
+
+## ... (dot-dot-dot)
+
+::: callout-note
+Utile pour passer des arguments supplémentaires, en particulier quand un des arguments de la fonction est lui même une fonction, par exemple pour `lapply`
+:::
+
+. . .
+
+::: callout-warning
+## Quelques points de vigilance
+- peut laisser passer des 'typos' sans lever d'erreurs ;
+- rend plus difficile la compréhension de ce que fait la fonction et nécessite une documentation précise.
+:::
+
+. . .
+
+```{r}
+#| eval: true
+sapply(list(c(1:10), c(1:10, NA)), mean, na.rm = TRUE)
+sapply(list(c(1:10), c(1:10, NA)), mean, na_rm = TRUE)
+```
+
+## Output d'une fonction
+
+```{r}
+convert_celsius_to_farheneit <- function(x) {
+  x_farheneit <- (x * 9 / 5) + 32
+  return(x_farheneit)
+}
+```
+
+. . .
+
+Similaire à :
+
+```{r}
+convert_celsius_to_farheneit <- function(x) {
+  x_farheneit <- (x * 9 / 5) + 32
+  x_farheneit 
+} 
+```
+
+Une fonction retourne l'objet contenu dans l'appel explicite à `return()` ou le résultat de la dernière expression évaluée de manière implicite.
+
+## Contrôle d'arguments {auto-animate="true"}
+
+C'est une bonne pratique de vérifier des conditions importantes sur les arguments.
+
+```{r}
+f04 <- function(x, y) {
+  x + y
+}
+```
+
+## Contrôle d'arguments {auto-animate="true"}
+
+C'est une bonne pratique de vérifier des conditions importantes sur les arguments.
+
+```{r}
+f04 <- function(x, y) {
+  if (!is.numeric(x)) stop("x not numeric")
+  if (!is.numeric(y)) stop("y not numeric")
+  x + y
+}
+f04(1, 2)
+f04(1, "a")
+```
+
+## Contrôle d'arguments {auto-animate="true"}
+
+C'est une bonne pratique de vérifier des conditions importantes sur les arguments.
+
+```{r}
+#| eval: true
+#| error: true
+f04 <- function(x, y) {
+  if (!is.numeric(x)) stop("x not numeric")
+  if (!is.numeric(y)) stop("y not numeric")
+  x + y
+}
+f04(1, 2)
+f04(1, "a")
+```
+
+## Contrôle d'arguments {auto-animate="true"}
+
+C'est une bonne pratique de vérifier des conditions importantes sur les arguments.
+
+```{r}
+f04 <- function(x, y) {
+  stopifnot(is.numeric(x), is.numeric(y))
+  x + y
+}
+f04(1, 2)
+f04(1, "a")
+```
+
+## Contrôle d'arguments {auto-animate="true"}
+
+C'est une bonne pratique de vérifier des conditions importantes sur les arguments.
+
+```{r}
+#| eval: true
+#| error: true
+f04 <- function(x, y) {
+  stopifnot(is.numeric(x), is.numeric(y))
+  x + y
+}
+f04(1, 2)
+f04(1, "a")
+```
+
+## Erreurs, avertissements, messages
+
+Trois types de signaux : `errors`, `warning`, `message`. En R, il est possible d'attraper les erreurs ou les messages.
+
+```{r}
+?tryCatch
+?try
+?withCallingHandlers
+```
+
+
+::: callout-note
+## Pour aller plus loin
+Voir le chapitre sur les conditions dans Advanced-R 
+<https://adv-r.hadley.nz/conditions.html#conditions>
+:::
+
+## Opérateurs et fonctions spéciales
+
+Quelques fonctions ont un comportement spécial : elles s'écrivent entre les arguments. Exemples, les opérateurs mathématiques :
+
+```{r}
+1 + 2
+3 * 4
+```
+
+On aurait pu écrire :
+
+```{r}
+`+`(1, 2)
+`*`(3, 4)
+```
+
+Liste des fonctions de ce type : `:`, `::`, `:::`, `$`, `@`, `^`, `*`, `/`, `+`, `-`, `>`, `>=`, `<`, `<=`, `==`, `!=`, `!`, `&`, `&&`, `|`, `||`, `~`, `<-`, `->`, `<<-.`, etc.
+
+## Opérateurs et fonctions spéciales
+
+Définir ses propres opérateurs :
+
+```{r}
+#| eval: true
+
+`%+%` <- function(lhs, rhs) {
+  paste0(lhs, rhs)
+}
+
+"hell" %+% "o"
+```
+
+. . .
+
+Autres fonctions spéciales :
+
+- `(`, `{`, `[`, `[[`, `next`, `repeat`, `break`, `if`, `for`, `while`, `repeat`, `function` ... 
+
+
+## Opérateurs et fonctions spéciales : pipe et composition de fonctions
+
+:::: {.columns}
+::: {.column width="35%"}
+
+Composition de fonctions :
+
+:::
+
+::: {.column width="65%"}
+```{r}
+#| eval: true
+
+square <- function(x) x^2
+deviation <- function(x) x - mean(x)
+x <- runif(100)
+# Population standard deviation
+sqrt(mean(square(deviation(x)))) 
+```
+:::
+::::
+
+:::: {.columns}
+::: {.column width="35%"}
+
+Avec des pipes, `magrittr` ou R base (>4.1) :
+
+:::
+
+::: {.column width="65%"}
+
+```{r}
+#| include: false
+#| eval: true
+
+library(magrittr)
+```
+
+
+```{r}
+#| eval: true
+x |> # R base (>4.1)
+  deviation() |>
+  square() |>
+  mean() |>
+  sqrt()
+x %>% # maggritr
+  deviation() %>%
+  square() %>% 
+  mean() %>%
+  sqrt()
+```
+
+:::
+::::
+
+## Fonctions anonymes
+
+Parfois, il n'est pas nécessaire de choisir d'associer un nom à une fonction, et on peut utiliser des fonctions anonymes.
+
+```{r}
+#| eval: true
+
+x <- 1:3
+sapply(x, function(x) x**2 - 1)
+```
+
+. . .
+
+```{r}
+#| eval: true
+
+integrate(function(x) 1 / ((x + 1) * sqrt(x)), lower = 0, upper = Inf)
+```
+
+. . .
+```{r}
+#| eval: true
+
+liste <- list(
+  f = function(x) x**2,
+  g = \(x) x - 1) # syntaxe possible depuis R > 4.1
+liste$f(10)
+liste$g(2)
+```
+
+
+# Objets S3 
+
+## Exemple : Date
+
+```{r}
+#| eval: true
+date_cours <- as.Date("2023-01-13", format = "%Y-%m-%d")
+str(date_cours)
+typeof(date_cours)
+class(date_cours)
+attributes(date_cours)
+```
+
+Les objets de type `Date` sont de classe `Date`, même si leur représentation interne est `double`^[On s'attend à un entier - nombre de jours depuis une certaine date de référence - mais non-forcé dans la représentation interne].
+
+## Attribut de classe
+
+```{r}
+#| eval: true 
+x <- 1:10
+str(x)
+class(x) <- "ma_premiere_classe"
+str(x)
+class(x)
+```
+
+. . .
+
+Un objet S3 est défini par son attribut `class`. R est très permissif.
+```{r}
+#| eval: true
+#| error: true
+mod <- lm(log(mpg) ~ log(disp), data = mtcars)
+class(mod)
+class(mod) <- "Date"
+print(mod)
+```
+
+## S3
+
+R n'a aucun moyen d'assurer que tous les objets d'une classe aient la même structure. 
+Il faut aider l'utilisateur en définissant : 
+
+- un constructeur
+- un validateur
+- un wrapper user-friendly autour du constructeur si l'objet a vocation à être exposé.
+
+Voir le [chapitre 13.3](https://adv-r.hadley.nz/s3.html#s3-classes) d'Advanced R pour plus de détails et d'informations sur la philosophie des objets S3.
+
+## Fonctions et méthodes génériques
+
+Une classe S3 permet le dispatch de fonctions génériques.
+
+```{r}
+# définir une fonction générique :
+nouvelle_fonction_generique <- function(x) {
+  UseMethod("nouvelle_fonction_generique")
+}
+```
+
+Fonctions génériques courantes : `print`, `summary`, `plot`...
+
+- Facilite l'apprentissage des APIs des librairies pour les utilisateurs
+- Le dispatch permet de gérer l'héritage de classe. R applique la bonne méthode au bon objet.
+
+## Exemple
+
+```{r}
+#| eval: true
+new_integer <- function(x) {
+  stopifnot(is.integer(x))
+  structure(x, class = "new_integer") # altern. à `class<-`
+}
+
+print.new_integer <- function(x, ...) {
+  cat("new_integer object\n")
+  r <- range(x, ...)
+  cat("min_value: ", r[[1L]], " - max_value: ", r[[2L]], "\n")
+  cat(head(x), "......", tail(x), "\n")
+  invisible(x)
+}
+
+x <- new_integer(1:40L)
+print(x)
+print(unclass(x)) # le même vecteur sans attribut de classe
+```
+
+## Autres paradigmes objets en R
+
+R n'est pas connu pour être un langage de programmation objet. Et pourtant, outre S3, il existe d'autres paradigmes : [S4](https://adv-r.hadley.nz/s4.html), [RC](https://rdocumentation.org/packages/methods/versions/3.6.2/topics/ReferenceClasses), [R6](https://adv-r.hadley.nz/r6.html) ...
+
+- Paradigmes parfois différents des paradigmes courants en Java, Python, etc ;
+- S3 doit être le choix par défaut; sa simplicité et flexibilité répond à de nombreux besoins.
 
 # Questions ?
+
+
