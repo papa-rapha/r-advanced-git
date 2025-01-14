@@ -18,10 +18,8 @@ knitr:
 ## Rappels
 
 ::: incremental
-- Rappels des notions importantes en R
-- Conseils de bonnes pratiques
-- Fonctions, Packages
-- Reproductibilité : `quarto`, `renv`
+- Notions importantes en R
+- Découverte de l'IDE
 :::
 
 . . .
