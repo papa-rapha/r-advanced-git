@@ -714,7 +714,7 @@ Les objets de type `Date` sont de classe `Date`, même si leur représentation i
 
 ```{r}
 #| eval: true 
-x <- 1:10
+x <- 1:9
 str(x)
 class(x) <- "ma_premiere_classe"
 str(x)
@@ -784,7 +784,7 @@ print(unclass(x)) # le même vecteur sans attribut de classe
 
 ## Autres paradigmes objets en R
 
-R n'est pas connu pour être un langage de programmation objet. Et pourtant, outre S3, il existe d'autres paradigmes : [S4](https://adv-r.hadley.nz/s4.html), [RC](https://rdocumentation.org/packages/methods/versions/3.6.2/topics/ReferenceClasses), [R6](https://adv-r.hadley.nz/r6.html) ...
+R n'est pas connu pour être un langage de programmation objet. Et pourtant, outre S3, il existe d'autres paradigmes : [S4](https://adv-r.hadley.nz/s4.html), [RC](https://rdocumentation.org/packages/methods/versions/3.6.2/topics/ReferenceClasses), [R6](https://adv-r.hadley.nz/r6.html), [S7](https://rconsortium.github.io/S7/) ...
 
 - Paradigmes parfois différents des paradigmes courants en Java, Python, etc ;
 - S3 doit être le choix par défaut; sa simplicité et flexibilité répond à de nombreux besoins.
