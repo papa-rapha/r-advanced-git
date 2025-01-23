@@ -1,0 +1,33 @@
+---
+title: "Exercices - Semaine 4"
+author: "Raphaël Nedellec"
+format: pdf
+---
+
+## Préparation
+
+1. Vérifiez que les options globales de RStudio sont conformes aux options recommandées dans le cours.
+2. Créez un projet RStudio intitulé `cours_r_semaine_4`. Ce projet sera créé vide. Nous initialiserons un projet git en cochant la case adéquate.
+
+Comme lors de la semaine 3, n'hésitez pas à réaliser un commit après chaque résolution de question, et à push régulièrement sur le répertoire distant.
+
+## Exercice 
+
+Pour cet exercice, nous allons utiliser un jeu de données issu de [https://insee.fr]() et est [disponible ici](https://www.insee.fr/fr/statistiques/6692220). L'objectif de cet exercice est de mettre en pratique les librairies découvertes aujourd'hui. Téléchargez les exercices disponibles sur le site pour la semaine 4.
+
+1. Créez un dossier data à la racine du projet dans lequel vous copierez les fichiers dé-zippés. Dans le fichier .gitignore, ajoutez la ligne "data/" puis sauvegardez. À quoi correspond cet étape ?
+
+2. Importez les différents fichiers en utilisant les librairies appropriées. Appelez la table df_DEC_DEP, la table résultant de la lecture du fichier DEC_DEP.json. Conservez ce schema de nommage pour les 4 fichiers.
+
+3. Combien de lignes dans la table df_DEC_COM_Meta font référence à des indicateurs calculés sur les moins de 30 ans ? Combien d'indicateurs concernent spécifiquement les couples avec enfants ? Donnez tous les codes de variables faisant référence à des indicateurs de type "Indice de Gini".
+
+4. Quel est le département avec le Rapport interdécile D9/D1 sur les revenus du ménage le plus faible ? le plus élevé ?
+
+5. Dans la table df_DEC_COM, quels sont les types des colonnes ? Que veut dire la modalité "s" à votre avis ?
+
+6. Gardez uniquement les lignes correspondantes aux communes de Nantes et Saint-Pierre. Convertissez les colonnes en type numérique. Indice: vous pourrez faire l'opération en deux temps, en commençant par remplacer les virgules par des séparateurs ".".
+
+7. Calculez l'écart interquartile entre les variables de 1er quartile (€) de revenu et du 	
+3e quartile (€).
+
+8. En utilisant une jointure sur le code GEO, identifier les 4 départements représentés dans la table df_DEC_COM.

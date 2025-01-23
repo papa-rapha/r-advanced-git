@@ -10,7 +10,7 @@ project:
     - "exercises/sem_1.qmd"
     - "exercises/sem_2.qmd" 
     - "exercises/sem_3.qmd"
-    #- "exercises/sem_4.qmd"
+    - "exercises/sem_4.qmd"
     #- "exercises/sem_5.qmd"
     #- "exercises/sem_6.qmd"
     # - "dm/01-dm.qmd"
@@ -23,8 +23,8 @@ project:
     - "slides/cours_2_files/"
     - "slides/cours_3.html"
     - "slides/cours_3_files/"
-    #- "slides/cours_4.html"
-    #- "slides/cours_4_files/"
+    - "slides/cours_4.html"
+    - "slides/cours_4_files/"
     #- "slides/cours_5.html"
     #- "slides/cours_5_files/"
     #- "slides/cours_6.html"
@@ -32,7 +32,7 @@ project:
     - "slides/images/"
     #- "material/semaine_3/tp3.zip"
     # - "material/semaine_2.zip"
-    # - "material/semaine_4.zip"
+    - "material/semaine_4.zip"
     - "exercises/images/"
 
 # See https://quarto.org/docs/projects/code-execution.html#freeze
