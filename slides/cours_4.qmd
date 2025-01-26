@@ -325,7 +325,7 @@ Concaténation de tables: `bind_rows`, `bind_columns`
 
 :::::: {.callout-tip}
 ## SQL
-Vocabulaire des verbes tiré du SQL, voir par exemple : [](https://learnsql.fr/blog/explication-des-types-de-jointures-sql/)
+Vocabulaire des verbes tiré du SQL, voir par exemple : [Ici](https://learnsql.fr/blog/explication-des-types-de-jointures-sql/)
 :::
 
 

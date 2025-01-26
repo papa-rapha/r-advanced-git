@@ -68,7 +68,7 @@ Pour l'utilisateur :
 
 ::: callout-note
 ## Github et Git
-Plus sur ce sujet lors du cours 6
+Voir cours n°2
 :::
 
 ## Installer, charger
@@ -84,6 +84,23 @@ pak::pkg_install("tibble") # using pak
 - `install.packages` en R base, depuis le CRAN ou des sources
 - `remotes` : librairie permettant l'installation depuis le CRAN et différents dépôt de code programmaticalement, tels que [github](https://github.com/), [gitlab](https://gitlab.com/), [bitbucket](https://bitbucket.org/product), ainsi que [Bioconductor](https://www.bioconductor.org/).
 - `pak` : librairie pour l'installation interactive de packages
+
+## Développer un package {auto-animate="true"}
+
+::: incremental
+- [usethis](https://usethis.r-lib.org/) : Outil de setup et d'aide aux développement d'une librairie.
+- [devtools](https://devtools.r-lib.org/) : Sorte de `tidyverse` du développement de librairie.
+:::
+
+## Développer un package {auto-animate="true"}
+
+- [usethis](https://usethis.r-lib.org/) Outil de setup et d'aide aux développement d'une librairie.
+- [devtools](https://devtools.r-lib.org/) Sorte de `tidyverse` du développement de librairie.
+
+::: callout-tip
+## Utilisation interactive
+`usethis` est un outil d'aide au développement : vous l'utiliserez toujours (ou presque) interactivement, en appelant les instructions dans la console R, et non par le biais de scripts !
+:::
 
 # Structure d'un package
 
@@ -184,7 +201,7 @@ Voir `usethis::use_data_raw()`
 - Il est possible d'écrire les documents .Rd à la main. Mais il recommandé d'utiliser `roxygen2` pour les générer automatiquement !
 - `roxygen2` est bien intégré au workflow `devtools`
 - Les *vignettes* sont des guides d'utilisation détaillés pour le package ou certaines de ses fonctionnalités.
-- À écrire en Rmarkdown
+- À écrire en Rmarkdown ou en quarto
 
 ## Autres dossiers
 
