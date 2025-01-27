@@ -29,7 +29,12 @@ L'objectif de cet exercice sera de créer un package nous permettant de fournir 
 - `plot.commune()`
 - `plot.departement()`
 
-Pour chacunes de ces fonctions, documentez et renseignez les dépendances en utilisant les notations Roxygen. Soyez particulièrement attentifs à la déclaration des dépendances, si vous utilisez des librairies tierces pour réaliser vos calculs.
+
+Pour chacunes de ces fonctions, documentez et renseignez les dépendances en utilisant les notations Roxygen. Soyez particulièrement attentifs à la déclaration des dépendances, si vous utilisez des librairies tierces pour réaliser vos calculs. 
+
+Vous créerez aussi 2 fonctions `creer_commune()` et `creer_departement()`, qui prendront en entrée une data.frame et renverront en sortie deux objets de classe respectivement commune et departement.
+
+Seules fonctions `summary.commune()`, `summary.departement()`, `plot.commune()`, `plot.departement()`, `creer_commune()` et `creer_departement()` seront exportées.
 
 
 **Data**
@@ -38,7 +43,7 @@ Pour chacunes de ces fonctions, documentez et renseignez les dépendances en uti
 
 **Tests**
 
-6. En utilisant `testthat`, écrivez des tests unitaires pour chacune des fonctions précédentes. Vous écrirez 2 tests unitaires par fonction. Essayez de tester soit la validité des arguments fournis en entrée, soit la pertinence des résultats pour un jeu de données fixé en entrée.
+6. En utilisant `testthat`, écrivez des tests unitaires pour chacune des fonctions précédentes. Vous écrirez 2 tests unitaires par fonction. Essayez de tester soit la validité des arguments fournis en entrée, soit la pertinence des résultats pour un jeu de données fixé en entrée. Vous pourrez créer les fichiers de tests en utilisant l'instruction `usethis::use_test()`
 
 **Documentation**
 
