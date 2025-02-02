@@ -6,73 +6,38 @@ format: pdf
 
 # Projet de fin de classe
 
-L'objectif du projet est le suivant :
+L'objectif du projet est le suivant : valider les différents éléments étudiés durant le cours. Cela comporte la construction d'une vignette, l'utilisation de quarto, et l'utilisation de github actions par le biais de la librairie `pkgdown`.
 
-- manipuler les différents concepts R vu lors des différents cours : fonctions et packages, documents `quarto`, et études reproductibles avec `renv` notamment.
-- vous faire intéragir avec git et github pour vous familiariser avec les outils et vous donner à voir aux potentialités de ces outils.
+# Deux projets sous github
 
-L'utilisation de git doit se faire de manière continue. Néanmoins, certaines questions vous demanderont d'exécuter certaines commandes à un moment donné. Ce n'est pas pour ça qu'il faut se restreindre à ces moments précis.
+## Librairie
 
-## Rendu
+Nous allons reprendre le développement de notre librairie. L'idée est de compléter la librairie obtenue à l'issue de l'exercice de la semaine 5 avec une nouvelle fonction `generer_rapport`.
 
-Le dossier projet sous github et le site seront le rendu, ainsi qu'un document .qmd compilé dans lequel vous préciserez les réponses aux questions qui ne pourront pas figurer dans le code. 
+1. Créez un dossier `inst` à la racine de la librairie, et déposez le fichier paramétré `rapport.qmd` obtenu à l'issue de l'exercice de la semaine 5.
+2. Implémentez une fonction `generer_rapport` qui prendra en argument les paramètres `commune` et `departement` qui permettront de configurer pour quelles communes et quels départements compiler le rendu. Un troisième paramètre `output` sera défini pour préciser le chemin d'écriture du document généré.
+Indication : une fois le package installé, nous pouvons utiliser la fonction `system.file` pour accéder aux fichiers présents dans le dossier `inst` d'un package au build time. Exemple, le fichier `inst/fichier.qmd`  du package `example` pourra être localisé en utilisant l'appel `system.file("fichier.qmd", library = "example") une fois la librairie `example` installée. 
+3. Assurez-vous de documenter la fonction, en s'assurant que les paramètres soient bien décrits, les dépendances signalées et que la librairie soit à jour.
+4. Faites les commits/push nécessaires pour mettre à jour le package sous github.
 
-- Le site devra être conforme aux demandes des questions suivantes.
-- Le dossier projet devra être structuré comme attendu.
+## Vignette
 
-La date finale du rendu est le 10 mars 2024.
+5. En utilisant la fonction `usethis::use_vignette`, initialiser une vignette pour votre package dont le titre sera `Générer un rapport d'analyses`.
+6. Par défault, les vignettes utilisent rmarkdown. Nous souhaitons plutôt utiliser quarto. Changez les entêtes .yaml de la vignette pour ainsi que le champ VignetteBuilder dans le fichier DESCRIPTION pour utiliser quarto. Indications: vous pourrez vous aider de ce site: https://cran.r-project.org/web/packages/quarto/vignettes/hello.html pour faire les configurations.
+7. Décrivez dans la vignette l'utilisation des fonctions `summary.commune`, `summary.departement`, et de la fonction `generer_rapport`. Utilisez un style litéral et assurez-vous d'utiliser les bonnes options de `chunks` pour avoir une vignette didactique.
 
-## Création d'un blog R quarto
+## pkgdown
 
-À la fin du projet, vous aurez créé un site de blog perso en quarto, hébergé sur github. Votre premier post de blog sera issu d'un travail reproductible généré en R à partir du package développé dans les séances précédentes.
+8. Installez `pkgdown`.
+9. En utilisant `usethis`, et la fonction `use_pkgdown_github_pages`, initialisez le setup du projet pour utiliser des github pages et construire une documentation de votre projet.
+10. Faites les commits nécessaires, et le push sur le répertoire projet.
 
-### Création du projet de site sous github
+Félicitations ! Vous avez construit une librairie fonctionnelle, documentée, et exposée avec succès. N'hésitez pas à peaufiner la documentation pour avoir le rendu le plus propre possible sur la documentation des fonctions ainsi que la page de garde.
+Pour valider le rendu, merci d'envoyer un mail à mon adresse `raphael.nedellec@univ-nantes.fr` avec votre nom, prénom, url du projet github, ainsi que l'url de la documentation.
 
-1. Créez un nouveau projet sous RStudio, que vous appelerez `my_blog`. Ce projet sera créé en utilisant le template quarto blog. Cochez les options `renv` et `git` pour les utiliser. Décrivez la structure du projet.
-2. Personnalisez les documents `index.qmd` et `about.qmd` *a minima*. De la même manière, modifiez le post `posts/welcome/index.qmd`.
-3. Créez un nouveau projet github, que vous appelerez `my_blog`. 
-4. De retour sur RStudio, ouvrez le terminal. Configurez les paramètres user.name et user.email en utilisant les instructions `git config user.name "<votre username>"` et `git config user.email "<votre email>"`. Vous pourrez utilisez le paramètre `--global` pour modifier ces valeurs pour tous vos projets par défaut `git config --global user.name "<votre username>"`.
-5. Toujours dans le terminal, configurez le `remote` de manière à le faire pointer vers le projet github récemment créé. L'instruction devrait ressembler à `git remote add git@github.com:<votre username github>/my_blog.git` si vous utilisez un accès ssh.
-6. Faites un commit de l'ensemble des fichiers, puis un push. Que voyez-vous désormais sous github ?
-7. Quittez le projet RStudio avant de passer à la section suivante.
-
-### Un package sous github
-
-1. Reprenez votre package `olympicsWeather` développé dans l'exercice de la semaine 4. Votre package doit être fonctionnel et pouvoir s'installer ! Ouvrez le projet associé au package.
-2. Créez un nouveau projet github, que vous appelerez `olympicsWeather`. 
-3. Initiez un projet git à l'aide de la commande `git init`. Configurez le `remote` de manière à le faire pointer vers le projet github récemment créé. L'instruction devrait ressembler à `git remote add git@github.com:<votre username github>/olympicsWeather.git`.
-4. Ajoutez l'ensemble des fichiers du dossier R à la pile des fichiers en utilisant la commande `git add`.
-5. Faites un premier commit intitulé "code R" en utilisant la commande `git commit -m "<insérez les infos du commit ici>"`. N'oubliez pas de faire un message informatif.
-6. Ajoutez un fichier .gitignore dans lequel vous excluerez les fichiers `'.Rproj.user', '.Rhistory', '.Rdata', '.httr-oauth', '.DS_Store'`.
-7. Faites un `git status`. Ajoutez les fichiers restants à la pile avec un `git add`, puis faites un nouveau commit.
-8. Synchronisez votre projet local avec le répertoire distant à l'aide de la commande `git push origin main`.
-9. Fermez le projet RStudio et redémarrez un nouveau terminal R. Depuis ce terminal, installez le packages `remotes`. Que se passe t'il quand vous exécutez la commande `remotes::install_github("<votre username>/olympicsWeather")` (remplacez `<votre username>` par votre username github) ?
-
-### Posts de blog
-
-1. Ouvrez à nouveau votre projet de blog, `my_blog`. Ouvrez le fichier `posts/post-with-code/index.qmd`. Vérifiez que `renv` est bien actif en utilisant la fonction `renv::status()`. Installez le package `c("quarto")`.
-2. Vous créerez une première section de niveau `h2.`, soit avec deux `##`, intitulée `Librairie olympicsWeather`. Après avoir introduit et présenté le package, vous décrirez comment installer le package en utilisant le package `remotes` depuis github. Vous utiliserez un bloc de code pour décrire les commandes. Attention, le code ne devra pas être exécuté !
-3. Installez le package `olympicsWeather` depuis votre dépôt github en utilisant le package `remotes`. Utilisez `renv::snapshot()` et vérifiez que le package `olympicsWeather` est bien mentionné dans votre fichier `renv.lock` à la racine de votre projet de blog.
-
-4. Modifiez votre post de blog `posts/post-with-code/index.qmd` de manière à ajouter une section pour chacune des requêtes suivantes : quelles sont les prévisions météo à 7 jours pour le `stade de France` ? Pour `Tahiti` ? Pour les coordonnées gps `43.276703, 5.334791` ?
-5. Ajoutez un fichier `.gitignore` à la racine du dossier `posts/post-with-code/` pour ne pas traquer les fichiers indésirables comme `.Rhistory`, ou autres.
-6. Dans le terminal ou dans la console R, faites une étape de preview de votre site complet. Par exemple, on pourra utiliser la commande `quarto preview` dans le terminal.
-7. Vérifiez que vous ajoutez bien tous les documents et les dossiers à votre commit. Faire un commit, en particulier assurez-vous que votre dossier `_site` est bien commit.
-8. Faites un git push et vérifiez que votre projet est à jour sur github.
-9. Configurez github pages. Assurez-vous que votre projet est public. Configurez votre `github pages` à la manière de :
-
-![](images/githubpages.png)
-
-Assurez-vous que les pages pointent vers le sous dossier `_site/` et non root.
-
-
-Si tout va bien, vous devriez avoir un github pages setup et un site web accessible ! Félicitations.
-
-### Exercices des semaines 1 à 3
-
-1. Créez un nouvel article de blog pour chacun des exercices des semaines 1 à 3.
-2. Répétez le processus décrit précédemment pour uploader et commit l'ensemble des articles relatifs à ces exercices. N'oubliez pas de `quarto render` ou de `quarto preview` avant le dernier commit pour pousser une version à jour du site contenue dans le dossier `_site`.
-
-### Bonus
-
-Le processus utilisé dans le projet nécessite que le site soit construit préalablement au commit. Il est possible d'utiliser une `github action` pour construire le site dynamiquement à chaque commit, et faire en sorte que le code soit exécuté à nouveau à chaque modification de la branche principale. Essayez de mettre ce processus en place en utilisant les instructions décrites ici https://quarto.org/docs/publishing/github-pages.html#example-knitr-with-renv. Ceci à l'avantage de ne pas nécessiter l'exécution préalable et donc allège les commits, tout en assurant que le site soit toujours à jour !
+Les éléments suivants seront pris en considération pour l'évaluation:
+- la librairie est elle installable dans un projet vierge avec l'instruction `remotes::install()`.
+- la documentation est-elle présente ? exposée avec `pkgdown` ?
+- qualité du code, des tests, respect des conventions de construction de librairie
+- possibilité d'utiliser la fonction `generer_rapport` ainsi que l'ensemble des fonctions nécessaires au bon fonctionnement du package.
+Tout effort supplémentaire - dans l'utilisation de dépendances utiles, dans la qualité visuelle et rédactionnelle du site de documentation - sera aussi évalué et récompensé.

@@ -23,8 +23,8 @@ format: html
 | 21 janvier | **Fonctions, Objets S3**        | [{{< fa book >}}](/slides/cours_3.html) | [{{< fa file-circle-question >}}](/exercises/sem_3.pdf) |  |
 | 24 janvier  | **Données, Texte, Dates**       | [{{< fa book >}}](/slides/cours_4.html) | [{{< fa file-circle-question >}}](/exercises/sem_4.pdf) | [{{< fa suitcase >}}](material/semaine_4.zip) |
 | 27 janvier  | **Développer une librairie R**        | [{{< fa book >}}](/slides/cours_5.html) | [{{< fa file-circle-question >}}](/exercises/sem_5.qmd) | [{{< fa suitcase >}}](material/semaine_5.zip)|
-| 3 février | **Science reproductible** | [{{< fa book >}}]() | [{{< fa file-circle-question >}}]() ||
-| 23 février | **Projet final**                 |                     | [{{< fa list-check >}}]()           ||
+| 3 février | **Science reproductible** | [{{< fa book >}}](/slides/cours_6.html) | [{{< fa file-circle-question >}}](/exercises/sem_6.qmd) ||
+| 23 février | **Projet final**                 |                     | [{{< fa list-check >}}](dm/projet.qmd)           ||
 
 
 : {tbl-colwidths="\[15,55,10,10,15\]"}
