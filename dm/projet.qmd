@@ -36,6 +36,7 @@ Félicitations ! Vous avez construit une librairie fonctionnelle, documentée, e
 Pour valider le rendu, merci d'envoyer un mail à mon adresse `raphael.nedellec@univ-nantes.fr` avec votre nom, prénom, url du projet github, ainsi que l'url de la documentation.
 
 Les éléments suivants seront pris en considération pour l'évaluation:
+
 - la librairie est elle installable dans un projet vierge avec l'instruction `remotes::install()`.
 - la documentation est-elle présente ? exposée avec `pkgdown` ?
 - qualité du code, des tests, respect des conventions de construction de librairie
