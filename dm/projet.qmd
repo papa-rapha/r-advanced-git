@@ -8,7 +8,7 @@ format: pdf
 
 L'objectif du projet est le suivant : valider les différents éléments étudiés durant le cours. Cela comporte la construction d'une vignette, l'utilisation de quarto, et l'utilisation de github actions par le biais de la librairie `pkgdown`.
 
-# Deux projets sous github
+# Un projet sous github
 
 ## Librairie
 
